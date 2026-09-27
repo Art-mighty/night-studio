@@ -1,0 +1,595 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}</style><style>:root{color-scheme:light dark;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}}:root[data-theme="dark"]{color-scheme:dark;--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}:root[data-theme="light"]{color-scheme:light}@media print{:root,:root[data-theme="dark"]{color-scheme:light;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}}body{background:var(--md-bg);color:var(--md-text);max-width:720px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:10px;font:14px/1.55 -apple-system,BlinkMacSystemFont,'SF Pro','Segoe UI',sans-serif;overflow-wrap:break-word}body>:first-child{margin-top:0}h1,h2,h3,h4,h5,h6{margin:6px 0 0;line-height:1.25;font-weight:600;text-wrap:balance}h1{font-size:1.35em}h2{font-size:1.15em;color:var(--md-muted)}h3,h4,h5,h6{font-size:1em}p,ul,ol,blockquote,table,pre,hr{margin:0}strong{font-weight:600}a{color:var(--md-link);text-decoration:none}a:hover{text-decoration:underline}ul,ol{display:flex;flex-direction:column;gap:6px;padding-left:22px}ul{list-style:disc}ol{list-style:decimal}:is(li,td,th)>*+:is(p,ul,ol,blockquote){margin-top:6px}blockquote{display:flex;flex-direction:column;gap:10px;border-left:2px solid var(--md-rule);padding-left:10px;color:var(--md-muted)}:not(pre)>code{background:var(--md-fill);padding:1px 3px;border-radius:4px;font:.92em 'SF Mono',ui-monospace,Menlo,Consolas,monospace}a>code{background:none;color:inherit}pre{background:var(--md-fill);padding:10px 12px;border-radius:6px;overflow-x:auto;font:12px/1.5 'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-block:4px}pre code{background:none;padding:0;font:inherit}table{width:100%;border-collapse:separate;border-spacing:2px;font:inherit}th,td{padding:6px 8px;border-radius:3px;text-align:left;vertical-align:top}th{background:var(--md-fill-strong);font-weight:600}td{background:var(--md-fill)}:is(th,td) :not(pre)>code{background:transparent}hr{border:0;border-top:1px solid var(--md-rule-strong);margin-block:10px}img{max-width:100%;height:auto;border-radius:4px}</style>
+</head><body>
+<h1>Merch Designer Quest: A 30-Day, One-Hour-a-Day Plan to Learn Merch Design with Figma + Claude Design</h1>
+<p>In 30 one-hour sessions, a shy beginner can go from zero to print-ready files for stickers, t-shirts, pins, patches and other merch. The game rewards private mastery, not public performance: small wins, real choices, unlimited retries.</p>
+<h2>TL;DR</h2>
+<ul>
+<li><strong>Two tools, two jobs.</strong> Claude Design is for ideas, mood boards, mockups and presentation. It exports Canva, PDF, PPTX or HTML, but not print-ready SVG or PNG. Figma is where the real print files (vector SVG/PDF, 300-DPI PNG) get built. So every Claude Design idea gets rebuilt or traced in Figma before printing.</li>
+<li><strong>Motivation design follows the evidence.</strong> A 144-study meta-analysis (Bureau, Howard, Chong &amp; Guay, 2022, <em>Review of Educational Research</em>) found that feeling competent is the strongest predictor of self-driven motivation, followed by autonomy (choice) and then relatedness (connection). Gamification meta-analyses show small-to-large learning gains (g ≈ 0.46–0.82), and shorter programs tend to work best. A 30-day plan fits well.</li>
+<li><strong>What that means in practice:</strong> many small private wins, choices of 2–3 options every day, no leaderboards, unlimited quiz retries, and a parent who acts as co-pilot rather than judge.</li>
+</ul>
+<hr>
+<h2>Why Claude Design + Figma Work Together</h2>
+<p>Claude Design lets you refine a design through conversation, inline comments, direct edits and custom sliders. It exports to Canva, PDF, PPTX or standalone HTML, but it has no image or SVG export button. Print shops want vector files or 300-PPI rasters (Sticker Mule), or transparent sRGB PNGs at 150+ DPI (Printful). So the course repeats this loop:</p>
+<p><strong>Claude Design (ideas, style boards, mockup pages, lookbook) → PDF or screenshot → Figma (trace or rebuild with the pen tool, booleans and components) → export SVG/PDF/PNG to the printer's spec.</strong></p>
+<p>This suits a shy, low-initiative learner. The AI removes the fear of a blank page, and building by hand in Figma gives her the sense of competence and ownership that motivation research says matter most.</p>
+<h2>What the Evidence Says About Motivating Shy, Reluctant Learners</h2>
+<ul>
+<li><strong>Self-Determination Theory (SDT):</strong> motivation grows when three needs are met: autonomy (choice), competence (mastery) and relatedness (connection). The biggest lever is competence.</li>
+<li><strong>Autonomy support:</strong> supportive adults see things from the learner's point of view, offer choices within clear guidelines, and give good reasons for the less fun tasks (Guay, 2022, <em>Canadian Journal of School Psychology</em>).</li>
+<li><strong>Gamification works, but modestly and depending on design:</strong> Huang et al. (2020) g = 0.46; Sailer &amp; Homner (2020) g = 0.49; Bai, Hew &amp; Huang (2020) g = 0.50; Li, Ma &amp; Shi (2023) g = 0.82.</li>
+<li><strong>Design implications:</strong> no public leaderboards, private progress, 2–3 option choices instead of an open-ended &quot;do whatever,&quot; unlimited retries, praise for process (&quot;you fixed the bleed&quot;) rather than ability, and optional family-only &quot;show and tell.&quot;</li>
+</ul>
+<hr>
+<h2>Game Design: &quot;Night Studio: The Merch Monster Workshop&quot;</h2>
+<p><strong>Theme:</strong> She's the secret artist in a cozy, lamp-lit studio after hours. Nobody watches. Her companion is a small, quiet monster called <strong>&quot;Blot&quot;</strong> who can't talk. Blot &quot;grows&quot; by wearing the merch she designs: a sticker on day 16, a tee on day 21, a pin on day 26. She is in charge of Blot, never the other way around. Nothing is shared unless she presses &quot;Show Family.&quot;</p>
+<p><strong>Core loop (daily):</strong> Unlock the day → watch 1–3 videos → do the hands-on task and upload a screenshot → take a 5-question quiz. <strong>Pass mark is 4/5. Retries are unlimited</strong>, questions reshuffle, and after a miss she gets a hint (&quot;Re-watch 2:00–4:00&quot;) → claim XP and badge → the next day unlocks.</p>
+<p><strong>XP system</strong></p>
+<ul>
+<li>Video watched: 10 XP each</li>
+<li>Task deliverable uploaded: 40 XP</li>
+<li>Quiz passed: 30 XP (+10 for a first-try perfect score)</li>
+<li>&quot;Choose your own twist&quot; bonus (she changes the task in her own way): 15 XP. This rewards autonomy.</li>
+<li>About 110 XP per day at most, and about 3,000 XP for the whole course.</li>
+</ul>
+<p><strong>Levels (7 studio &quot;rooms&quot;)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Days</th>
+<th>Room name</th>
+<th>Unlock reward</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1–6</td>
+<td>The Sketch Lamp</td>
+<td>Blot gets a color</td>
+</tr>
+<tr>
+<td>2</td>
+<td>7–12</td>
+<td>The Vector Forge</td>
+<td>Blot gets a pen-nib tail</td>
+</tr>
+<tr>
+<td>3</td>
+<td>13–15</td>
+<td>The AI Sidekick Nook</td>
+<td>Blot gets a robot friend &quot;Clawd-bot&quot;</td>
+</tr>
+<tr>
+<td>4</td>
+<td>16–20</td>
+<td>The Sticker Lab</td>
+<td>Blot wears her first sticker</td>
+</tr>
+<tr>
+<td>5</td>
+<td>21–25</td>
+<td>The Thread Loft</td>
+<td>Blot wears her t-shirt</td>
+</tr>
+<tr>
+<td>6</td>
+<td>26–28</td>
+<td>The Metal &amp; Stitch Workshop</td>
+<td>Blot wears her pin &amp; patch</td>
+</tr>
+<tr>
+<td>7</td>
+<td>29–30</td>
+<td>The Launch Window</td>
+<td>Studio &quot;lights up&quot; with her full collection</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Streaks (low pressure):</strong> Each day in a row lights one &quot;lantern.&quot; She gets <strong>two &quot;Rain Day&quot; streak shields per week</strong>, so missing a day never resets progress. The display never shows a broken streak in red. It just says &quot;Lanterns lit: 12.&quot;</p>
+<p><strong>Badges:</strong> <em>First Mark</em>, <em>Palette Keeper</em>, <em>Type Whisperer</em>, <em>Path Tamer</em>, <em>Cookie Cutter</em>, <em>Clone Master</em>, <em>Shape Shifter</em>, <em>Export Ninja</em>, <em>Prompt Captain</em>, <em>Cut Line Pro</em>, <em>Bleed Guard</em>, <em>Holo Hunter</em>, <em>Thread Head</em>, <em>Pixel Math Wizard</em>, <em>Pattern Weaver</em>, <em>Metal Liner</em>, <em>Stitch Smith</em>, <em>Collection Curator</em>, <em>Launch Legend</em>. There are also secret independence badges: <em>Solo Flight</em> (finishes a task without asking for help) and <em>Own Idea</em> (makes up her own twist 3 times).</p>
+<p><strong>Artifact data structure (per day):</strong>
+<code>{ day, level, title, goal, videos:[{title, channel, url, minutes}], task:{tool, steps[], deliverable}, time:{warmup, video, task, quiz, reflect}, quiz:[{q, options[4], answerIndex, explanation, hintTimestamp}], xp:{video, task, quiz, bonus}, badge }</code></p>
+<hr>
+<h2>Parent Playbook</h2>
+<ol>
+<li><strong>Co-pilot, not judge.</strong> Sit beside her for the first 5 minutes, then move to &quot;nearby.&quot; Ask &quot;Which of these two do you like?&quot; rather than &quot;What do you want to make?&quot; Open-ended prompts can freeze a reluctant learner, while 2–3 choices give autonomy without overwhelm.</li>
+<li><strong>Praise the process, specifically:</strong> &quot;You kept the text inside the safe zone,&quot; not &quot;You're so talented.&quot;</li>
+<li><strong>Showing work safely:</strong> keep a private gallery inside the game, hold a family &quot;gallery night,&quot; and order one real physical print as the capstone reward. Share online only if she wants to, and use a pen name.</li>
+<li><strong>Plugins &amp; Community files:</strong> check who made a plugin before installing it. Duplicating a Community file makes your own copy.</li>
+<li><strong>Copyright rule for the whole course:</strong> only original characters. No fan art of brands or characters for anything that might be sold.</li>
+<li><strong>Keep Claude Design as a work tool:</strong> open it for the design task, close it when done.</li>
+</ol>
+<hr>
+<h2>Print-Spec Cheat Sheet</h2>
+<ul>
+<li><strong>Pixel math:</strong> pixels = inches × DPI. 12 in × 300 DPI = 3,600 px. A 12×16 in print at 300 DPI needs 3,600 × 4,800 px. Design at 1× in Figma and export at 2× or 3×.</li>
+<li><strong>Stickers (Sticker Mule):</strong> vector or ≥300 PPI. Cut line as a 0.05–1 pt magenta stroke. Use 1/8 in (0.125 in) bleed. Minimum font 6 pt, minimum line 1 pt. CMYK recommended. Text can't be printed full-bleed.</li>
+<li><strong>Stickers (general):</strong> a 3×4 in sticker with 1/8 in bleed needs a 3.25×4.25 in canvas. Keep key detail about 1/8 in inside the cut line.</li>
+<li><strong>T-shirts (Printful):</strong> transparent PNG, sRGB, minimum 150 DPI, best not above 300 DPI. Front print area up to 12×16 in. Phone cases and stickers need 300 DPI. A black background on a black shirt prints as a grayish rectangle. JPG works better for all-over print.</li>
+<li><strong>CMYK vs RGB:</strong> Figma is RGB. Printful apparel asks for sRGB, while sticker and paper printers prefer CMYK. The &quot;Print for Figma&quot; plugin adds CMYK export and 0.125 in bleed.</li>
+<li><strong>Enamel pins:</strong> vector files, no gradients, every color separated by metal. Metal lines ≥0.2 mm, color areas ≥0.3 mm, text ≥5 pt. A beginner size is about 1–1.5 in.</li>
+<li><strong>Embroidery (Printful):</strong> text at least 0.25 in tall, lines at least 0.05 in thick.</li>
+<li><strong>Figma export:</strong> SVG and PDF export at 1× only because they're vector.</li>
+</ul>
+<hr>
+<h2>The 30-Day Plan</h2>
+<blockquote>
+<p><strong>Note on videos:</strong> URLs come from live YouTube search results, but lengths are approximate. Preview each video first, since some contain sponsor or course promotions. If a video doesn't cover a quiz point, use the cheat sheet fact instead.</p>
+</blockquote>
+<p><strong>Standard hour:</strong> Warm-up 5 min · Videos 10–25 · Task 25–35 · Quiz 5–8 · Reflection &amp; reward 2–5 = ~60 min.</p>
+<hr>
+<h3>LEVEL 1: THE SKETCH LAMP (Days 1–6)</h3>
+<h4>Day 1: Hello, Figma</h4>
+<p><strong>Goal:</strong> Get around the canvas; make your first frame, shapes and text; export once.
+<strong>Videos:</strong></p>
+<ol>
+<li>&quot;Course overview: Figma Design for beginners (2025)&quot; (Figma) <a href="https://www.youtube.com/watch?v=AFDZpMCTn2E">https://www.youtube.com/watch?v=AFDZpMCTn2E</a> (~3 min)</li>
+<li>&quot;Learn Figma in 13 minutes! (Crash course for beginners)&quot; <a href="https://www.youtube.com/watch?v=jQ1sfKIl50E">https://www.youtube.com/watch?v=jQ1sfKIl50E</a> (~13 min)</li>
+</ol>
+<p><strong>Task:</strong> Open Figma and create a file called &quot;My Night Studio.&quot; Add a 1080×1080 frame, 3 shapes (circle, rectangle, star) and your initials in text. Export the frame as a PNG. <strong>Deliverable:</strong> <code>Day01_hello.png</code>.
+<strong>Quiz:</strong></p>
+<ol>
+<li>You drag a rectangle from the empty canvas into a frame. What changes? A) It becomes a component B) It becomes a child of the frame, moving and clipping with it C) It gets flattened D) Nothing. <strong>✅ B.</strong> Frames contain layers, so the rectangle moves with the frame and can be clipped by it.</li>
+<li>What do you need to follow Figma's beginner course? A) A paid Professional plan B) An iPad and Apple Pencil C) A computer, internet and a Figma account; the free Starter plan is enough D) Adobe Illustrator. <strong>✅ C.</strong></li>
+<li>Frame vs group? A) Groups can clip; frames can't B) Frames have their own fill, clipping and layout; groups just bundle layers C) Identical D) Only groups export. <strong>✅ B.</strong></li>
+<li>In the Layers panel, a layer higher in the list appears… A) behind lower layers B) in front of lower layers C) randomly D) hidden. <strong>✅ B.</strong></li>
+<li>You want to export only your artwork. Best method? A) Screenshot B) Select the frame and add an export setting C) Print the page D) Export the page file. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>First Mark</em>, and Blot opens his eyes.</li>
+</ol>
+<h4>Day 2: The Secret Rules of Good Design</h4>
+<p><strong>Goal:</strong> Use balance, contrast, emphasis, repetition and unity.
+<strong>Video:</strong> &quot;The Principles of Design | FREE COURSE&quot; (Envato Tuts+) <a href="https://www.youtube.com/watch?v=9EPTM91TBDU">https://www.youtube.com/watch?v=9EPTM91TBDU</a> (~22 min)
+<strong>Task:</strong> Make four 600×600 &quot;sticker cards&quot; using only circles, squares and triangles in 2 colors, one each for <em>Contrast</em>, <em>Balance</em>, <em>Repetition</em> and <em>Emphasis</em>. <strong>Deliverable:</strong> 4 frames.
+<strong>Quiz:</strong></p>
+<ol>
+<li>A big star sits in the center with identical small stars mirrored on each side. What kind of balance? A) Asymmetrical B) Symmetrical C) Radial only D) None. <strong>✅ B.</strong></li>
+<li>Which layout balances <em>without</em> mirroring? A) One large dark shape on the left, several smaller shapes on the right B) Two identical shapes C) Everything centered D) One shape filling the canvas. <strong>✅ A.</strong></li>
+<li>One red shape among ten gray ones. Which principle creates the difference, and what does it produce? A) Repetition creates unity B) Contrast creates emphasis C) Balance creates rhythm D) Unity creates contrast. <strong>✅ B.</strong></li>
+<li>A tote covered in the same small icon at regular spacing uses… A) Emphasis B) Pattern/repetition C) Asymmetry D) Hierarchy. <strong>✅ B.</strong></li>
+<li>A 5-sticker pack uses a different random font and palette on each sticker. What's missing? A) Contrast B) Unity C) Emphasis D) Movement. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Rule Finder</em>.</li>
+</ol>
+<h4>Day 3: Color Magic</h4>
+<p><strong>Goal:</strong> Build palettes with the color wheel; understand hue, saturation and value.
+<strong>Videos:</strong></p>
+<ol>
+<li>&quot;Color Theory Basics Explained (Design the PERFECT Color Palette!)&quot; (Lindsay Marsh) <a href="https://www.youtube.com/watch?v=Zl1-GHVl9Sw">https://www.youtube.com/watch?v=Zl1-GHVl9Sw</a> (~15 min)</li>
+<li>&quot;Color Theory for Beginners | FREE COURSE&quot; (Envato Tuts+) <a href="https://www.youtube.com/watch?v=2QTHs7QSR9o">https://www.youtube.com/watch?v=2QTHs7QSR9o</a> (first ~10 min)</li>
+</ol>
+<p><strong>Task:</strong> Save three palettes as Figma color styles: complementary, analogous and triadic. Recolor your Day 2 cards with your favorite. <strong>Deliverable:</strong> a &quot;Palette Board&quot; frame.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Which pair is complementary? A) Blue &amp; orange B) Blue &amp; green C) Red &amp; orange D) Yellow &amp; yellow-green. <strong>✅ A.</strong></li>
+<li>A dull blue and a vivid blue have the same hue. What differs? A) Value B) Saturation C) Temperature D) Hue. <strong>✅ B.</strong></li>
+<li>Why does an analogous palette feel calm? A) It uses opposite colors B) Its colors are neighbors on the wheel, so contrast is low C) It's black and white D) It uses neon. <strong>✅ B.</strong></li>
+<li>Yellow text on a white sticker is hard to read mainly because of… A) Low hue contrast B) Low <em>value</em> contrast C) Too much saturation D) Wrong font. <strong>✅ B.</strong></li>
+<li>Why let one color dominate and use its complement only as an accent? A) Printers need it B) Equal amounts of complements can &quot;vibrate&quot; and feel jarring C) Complements can't print D) It's required on tees. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Palette Keeper</em>, and Blot turns your main color.</li>
+</ol>
+<h4>Day 4: Type That Talks</h4>
+<p><strong>Goal:</strong> Control font, size, letter spacing and line height.
+<strong>Video:</strong> &quot;Typography in Figma for Beginners (Text Tool, Fonts, and Spacing Explained)&quot; <a href="https://www.youtube.com/watch?v=doCdDEANxKE">https://www.youtube.com/watch?v=doCdDEANxKE</a> (~10–15 min)
+<strong>Task:</strong> Pick a phrase (your own, or &quot;Stay Weird,&quot; &quot;Quiet Power,&quot; &quot;Night Owl&quot;). Set it three ways: bold sans, serif and fun display. <strong>Deliverable:</strong> 3 &quot;word sticker&quot; frames.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Letter spacing (tracking) changes… A) Space between one pair of letters B) Space evenly across all selected letters C) Space between lines D) Weight. <strong>✅ B.</strong></li>
+<li>Line height controls… A) Letter width B) Vertical space between lines C) Color D) Box width. <strong>✅ B.</strong></li>
+<li>You type a long phrase in an auto-width text box. What happens? A) It wraps B) It keeps growing sideways on one line C) It shrinks D) It outlines. <strong>✅ B.</strong></li>
+<li>A serif font has… A) All caps B) Small &quot;feet&quot; at the ends of strokes C) A handwritten look D) Monospace letters. <strong>✅ B.</strong></li>
+<li>For a 2-inch sticker, which is safest? A) Thin script at 5 pt B) Bold sans-serif with open spacing, well above 6 pt C) Hairline serif D) Tiny caps. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Type Whisperer</em>.</li>
+</ol>
+<h4>Day 5: Where the Eye Goes (Hierarchy &amp; Composition)</h4>
+<p><strong>Goal:</strong> Build a design with a clear first, second and third read.
+<strong>Videos:</strong></p>
+<ol>
+<li>&quot;The ONLY Video On Visual Hierarchy ANY Graphic Designer Needs&quot; (Satori Graphics) <a href="https://www.youtube.com/watch?v=4QNEDhrsRLo">https://www.youtube.com/watch?v=4QNEDhrsRLo</a> (~12 min)</li>
+<li>&quot;LESS Than 10% Of Designers Know This!&quot; (Satori Graphics) <a href="https://www.youtube.com/watch?v=dGYCn9qYjUQ">https://www.youtube.com/watch?v=dGYCn9qYjUQ</a> (~10 min)</li>
+</ol>
+<p><strong>Task:</strong> Design a circular &quot;club badge&quot; with 3 levels: icon, club name, small tagline. Then do a blur test on a copy to see what still stands out. <strong>Deliverable:</strong> badge plus blurred copy.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Visual hierarchy is… A) Layer order B) The order the eye notices elements C) Alphabetical font order D) Folder structure. <strong>✅ B.</strong></li>
+<li>Which is NOT a hierarchy tool? A) Size B) Contrast C) White space D) File format. <strong>✅ D.</strong></li>
+<li>Why blur or squint at a design? A) To test resolution B) To see what still stands out when detail disappears C) To add a style D) To check spelling. <strong>✅ B.</strong></li>
+<li>Everything is the same size and weight. The result? A) Strong focus B) No clear entry point C) Better unity D) Faster printing. <strong>✅ B.</strong></li>
+<li>A tee is seen from about 3 m away. The primary element should be… A) Tiny text B) Large, simple and high-contrast C) A photo gradient D) 1 inch wide. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Eye Guide</em>.</li>
+</ol>
+<h4>Day 6: Level 1 Boss: Your First Mini Poster</h4>
+<p><strong>Goal:</strong> Combine the basics; learn pixel and DPI basics.
+<strong>Video:</strong> &quot;Figma Basics Tutorial for Beginners 2025. FREE Design Tool for Print on Demand.&quot; (The Shirtheads) <a href="https://www.youtube.com/watch?v=FgU0rTnWlRk">https://www.youtube.com/watch?v=FgU0rTnWlRk</a> (~15–20 min)
+<strong>Task:</strong> Make a 1800×2400 poster frame and export it at 2× (3600×4800 = 12×16 in at 300 DPI). <strong>Deliverable:</strong> <code>Day06_poster@2x.png</code>.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Why use a transparent PNG for shirts? A) Smaller files B) Any background in the file gets printed on the garment C) PNGs are vector D) Stickers need it. <strong>✅ B.</strong></li>
+<li>Pixels for 12 in at 300 DPI? A) 1,200 B) 2,400 C) 3,600 D) 4,800. <strong>✅ C.</strong></li>
+<li>An 1800 px frame exported at 2× is… A) 900 B) 1,800 C) 3,600 D) 7,200 px wide. <strong>✅ C.</strong></li>
+<li>Which format supports transparency? A) JPG B) PNG C) Both D) Neither. <strong>✅ B.</strong></li>
+<li>Why do Figma shapes stay sharp when enlarged but a small photo doesn't? A) Figma sharpens photos B) Shapes are vectors (math), photos are pixels C) Photos are always blurry D) Export settings. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏆 <strong>Level 1 complete.</strong> Blot gets his color.</li>
+</ol>
+<hr>
+<h3>LEVEL 2: THE VECTOR FORGE (Days 7–12)</h3>
+<h4>Day 7: Taming the Pen Tool</h4>
+<p><strong>Video:</strong> &quot;Figma Tutorial: Pen Tool Basics &amp; Vector Networks&quot; (Figma) <a href="https://www.youtube.com/watch?v=5x2uHUB_pzw">https://www.youtube.com/watch?v=5x2uHUB_pzw</a> (~8–10 min)
+<strong>Task:</strong> Draw a lightning bolt, a cloud, and a branching &quot;sprout&quot; with 3 leaves from one point. Fill the leaves separately with the paint bucket. <strong>Deliverable:</strong> 3 icons.
+<strong>Quiz:</strong></p>
+<ol>
+<li>What makes vector networks unusual? A) They must always close B) One point can connect to more than two paths, so shapes can branch C) Straight lines only D) They're raster. <strong>✅ B.</strong></li>
+<li>Click-<em>drag</em> with the Pen tool makes… A) A corner B) A curve with bézier handles C) A frame D) Text. <strong>✅ B.</strong></li>
+<li>To close a path you… A) Press Enter twice B) Hover over the starting point and click C) Double-click empty canvas D) Use Union. <strong>✅ B.</strong></li>
+<li>To stop drawing and leave the path open, press… A) Delete B) Escape C) Shift D) Tab. <strong>✅ B.</strong></li>
+<li>How do you fill just one enclosed region? A) Fill the whole layer B) Paint bucket in vector edit mode C) Mask it D) Flatten first. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Path Tamer</em>.</li>
+</ol>
+<h4>Day 8: Cookie-Cutter Shapes (Boolean Operations)</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;Boolean Operations Figma tutorial&quot; <a href="https://www.youtube.com/watch?v=P4vvf0KBhZM">https://www.youtube.com/watch?v=P4vvf0KBhZM</a> (~8 min)</li>
+<li>&quot;Boolean Groups - Figma Tutorial&quot; <a href="https://www.youtube.com/watch?v=tdyQVg7tbfg">https://www.youtube.com/watch?v=tdyQVg7tbfg</a> (~6 min)</li>
+</ol>
+<p><strong>Task:</strong> Build a crescent moon, a cloud from 4 circles, a donut and a keyhole. Flatten a copy of the cloud. <strong>Deliverable:</strong> 4 icons plus the flattened copy.
+<strong>Quiz:</strong></p>
+<ol>
+<li>For a crescent, the second circle goes ___ and you use ___. A) Below; Union B) On top, offset; Subtract C) On top; Intersect D) Below; Exclude. <strong>✅ B.</strong></li>
+<li>After Subtract, which layer's fill does the result use? A) Top B) Bottom C) Random D) Gray. <strong>✅ B.</strong></li>
+<li>After Union, which layer sets the fill? A) Top B) Bottom C) Largest D) None. <strong>✅ A.</strong></li>
+<li>Why keep a boolean unflattened while designing? A) It prints better B) It's non-destructive, so you can still move the cutter shape C) Flattening is impossible D) Plugins need it. <strong>✅ B.</strong></li>
+<li>Exclude keeps… A) Only the overlap B) Everything except the overlap C) The bottom shape D) Outlines. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Cookie Cutter</em>.</li>
+</ol>
+<h4>Day 9: Clone Power (Components)</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;Figma Tutorial: Components - The Basics&quot; <a href="https://www.youtube.com/watch?v=k74IrUNaJVk">https://www.youtube.com/watch?v=k74IrUNaJVk</a> (~8 min)</li>
+<li>&quot;Figma Components 101&quot; (Figma) <a href="https://www.youtube.com/watch?v=EoJolbaEQi8">https://www.youtube.com/watch?v=EoJolbaEQi8</a> (~10 min)</li>
+</ol>
+<p><strong>Task:</strong> Make &quot;Blot's eye&quot; a component and place 3 recolored instances. Edit the main component and watch the instances update. Bonus: make open and closed variants. <strong>Deliverable:</strong> component plus 3 instances.
+<strong>Quiz:</strong></p>
+<ol>
+<li>You edit the main component. Instances… A) Stay the same B) Update, except for overrides C) Delete D) Detach. <strong>✅ B.</strong></li>
+<li>An instance was recolored, then the main component's shape changes. The instance… A) Loses its color B) Keeps its color and gets the new shape C) Does nothing D) Breaks. <strong>✅ B.</strong></li>
+<li>&quot;Detach instance&quot; means… A) Deleted B) No longer linked to the main component C) It becomes the main D) Locked. <strong>✅ B.</strong></li>
+<li>Why are components great for a 10-sticker pack? A) Smaller files B) One shared element updates everywhere at once C) Printers require them D) They add bleed. <strong>✅ B.</strong></li>
+<li>Eye open and eye closed belong together as… A) Groups B) Variants in a component set C) Pages D) Styles. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Clone Master</em>.</li>
+</ol>
+<h4>Day 10: Shape Shifter (Auto Layout)</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;Figma in 5: Auto Layout&quot; (Figma) <a href="https://www.youtube.com/watch?v=TyaGpGDFczw">https://www.youtube.com/watch?v=TyaGpGDFczw</a> (~5 min)</li>
+<li>&quot;Figma for Education: Learning Auto layout&quot; (Figma) <a href="https://www.youtube.com/watch?v=PGYCZbP3xH4">https://www.youtube.com/watch?v=PGYCZbP3xH4</a> (~10 min)</li>
+</ol>
+<p><strong>Task:</strong> Build a hang tag that grows with its text, and a 3×2 sticker grid that reflows when you add a sticker. <strong>Deliverable:</strong> tag plus grid.
+<strong>Quiz:</strong></p>
+<ol>
+<li>&quot;Hug contents&quot; means… A) Fixed size B) The frame fits its children C) Fills its parent D) Clips. <strong>✅ B.</strong></li>
+<li>Padding vs gap? A) Same thing B) Padding is inside the frame edge; gap is between items C) Gap is outside the frame D) Padding is vertical only. <strong>✅ B.</strong></li>
+<li>You add a 4th item to a horizontal auto layout. What happens? A) Overlap B) Items shift automatically C) It breaks D) Nothing. <strong>✅ B.</strong></li>
+<li>A name / price / size stack uses which direction? A) Horizontal B) Vertical C) Wrap D) Absolute. <strong>✅ B.</strong></li>
+<li>A badge should widen with its name. Set horizontal sizing to… A) Fixed B) Hug C) Fill D) Scale. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Shape Shifter</em>.</li>
+</ol>
+<h4>Day 11: Plugins &amp; the Community Treasure Chest</h4>
+<p><strong>Video:</strong> &quot;How to use Plugins in Figma&quot; <a href="https://www.youtube.com/watch?v=ZEOdvJSkcmM">https://www.youtube.com/watch?v=ZEOdvJSkcmM</a> (~8–10 min; contains a course promotion)
+<strong>Task:</strong> Run a palette plugin on your Day 3 colors. Duplicate the Community file &quot;Bonfire T-Shirt Mockup Generator.&quot; Optionally try &quot;Print for Figma&quot; to make a 3×3 in page with bleed. <strong>Deliverable:</strong> screenshot plus duplicated file.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Before installing a plugin, check… A) Nothing B) Who made it and what it can access C) Its color D) File size. <strong>✅ B.</strong></li>
+<li>Duplicating a Community file… A) Edits the original B) Creates your own copy C) Deletes it D) Costs money. <strong>✅ B.</strong></li>
+<li>Figma natively designs in… A) CMYK B) RGB C) Pantone D) Grayscale. <strong>✅ B.</strong></li>
+<li>Print for Figma's bleed option adds… A) 0.5 in of white B) 0.125 in of bleed C) A watermark D) A cut line only. <strong>✅ B.</strong></li>
+<li>When using a Community mockup, you should still… A) Sell the template B) Check its license and credit it if asked C) Remove the author's name D) Ignore licenses. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Treasure Hunter</em>.</li>
+</ol>
+<h4>Day 12: Export Ninja</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;How to Export Figma to JPG, PNG, SVG &amp; PDF&quot; <a href="https://www.youtube.com/watch?v=w0SDoyvywbo">https://www.youtube.com/watch?v=w0SDoyvywbo</a> (~6 min)</li>
+<li>&quot;Figma Basics: How To EXPORT Your Projects&quot; <a href="https://www.youtube.com/watch?v=FLCyHiolSVU">https://www.youtube.com/watch?v=FLCyHiolSVU</a> (~6 min)</li>
+</ol>
+<p><strong>Task:</strong> Export the moon as SVG, PNG@3x and PDF. Remove the frame fill and confirm the PNG is transparent. <strong>Deliverable:</strong> a &quot;Print Ready&quot; folder.
+<strong>Quiz:</strong></p>
+<ol>
+<li>What does a pin factory want? A) JPG B) SVG or PDF (vector) C) GIF D) Screenshot. <strong>✅ B.</strong></li>
+<li>What does a Printful DTG shirt want? A) Transparent PNG B) PPTX C) White-background JPG D) HTML. <strong>✅ A.</strong></li>
+<li>Why do SVG and PDF export only at 1×? A) Bug B) They're vector, so scale doesn't matter C) To save money D) Printers demand it. <strong>✅ B.</strong></li>
+<li>A white box appears around your PNG. Cause? A) Font B) The frame still has a white fill C) DPI D) Boolean error. <strong>✅ B.</strong></li>
+<li>You export one small selected layer. The file is… A) The whole page B) Just that layer's bounds C) Blank D) The whole frame. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏆 <strong>Level 2 complete.</strong> Badge <em>Export Ninja</em>.</li>
+</ol>
+<hr>
+<h3>LEVEL 3: THE AI SIDEKICK NOOK (Days 13–15)</h3>
+<h4>Day 13: Meet Claude Design</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;Introducing Claude Design by Anthropic Labs&quot; <a href="https://www.youtube.com/watch?v=t_LBECIQQqs">https://www.youtube.com/watch?v=t_LBECIQQqs</a> (~2–4 min)</li>
+<li>&quot;Claude Design Tutorial for Beginners: Make Pro Docs and Slides&quot; <a href="https://www.youtube.com/watch?v=e55YEhUBATw">https://www.youtube.com/watch?v=e55YEhUBATw</a> (~15 min)</li>
+</ol>
+<p><strong>Task:</strong> Write a prompt with the template <em>Subject + Style + 3 Colors + Mood + Format</em>. Example: &quot;A one-page mood board for a shy night-owl monster mascot, flat cartoon style, navy/mustard/pink, cozy and funny, 6 variations.&quot; Type it into Claude Design and pick a favorite out of 3. <strong>Deliverable:</strong> PDF of the mood board.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Which model powered Claude Design at launch? A) Claude Haiku B) Claude Opus 4.7 C) GPT-4 D) Gemini. <strong>✅ B.</strong></li>
+<li>Which is NOT a way to refine a Claude Design output? A) Conversation B) Inline comments C) Custom sliders D) A Photoshop plugin. <strong>✅ D.</strong></li>
+<li>Which export does Claude Design NOT offer? A) PDF B) PPTX C) Canva D) A native Figma .fig file. <strong>✅ D.</strong></li>
+<li>Why does Claude Design output need rebuilding in Figma for print? A) It's ugly B) It exports PDF/PPTX/HTML/Canva, not print-ready SVG or 300-PPI PNG C) Figma is AI D) Printers ban AI. <strong>✅ B.</strong></li>
+<li>The most usable merch prompt? A) &quot;Make something cool&quot; B) &quot;Sticker&quot; C) &quot;A die-cut sticker of a sleepy owl, thick outlines, 3 flat colors (navy, mustard, pink), readable at 3 inches&quot; D) &quot;Do art.&quot; <strong>✅ C.</strong>
+<strong>Reward:</strong> 🏅 <em>Prompt Captain</em>, and Blot meets his robot friend.</li>
+</ol>
+<h4>Day 14: Iterate Like a Pro (and Move Ideas into Figma)</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;Claude Design: The Complete Guide&quot; <a href="https://www.youtube.com/watch?v=eXlSgQmz02E">https://www.youtube.com/watch?v=eXlSgQmz02E</a> (~15–20 min)</li>
+<li>&quot;Claude Design Tutorial for Beginners | Master 99% in under 20 Minutes&quot; <a href="https://www.youtube.com/watch?v=ii9MJCBHqjM">https://www.youtube.com/watch?v=ii9MJCBHqjM</a> (first ~8 min)</li>
+</ol>
+<p><strong>Task:</strong> Do 3 rounds of iteration: an inline comment, a slider or color tweak, then &quot;3 simpler versions for a 2-inch sticker.&quot; Place the result in Figma as a locked 50%-opacity reference and trace it with the Pen tool. <strong>Deliverable:</strong> traced vector outline.
+<strong>Quiz:</strong></p>
+<ol>
+<li>You only want to change the hat color. Best move? A) A new prompt B) An inline comment on the hat C) Export to PPTX D) Delete the design. <strong>✅ B.</strong></li>
+<li>What is &quot;Handoff to Claude Code&quot; for? A) Printing stickers B) Turning a design into a working coded product C) T-shirts D) Adding bleed. <strong>✅ B.</strong></li>
+<li>Best iteration habit? A) Change everything each round B) Change one thing at a time C) Never iterate D) Only use sliders. <strong>✅ B.</strong></li>
+<li>Claude Design usage counts against plan limits, so… A) Spam prompts B) Plan a clear prompt before sending C) Use it for chatting D) Never export. <strong>✅ B.</strong></li>
+<li>Why trace the AI idea yourself? A) It's required B) You get clean vectors and the design becomes truly yours C) It's faster than exporting D) The AI asks you to. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Iteration Engine</em>.</li>
+</ol>
+<h4>Day 15: Designing a Mascot for Merch</h4>
+<p><strong>Video:</strong> &quot;Create illustrated stickers with Figma | Draw Lolo with us&quot; (LottieFiles) <a href="https://www.youtube.com/watch?v=qu8NCUxajZ0">https://www.youtube.com/watch?v=qu8NCUxajZ0</a> (~20–30 min; key parts)
+<strong>Task:</strong> Rebuild the mascot from basic shapes and booleans. Make the eyes and mouth components, and create happy and sleepy variants. <strong>Deliverable:</strong> mascot in 2 moods.
+<strong>Quiz:</strong></p>
+<ol>
+<li>What's the first step for a merch character? A) Tiny details B) Big basic shapes, then refine C) Gradients D) Shadows. <strong>✅ B.</strong></li>
+<li>Fastest way to make two moods? A) Redraw everything B) Swap eye and mouth components or variants C) Change the font D) A new file. <strong>✅ B.</strong></li>
+<li>The silhouette test checks… A) Color B) Whether the shape is recognizable at a glance C) DPI D) Bleed. <strong>✅ B.</strong></li>
+<li>Why thick, consistent outlines? A) Style only B) They survive small sizes and cutting C) Printers require black D) Smaller files. <strong>✅ B.</strong></li>
+<li>Line weights across a set should be… A) Random B) Consistent C) Thinner each time D) Irrelevant. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏆 <strong>Level 3 complete.</strong> Badge <em>Character Creator</em>.</li>
+</ol>
+<hr>
+<h3>LEVEL 4: THE STICKER LAB (Days 16–20)</h3>
+<h4>Day 16: Die-Cut vs Kiss-Cut</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;Die cut vs. Kiss cut stickers&quot; (Sticker Mule) <a href="https://www.youtube.com/watch?v=vjblLJPQykI">https://www.youtube.com/watch?v=vjblLJPQykI</a> (~1–2 min)</li>
+<li>&quot;Kiss Cut vs Die Cut Stickers – What's the Difference?&quot; <a href="https://www.youtube.com/watch?v=gM9AoEJqBgQ">https://www.youtube.com/watch?v=gM9AoEJqBgQ</a> (~5 min)</li>
+</ol>
+<p><strong>Task:</strong> Give the mascot a thick white outside stroke, then Outline Stroke → Union → Flatten. Add a 0.5 pt magenta cut line. Make a kiss-cut version too. <strong>Deliverable:</strong> 2 artboards.
+<strong>Quiz:</strong></p>
+<ol>
+<li>A die-cut sticker is cut… A) Through the vinyl only B) Through vinyl <em>and</em> backing, to the design's shape C) As a square D) Not at all. <strong>✅ B.</strong></li>
+<li>A kiss-cut sticker's backing… A) Matches the shape B) Stays a larger shape and can be printed on C) Is clear D) Has no adhesive. <strong>✅ B.</strong></li>
+<li>A thin antenna pokes out of the design. For die-cut you… A) Leave it B) Thicken it or enclose it in the border C) Make it thinner D) Add a gradient. <strong>✅ B.</strong></li>
+<li>Sticker Mule's cut-line indicator? A) 5 pt black B) 0.05–1 pt magenta stroke C) Dotted blue D) A text label. <strong>✅ B.</strong></li>
+<li>The cleanest border path in Figma comes from… A) Screenshot B) Outline stroke → Union → Flatten C) Mask D) Blur. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Cut Line Pro</em>.</li>
+</ol>
+<h4>Day 17: Bleed, White Borders &amp; Safe Zones</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;How to add a white sticker outline to a design in Procreate&quot; <a href="https://www.youtube.com/watch?v=s2hz5Va1sz4">https://www.youtube.com/watch?v=s2hz5Va1sz4</a> (~5–8 min; the idea transfers to Figma)</li>
+<li>&quot;HOW TO OUTLINE STICKERS BY ADDING A WHITE BORDER&quot; <a href="https://www.youtube.com/watch?v=bNqJMDof-eA">https://www.youtube.com/watch?v=bNqJMDof-eA</a> (~8 min)</li>
+</ol>
+<p><strong>Task:</strong> Make a 3×3 in full-color sticker on a 975×975 px canvas. Add guides for the trim (37.5 px in) and the safe zone (75 px in). <strong>Deliverable:</strong> full-bleed file.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Why add bleed? A) Bigger sticker B) Cutting drift would otherwise leave a white sliver at the edge C) Printer logo D) Thicker vinyl. <strong>✅ B.</strong></li>
+<li>A 3×4 in sticker with 1/8 in bleed needs a canvas of… A) 3×4 B) 3.125×4.125 C) 3.25×4.25 D) 3.5×4.5 in. <strong>✅ C.</strong></li>
+<li>Sticker Mule says text… A) Can go full-bleed B) Can't be printed full-bleed C) Must be red D) Must be 1 pt. <strong>✅ B.</strong></li>
+<li>Minimums? A) 2 pt font, 0.1 pt line B) 6 pt font, 1 pt line C) 12 pt, 5 pt D) None. <strong>✅ B.</strong></li>
+<li>Minimum raster resolution for stickers? A) 72 B) 150 C) 300 D) 600 PPI. <strong>✅ C.</strong>
+<strong>Reward:</strong> 🏅 <em>Bleed Guard</em>.</li>
+</ol>
+<h4>Day 18: Holographic &amp; Special Finishes</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;Holographic Stickers – Sticker Mule&quot; <a href="https://www.youtube.com/watch?v=wS24KZon9Io">https://www.youtube.com/watch?v=wS24KZon9Io</a> (~1–2 min)</li>
+<li>&quot;Zap Creatives Iridescent stickers vs Stickermule holographic stickers comparison review&quot; <a href="https://www.youtube.com/watch?v=apzxZx1JGZ8">https://www.youtube.com/watch?v=apzxZx1JGZ8</a> (~8–10 min)</li>
+</ol>
+<p><strong>Task:</strong> Make a holo-friendly sticker. Leave open areas where the vinyl shows through, and give text strong outlines. Add a &quot;HOLO ZONES&quot; note layer. <strong>Deliverable:</strong> holo sticker.
+<strong>Quiz:</strong></p>
+<ol>
+<li>The holo rainbow… A) Is printed ink B) Changes with light and viewing angle C) Only shows in the dark D) Is a gradient in the file. <strong>✅ B.</strong></li>
+<li>Which design shows off holo most? A) Solid dark ink everywhere B) Light or open areas C) Photo backgrounds D) Tiny text. <strong>✅ B.</strong></li>
+<li>Why compare finishes? A) Same cost B) They look different, so one may fit the theme better C) Iridescent is paper D) No reason. <strong>✅ B.</strong></li>
+<li>Text over holo should… A) Be thin B) Have a strong outline or contrast C) Be pastel D) Be tiny. <strong>✅ B.</strong></li>
+<li>Before sending a holo file you… A) Guess B) Check that printer's file instructions C) Use JPG D) Skip the proof. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Holo Hunter</em>.</li>
+</ol>
+<h4>Day 19: AI-Brainstormed Sticker Sheet</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;Claude Design is Insanely Easy (even for beginners)&quot; <a href="https://www.youtube.com/watch?v=VeWf0l4ci6Y">https://www.youtube.com/watch?v=VeWf0l4ci6Y</a> (~12 min; contains promos)</li>
+<li>&quot;A Complete Guide to the New Claude Design&quot; (Futurepedia) <a href="https://www.youtube.com/watch?v=3RWm4inkS2E">https://www.youtube.com/watch?v=3RWm4inkS2E</a> (first ~8 min)</li>
+</ol>
+<p><strong>Task:</strong> Ask Claude Design for &quot;6 sticker concepts for a 'Night Owl Club' set featuring [mascot], same 3-color palette, bold outlines.&quot; Pick 3, build them in Figma with components, and lay them out on a 5×7 in kiss-cut sheet with auto layout. <strong>Deliverable:</strong> sticker sheet.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Why ask for 6 concepts but build only 3? A) Laziness B) Explore widely, then choose, so you keep creative control C) Printer limits D) Required. <strong>✅ B.</strong></li>
+<li>How do you keep a set unified? A) New palette each time B) Shared palette, line weight and mascot components C) Random fonts D) Different sizes. <strong>✅ B.</strong></li>
+<li>Which tool makes the sheet reflow? A) Boolean B) Auto layout C) Pen D) Mask. <strong>✅ B.</strong></li>
+<li>Kiss-cut suits sheets because… A) Each sticker is cut through the backing B) Stickers peel from one shared backing C) Cheaper vinyl D) No cut line needed. <strong>✅ B.</strong></li>
+<li>An AI concept has a thin spiky outline. Before building it for print you… A) Keep it B) Simplify and thicken it so it survives printing and cutting C) Add a gradient D) Shrink it. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Set Builder</em>.</li>
+</ol>
+<h4>Day 20: Level 4 Boss: The Print-Ready Sticker Pack</h4>
+<p><strong>Video:</strong> &quot;Ultimate Cricut Sticker Guide from Start to Finish&quot; <a href="https://www.youtube.com/watch?v=ygrHVHDjeRE">https://www.youtube.com/watch?v=ygrHVHDjeRE</a> (~20 min; file-setup parts)
+<strong>Task:</strong> Finish 5 stickers (die-cut, kiss-cut, holo) and check each against the list: 300 PPI ✔, 1/8 in bleed ✔, safe zone ✔, ≥6 pt text ✔, ≥1 pt lines ✔, magenta cut line ✔. <strong>Deliverable:</strong> a &quot;StickerPack_v1&quot; folder.
+<strong>Quiz:</strong></p>
+<ol>
+<li>The most print-ready set is… A) Screenshots B) Vector PDF plus 300-PPI PNGs with bleed and cut lines C) 72-DPI JPG D) PPTX. <strong>✅ B.</strong></li>
+<li>A 1-in 300-PPI PNG scaled to 3 in becomes… A) 300 B) 900 C) 100 D) 150 PPI. <strong>✅ C.</strong></li>
+<li>Cut line color? A) Your main color B) A spot color like magenta that isn't in the art C) White D) Black. <strong>✅ B.</strong></li>
+<li>Gradients are fine on… A) Printed vinyl stickers B) Enamel pins C) Screen-print tees D) Embroidery. <strong>✅ A.</strong></li>
+<li>Converting text to outlines… A) Is pointless B) Avoids font problems at the printer C) Adds bleed D) Lowers DPI. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏆 <strong>Level 4 complete.</strong> Blot wears her sticker. Order a small real sticker run as a trophy.</li>
+</ol>
+<hr>
+<h3>LEVEL 5: THE THREAD LOFT (Days 21–25)</h3>
+<h4>Day 21: T-Shirt Anatomy &amp; Pixel Math</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;Designing and printing my own T-shirts (24 Hr Challenge)&quot; (Will Paterson) <a href="https://www.youtube.com/watch?v=a1aNTnnocTo">https://www.youtube.com/watch?v=a1aNTnnocTo</a> (~15 min)</li>
+<li>&quot;How to Design T-Shirt in Printify [2026 Full Guide]&quot; <a href="https://www.youtube.com/watch?v=JQj_inE7yQU">https://www.youtube.com/watch?v=JQj_inE7yQU</a> (first ~8 min)</li>
+</ol>
+<p><strong>Task:</strong> Make a front print frame of 1800×2400 and export at 2×, plus a 4×4 in chest print at 1200×1200. Use transparent backgrounds. <strong>Deliverable:</strong> 2 PNGs.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Printful's standard front print area? A) 8×10 B) 12×16 in C) 20×30 D) 5×5. <strong>✅ B.</strong></li>
+<li>Minimum DTG resolution? A) 72 B) 150 C) 600 D) 1,000 DPI. <strong>✅ B.</strong></li>
+<li>Printful's color profile? A) CMYK B) sRGB C) Pantone D) Grayscale. <strong>✅ B.</strong></li>
+<li>A 4×4 in print at 300 DPI is… A) 400 px B) 1,200×1,200 px C) 3,000 px D) 300 px. <strong>✅ B.</strong></li>
+<li>A black background on a black tee prints as… A) Invisible B) A grayish rectangle C) Perfect D) Shiny. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Pixel Math Wizard</em>.</li>
+</ol>
+<h4>Day 22: DTG vs DTF vs Screen Printing</h4>
+<p><strong>Video:</strong> &quot;DTG vs DTF: Closer Look at Printful's Premium DTFlex Method&quot; (Printful) <a href="https://www.youtube.com/watch?v=Sc_Xm1cBxbY">https://www.youtube.com/watch?v=Sc_Xm1cBxbY</a> (~6–10 min)
+<strong>Task:</strong> Make a full-color DTG version and a 3-spot-color screen-print version. <strong>Deliverable:</strong> 2 versions.
+<strong>Quiz:</strong></p>
+<ol>
+<li>DTG is best for… A) Huge 1-color runs B) Small runs of full-color, detailed designs C) Embroidery D) Metal. <strong>✅ B.</strong></li>
+<li>Screen printing is best for… A) One-off photos B) Bulk runs of simple, few-color designs C) Phone cases D) Stickers. <strong>✅ B.</strong></li>
+<li>Why limit colors for screen printing? A) Style B) Each color usually needs its own screen C) Colorblind printers D) No reason. <strong>✅ B.</strong></li>
+<li>DTF prints… A) Directly on fabric B) On a film that's heat-transferred to the garment C) Embroidery D) Sublimation. <strong>✅ B.</strong></li>
+<li>The screen version should avoid… A) Flat shapes B) Gradients and soft shadows C) Bold text D) Outlines. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Ink Master</em>.</li>
+</ol>
+<h4>Day 23: Mockups That Sell the Idea</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;How to Make a T-Shirt Mockup in Photoshop&quot; (Printful) <a href="https://www.youtube.com/watch?v=aiihQyIaPto">https://www.youtube.com/watch?v=aiihQyIaPto</a> (~10 min)</li>
+<li>&quot;T-Shirt Mockup Design || Figma Photopea Tutorial&quot; <a href="https://www.youtube.com/watch?v=4ZBYb23ngoM">https://www.youtube.com/watch?v=4ZBYb23ngoM</a> (~8 min)</li>
+</ol>
+<p><strong>Task:</strong> Place the tee art on 3 shirt colors in the Bonfire mockup file. Try Multiply blend mode. <strong>Deliverable:</strong> mockup board.
+<strong>Quiz:</strong></p>
+<ol>
+<li>You send the printer… A) The mockup B) The separate transparent print file C) A screenshot D) A PDF mockup. <strong>✅ B.</strong></li>
+<li>Multiply on a light shirt… A) Brightens B) Lets fabric folds and shadows show through C) Adds bleed D) Converts to CMYK. <strong>✅ B.</strong></li>
+<li>Why test 3 shirt colors? A) Required B) The same art reads well or badly depending on garment contrast C) Cheaper D) DPI. <strong>✅ B.</strong></li>
+<li>A dark design on navy fails because of… A) Low value contrast B) Resolution C) File type D) Bleed. <strong>✅ A.</strong></li>
+<li>Mockup photos from the internet… A) Are free B) May be copyrighted, so use licensed or Community mockups C) Are print files D) Need bleed. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Showroom Star</em>.</li>
+</ol>
+<h4>Day 24: Hoodies, Hats &amp; Embroidery</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;Do This, Not That: Printful Embroidery Tutorial for Beginners!&quot; <a href="https://www.youtube.com/watch?v=vv6gbW4tJ0A">https://www.youtube.com/watch?v=vv6gbW4tJ0A</a> (~10 min)</li>
+<li>&quot;How to Create Embroidery Designs with Printful's Design Maker&quot; <a href="https://www.youtube.com/watch?v=OIE2cjfPJGs">https://www.youtube.com/watch?v=OIE2cjfPJGs</a> (~8 min)</li>
+</ol>
+<p><strong>Task:</strong> Make an embroidery hat version (≤6 flat colors, text ≥0.25 in, lines ≥0.05 in), and plan a hoodie with a chest logo and a back print. <strong>Deliverable:</strong> hat file plus hoodie layout.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Minimum embroidered text height? A) 0.05 B) 0.25 in C) 1 D) 2. <strong>✅ B.</strong></li>
+<li>Minimum line thickness? A) 0.001 B) 0.05 in C) 0.5 D) 1. <strong>✅ B.</strong></li>
+<li>Why do gradients fail in embroidery? A) Thread is solid color B) Too cheap C) Too shiny D) They don't fail. <strong>✅ A.</strong></li>
+<li>A tiny tagline in embroidery will… A) Stitch perfectly B) Blur or fill in, so remove or enlarge it C) Glow D) Turn into a gradient. <strong>✅ B.</strong></li>
+<li>A good hoodie plan is… A) One huge chest print B) Small chest logo plus a larger back design, separate files C) One file stretched everywhere D) No plan. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Thread Head</em>.</li>
+</ol>
+<h4>Day 25: All-Over Print Patterns</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;How to Design All-Over Print Apparel | Printful Tutorial 2026&quot; <a href="https://www.youtube.com/watch?v=ZLHl0KQpSEM">https://www.youtube.com/watch?v=ZLHl0KQpSEM</a> (~12 min)</li>
+<li>&quot;Create All-Over Print Pattern Designs for Free&quot; (Printful) <a href="https://www.youtube.com/watch?v=H8iYo08qDeE">https://www.youtube.com/watch?v=H8iYo08qDeE</a> (~8 min)</li>
+</ol>
+<p><strong>Task:</strong> Make a 1000×1000 seamless tile, with edge-crossing icons copied to the opposite edge. Preview it 3×3 and export JPG. <strong>Deliverable:</strong> tile plus preview.
+<strong>Quiz:</strong></p>
+<ol>
+<li>&quot;Seamless&quot; means… A) No outlines B) Anything cut at one edge continues on the opposite edge C) One color D) Random placement. <strong>✅ B.</strong></li>
+<li>Format for all-over print? A) PNG only B) JPG C) SVG D) PPTX. <strong>✅ B.</strong></li>
+<li>Why do templates include seam areas? A) Decoration B) The design wraps across panels, so art must extend past cut edges C) Embroidery D) Bleed-free. <strong>✅ B.</strong></li>
+<li>A visible stripe every tile means… A) DPI B) Edge elements weren't copied exactly to the opposite side C) Font D) Color mode. <strong>✅ B.</strong></li>
+<li>Patterns rely on… A) Repetition and consistent spacing B) One giant focal point C) Tiny text D) Photos. <strong>✅ A.</strong>
+<strong>Reward:</strong> 🏆 <strong>Level 5 complete.</strong> Badge <em>Pattern Weaver</em>; Blot wears her tee.</li>
+</ol>
+<hr>
+<h3>LEVEL 6: THE METAL &amp; STITCH WORKSHOP (Days 26–28)</h3>
+<h4>Day 26: Enamel Pins</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;[PIN MAKING 101] How To Design Enamel Pins ~ Part 1!&quot; <a href="https://www.youtube.com/watch?v=xDn6iEXP_2o">https://www.youtube.com/watch?v=xDn6iEXP_2o</a> (~10 min)</li>
+<li>&quot;The Ultimate Guide to Creating Custom Enamel Pins&quot; <a href="https://www.youtube.com/watch?v=-AxpA48Bezk">https://www.youtube.com/watch?v=-AxpA48Bezk</a> (~10–15 min)</li>
+</ol>
+<p><strong>Task:</strong> Design a 1.25 in pin with metal-line outlines, ≤5 flat colors, no gradients and text ≥5 pt. Export SVG plus PDF. <strong>Deliverable:</strong> pin vector.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Pin colors must be… A) Blended B) Separated by raised metal lines C) Gradients D) Printed. <strong>✅ B.</strong></li>
+<li>Minimum metal line? A) 0.02 mm B) 0.2 mm C) 2 mm D) 5 mm. <strong>✅ B.</strong></li>
+<li>For a sunset gradient you'd use… A) Hard enamel B) A printed pin, or flat bands C) A soft enamel gradient D) Embroidery. <strong>✅ B.</strong></li>
+<li>Soft vs hard enamel? A) Soft is smooth and polished B) Soft has recessed enamel with raised metal you can feel; hard is flat and polished C) Same D) Hard is cheaper. <strong>✅ B.</strong></li>
+<li>A beginner pin size is… A) 0.25 in B) About 1–1.5 in C) 6 in D) 12 in. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Metal Liner</em>.</li>
+</ol>
+<h4>Day 27: Patches &amp; Keychains</h4>
+<p><strong>Video:</strong> &quot;How to Make Custom Embroidered Patches! What You Need to Know&quot; <a href="https://www.youtube.com/watch?v=40QnBG07Flc">https://www.youtube.com/watch?v=40QnBG07Flc</a> (~10 min)
+<strong>Task:</strong> Make a 3 in round patch (bold shapes, ≤6 thread colors, thick border) and an acrylic keychain (white border, cut line, hole tab). <strong>Deliverable:</strong> 2 files.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Why does AI art often fail as a patch? A) Too simple B) Fine textures, gradients and tiny details can't be stitched C) It's vector D) Too small. <strong>✅ B.</strong></li>
+<li>The fix? A) Upscale B) Redraw as bold, flat shapes with few colors C) Add noise D) Add a gradient. <strong>✅ B.</strong></li>
+<li>The patch border should be… A) Hairline B) Thick and simple C) Dotted D) Missing. <strong>✅ B.</strong></li>
+<li>A keychain file needs… A) A mockup only B) Art, a cut line and a hole or tab area C) PPTX D) A gradient. <strong>✅ B.</strong></li>
+<li>Which uses thread? A) Pin B) Patch C) Both D) Neither. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Stitch Smith</em>.</li>
+</ol>
+<h4>Day 28: Phone Cases, Mugs, Totes &amp; Packaging</h4>
+<p><strong>Videos:</strong></p>
+<ol>
+<li>&quot;Easy Custom Phone Case Tutorial (Printify)&quot; <a href="https://www.youtube.com/watch?v=ZJVivm48UEo">https://www.youtube.com/watch?v=ZJVivm48UEo</a> (~6 min)</li>
+<li>&quot;Mug Design Tutorial - Printify Mug Tutorial 11oz &amp; 15oz&quot; <a href="https://www.youtube.com/watch?v=ZW9dsdcWZ5U">https://www.youtube.com/watch?v=ZW9dsdcWZ5U</a> (~8 min)</li>
+<li>&quot;How to Create a Custom Tote Bag (Printify)&quot; <a href="https://www.youtube.com/watch?v=EKjylNTRVAY">https://www.youtube.com/watch?v=EKjylNTRVAY</a> (~6 min)</li>
+</ol>
+<p><strong>Task:</strong> Make a phone case (300 DPI, camera area clear), a mug wrap (away from the handle), a tote front and a sticker backing card. <strong>Deliverable:</strong> 4 files.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Phone case resolution? A) 72 B) 150 C) 300 D) 30 DPI. <strong>✅ C.</strong></li>
+<li>On a phone case, keep art away from… A) The center B) The camera cutout and curved edges C) The bottom D) Nowhere. <strong>✅ B.</strong></li>
+<li>A mug design is… A) Tall and narrow B) Wide and horizontal C) Circular D) Square. <strong>✅ B.</strong></li>
+<li>Why check 11oz and 15oz separately? A) Same template B) Different print areas C) Colors D) No reason. <strong>✅ B.</strong></li>
+<li>Packaging should… A) Hide the brand B) Match the collection's palette and mascot C) Be random D) Be black. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏆 <strong>Level 6 complete.</strong> Blot wears her pin and patch.</li>
+</ol>
+<hr>
+<h3>LEVEL 7: THE LAUNCH WINDOW (Days 29–30)</h3>
+<h4>Day 29: Collection Board &amp; Portfolio</h4>
+<p><strong>Video:</strong> &quot;How to Actually Use Claude Design Like a Pro&quot; <a href="https://www.youtube.com/watch?v=3ZBY7oVZpuM">https://www.youtube.com/watch?v=3ZBY7oVZpuM</a> (~15 min)
+<strong>Task:</strong> Build a Figma &quot;Collection Board&quot; (palette, mascot, stickers, tee, hat, pin, patch, case, mug). Then have Claude Design turn it into a one-page lookbook and export it as a PDF. <strong>Deliverable:</strong> board plus lookbook.
+<strong>Quiz:</strong></p>
+<ol>
+<li>A strong portfolio shows… A) Everything B) Your best, most cohesive pieces plus a bit of process C) Only sketches D) Only AI output. <strong>✅ B.</strong></li>
+<li>What's safest to share publicly? A) Your home address B) A pen name and your designs C) Your phone number D) Your school schedule. <strong>✅ B.</strong></li>
+<li>What makes a collection a &quot;line&quot;? A) Different styles B) Shared palette, mascot, line weight and theme C) Different fonts D) Random products. <strong>✅ B.</strong></li>
+<li>Why include process shots? A) Filler B) They show real skill and ownership beyond AI output C) Printers need them D) DPI. <strong>✅ B.</strong></li>
+<li>The lookbook is best exported as… A) An SVG print file B) A PDF to show people C) A pin file D) An embroidery file. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏅 <em>Collection Curator</em>.</li>
+</ol>
+<h4>Day 30: Capstone Boss: Launch Your Merch Line</h4>
+<p><strong>Video:</strong> &quot;Color Theory for Digital Artists &amp; Beginners&quot; <a href="https://www.youtube.com/watch?v=5m4YjFFHxRo">https://www.youtube.com/watch?v=5m4YjFFHxRo</a> (~10–15 min)
+<strong>Task:</strong> Final pass on the whole line: 3 stickers, 1 tee (DTG plus a 3-color version), 1 pin, 1 patch or hat, 1 extra product, mockups, and a &quot;PRINT_READY&quot; folder. She chooses the theme. Finish with a family launch night. <strong>Deliverable:</strong> the complete folder plus a 3-slide presentation.
+<strong>Quiz:</strong></p>
+<ol>
+<li>Which file goes to which vendor? A) SVG to the tee, PNG to the pin maker B) Transparent sRGB PNG to the Printful tee; vector to the pin maker; vector PDF or 300-PPI PNG with cut line to the sticker printer C) Mockups to all D) PPTX to all. <strong>✅ B.</strong></li>
+<li>1200×1600 px art at 12×16 in is… A) 300 B) 150 C) 100 D) 72 DPI. <strong>✅ C.</strong> That's below the 150 minimum.</li>
+<li>One color harmony across the line supports… A) Contrast B) Unity C) Bleed D) Resolution. <strong>✅ B.</strong></li>
+<li>The mascot is full color on stickers but 5 flat colors on the pin. That's… A) Inconsistency B) Adapting to production limits while keeping identity C) A mistake D) Illegal. <strong>✅ B.</strong></li>
+<li>Claude Design's best role was… A) Final print files B) Exploring, mood boards and presentation, while Figma made the production files C) Embroidery digitizing D) Ordering. <strong>✅ B.</strong>
+<strong>Reward:</strong> 🏆 <strong>&quot;Launch Legend.&quot;</strong> The studio lights up. Order one real product as a trophy.</li>
+</ol>
+<hr>
+<h2>Recommendations</h2>
+<ol>
+<li><strong>Pass mark 4/5, unlimited retries, always.</strong> For an anxious learner, turn on &quot;open-video mode&quot; so the video stays visible during the quiz.</li>
+<li><strong>Reward independence on purpose:</strong> <em>Solo Flight</em> and <em>Own Idea</em> should be worth the most XP.</li>
+<li><strong>One real print is worth 100 badges.</strong> Order a small sticker run after Day 20 and a tee or pin after Day 30.</li>
+<li><strong>Go at her pace.</strong> If a day takes two sessions, that's fine. Rain Day shields exist for exactly this.</li>
+</ol>
+<h2>Caveats</h2>
+<ul>
+<li>Video lengths and some channel names couldn't be confirmed. Preview every video, especially ones with sponsor or course pitches.</li>
+<li>Quizzes are based on each video's topic and on official specs, not full transcripts. Adjust any question a video doesn't cover.</li>
+<li>Printers disagree on some specs (bleed, CMYK vs RGB). Always follow the specific printer's file guidelines.</li>
+<li>Claude Design is in research preview, so features may change.</li>
+</ul>
+
+</body></html>

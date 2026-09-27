@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Night Studio tests…</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    main { max-width: 980px; margin: 0 auto; padding: 24px 16px 80px; }
+    #results { padding-left: 1.4em; font-size: 0.95rem; }
+    #results li.ok { color: var(--mint); }
+    #results li.bad { color: var(--danger); font-weight: 700; }
+    #results li.info { color: var(--muted); list-style: none; }
+    #summary { font-size: 1.3rem; font-weight: 900; }
+    .sheet { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sheet figure { margin: 0; background: #131735; border: 1px solid var(--line); border-radius: 12px; padding: 6px; text-align: center; }
+    .sheet canvas { width: 100%; image-rendering: pixelated; }
+    .sheet figcaption { color: var(--muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Night Studio tests</h1>
+  <p class="muted">Checks the 30 days of content, the game rules, saving and backups, and that Lumi moves exactly like the
+    original in Lumia_marketing. Nothing to install: run <code>python3 serve.py</code> in this folder and open
+    <code>http://localhost:8000/tests.html</code>. The tab title says PASS or FAIL.</p>
+  <p id="summary">Running…</p>
+  <ol id="results"></ol>
+  <h2>Lumi, by eye</h2>
+  <p class="muted">Every move at its key pose, the star colours, and a made-up design worn on the tummy, pin and patch.
+    <label><input type="checkbox" id="play"> play</label></p>
+  <div class="sheet" id="sheet"></div>
+</main>
+<script type="module">
+  import { ROOMS, PASS, XP } from "./js/content/course.js";
+  import * as R from "./js/rules.js";
+  import { migrate, openStore } from "./js/store.js";
+  import { paint, warp } from "./js/lumi/kit.js";
+  import { composeLumi, paintLumi } from "./js/lumi/lumi.js";
+  import { MOVES } from "./js/lumi/moves.js";
+  import { STARS } from "./js/lumi/art.js";
+  import { pixelate } from "./js/images.js";
+
+  // ---------- a tiny test runner ----------
+  const list = document.getElementById("results");
+  let passed = 0, failed = 0;
+  const line = (text, cls) => list.append(Object.assign(document.createElement("li"), { textContent: text, className: cls }));
+  const test = async (name, fn) => {
+    try {
+      await fn();
+      passed++;
+      line(`✓ ${name}`, "ok");
+    } catch (e) {
+      failed++;
+      line(`✗ ${name}: ${e.message}`, "bad");
+      console.error(name, e);
+    }
+  };
+  const ok = (value, msg = "expected true") => { if (!value) throw new Error(msg); };
+  const eq = (a, b, msg = "") => { if (JSON.stringify(a) !== JSON.stringify(b)) throw new Error(`${msg} expected ${JSON.stringify(b)}, got ${JSON.stringify(a)}`); };
+  const D = "2026-10-01", D2 = "2026-10-02", D5 = "2026-10-05";
+
+  // ---------- 1. content ----------
+  let DAYS = null;
+  try {
+    ({ DAYS } = await import("./js/content/days.js"));
+  } catch (e) {
+    await test("content file loads", () => { throw e; });
+  }
+  if (DAYS) {
+    await test("30 days, in order, in the right rooms", () => {
+      eq(DAYS.length, 30, "days:");
+      DAYS.forEach((d, i) => {
+        eq(d.day, i + 1, "day number:");
+        eq(d.room, R.roomOf(d.day).n, `day ${d.day} room:`);
+        ok(d.title && d.goal, `day ${d.day} needs a title and a goal`);
+      });
+    });
+    await test("videos: valid ids, clips that make sense", () => {
+      for (const d of DAYS) {
+        ok(d.videos.length >= 1 && d.videos.length <= 3, `day ${d.day}: 1–3 videos`);
+        for (const v of d.videos) {
+          ok(/^[\w-]{11}$/.test(v.id), `day ${d.day}: bad video id ${v.id}`);
+          ok(v.title && v.channel && v.min > 0, `day ${d.day}: video ${v.id} needs title, channel, minutes`);
+          ok(!v.end || (v.start ?? 0) < v.end, `day ${d.day}: video ${v.id} start must be before end`);
+        }
+      }
+      const removed = ["P4vvf0KBhZM", "JQj_inE7yQU"]; // login-only and embedding-disabled (checked Sep 2026)
+      ok(!DAYS.some((d) => d.videos.some((v) => removed.includes(v.id))), "a broken video is still listed");
+    });
+    await test("flavor choices fit into the task", () => {
+      for (const d of DAYS) {
+        ok(d.flavor.prompt && d.flavor.options.length >= 2 && d.flavor.options.length <= 3, `day ${d.day}: 2–3 flavor options`);
+        d.flavor.options.forEach((o) => ok(o.label && o.fill, `day ${d.day}: flavor option needs label and fill`));
+        ok(d.task.steps.length >= 3 && d.task.steps.length <= 6, `day ${d.day}: 3–6 steps`);
+        ok(d.task.steps.some((s) => s.includes("{flavor}")), `day ${d.day}: no step uses {flavor}`);
+        ok(d.task.deliverable && d.task.tool, `day ${d.day}: deliverable and tool`);
+      }
+    });
+    await test("quizzes: 5 questions, 4 different options, an answer and a why", () => {
+      for (const d of DAYS) {
+        eq(d.quiz.length, 5, `day ${d.day} questions:`);
+        for (const q of d.quiz) {
+          ok(q.q && q.why, `day ${d.day}: question and why must not be empty`);
+          eq(new Set(q.options).size, 4, `day ${d.day} "${q.q.slice(0, 30)}" distinct options:`);
+          ok(Number.isInteger(q.answer) && q.answer >= 0 && q.answer <= 3, `day ${d.day}: answer must be 0–3`);
+          ok(!q.options.some((o) => /^(both|neither|all of the above|none of the above)\.?$/i.test(o.trim())), `day ${d.day}: an option only works in a fixed position`);
+        }
+      }
+    });
+    await test("badges are unique, and Blot is gone", () => {
+      const ids = DAYS.map((d) => d.badge.id);
+      eq(new Set(ids).size, 30, "unique badge ids:");
+      DAYS.forEach((d) => ok(d.badge.name && d.badge.icon, `day ${d.day}: badge name and icon`));
+      ok(!/\bBlot\b/.test(JSON.stringify(DAYS)), "the research's old companion is still mentioned");
+    });
+    const spread = [0, 0, 0, 0];
+    DAYS.forEach((d) => d.quiz.forEach((q) => spread[q.answer]++));
+    line(`(info) correct-answer positions in the file: A ${spread[0]}, B ${spread[1]}, C ${spread[2]}, D ${spread[3]}. The game shuffles them every attempt.`, "info");
+  }
+
+  // ---------- 2. rules (on made-up days, so content edits never break these) ----------
+  const FAKE = Array.from({ length: 30 }, (_, i) => ({
+    day: i + 1,
+    videos: [{ id: `vid-a-${i}` }, { id: `vid-b-${i}` }],
+    quiz: Array.from({ length: 5 }, (_, j) => ({ q: `q${j}`, options: ["w", "x", "y", "z"], answer: j % 4, why: "." })),
+    badge: { id: `badge-${i + 1}` },
+  }));
+  const finish = (P, n, date = D, score = 5) => {
+    P = R.act(P, { type: "upload", day: n, key: `k${n}` }, date);
+    return R.act(P, { type: "quiz", day: n, score }, date);
+  };
+  const finishAll = (upTo, P = R.blank()) => { for (let n = 1; n <= upTo; n++) P = finish(P, n); return P; };
+
+  await test("a fresh start: Day 1 open, Day 2 locked, Lumi asleep", () => {
+    const P = R.blank();
+    eq([R.dayStatus(P, 1), R.dayStatus(P, 2)], ["open", "locked"]);
+    eq(R.currentDay(P), 1);
+    ok(!R.awake(P), "Lumi should doze before Day 1");
+  });
+  await test("locked days ignore actions, and act() never changes the old progress", () => {
+    const P = R.blank();
+    ok(R.act(P, { type: "watch", day: 2, id: "x" }, D) === P, "locked day changed");
+    const P2 = R.act(P, { type: "watch", day: 1, id: "x" }, D);
+    ok(P2 !== P && !P.days[1], "the old object was modified");
+  });
+  await test("a day is done only with a picture AND a passed quiz", () => {
+    let P = R.act(R.blank(), { type: "quiz", day: 1, score: 5 }, D);
+    ok(!P.days[1].doneAt, "quiz alone finished the day");
+    P = R.act(R.blank(), { type: "upload", day: 1, key: "k" }, D);
+    ok(!P.days[1].doneAt, "picture alone finished the day");
+    P = R.act(P, { type: "quiz", day: 1, score: PASS - 1 }, D);
+    ok(!P.days[1].doneAt, "a failed quiz finished the day");
+    P = R.act(P, { type: "quiz", day: 1, score: PASS }, D);
+    eq(P.days[1].doneAt, D);
+    eq(R.dayStatus(P, 2), "open", "day 2:");
+    ok(R.awake(P), "Day 1 should wake Lumi");
+  });
+  await test("the day stays done if its picture is removed", () => {
+    let P = finish(R.blank(), 1);
+    P = R.act(P, { type: "unupload", day: 1, key: "k1" }, D2);
+    eq(P.days[1].uploads, []);
+    eq(P.days[1].doneAt, D);
+  });
+  await test("no double XP: the same video twice counts once", () => {
+    let P = R.act(R.blank(), { type: "watch", day: 1, id: "vid-a-0" }, D);
+    P = R.act(P, { type: "watch", day: 1, id: "vid-a-0" }, D);
+    eq(R.xp(P, FAKE), XP.video);
+  });
+  await test("first-try perfect means the first FINISHED attempt", () => {
+    let P = R.act(R.blank(), { type: "upload", day: 1, key: "k" }, D);
+    P = R.act(P, { type: "quiz", day: 1, score: 3 }, D);
+    P = R.act(P, { type: "quiz", day: 1, score: 5 }, D);
+    eq(P.days[1].quiz, { first: 3, best: 5 });
+    eq(R.dayXp(P.days[1], FAKE[0]), XP.task + XP.quiz, "no perfect bonus:");
+    eq(R.dayXp(finish(R.blank(), 1).days[1], FAKE[0]), XP.task + XP.quiz + XP.perfect, "perfect bonus:");
+  });
+  await test("lanterns: one per date, never removed; a kind welcome after a break", () => {
+    let P = R.act(R.blank(), { type: "watch", day: 1, id: "a" }, D);
+    P = R.act(P, { type: "watch", day: 1, id: "b" }, D);
+    eq(R.lanterns(P), 1);
+    P = R.act(P, { type: "flavor", day: 1, index: 0 }, D2);
+    eq(R.lanterns(P), 1, "picking a flavor isn't studying:");
+    P = R.act(P, { type: "quiz", day: 1, score: 2 }, D2);
+    eq(P.lanterns, [D, D2]);
+    ok(!R.welcomeBack(P, "2026-10-03"), "no welcome after 1 day");
+    ok(R.welcomeBack(P, "2026-10-04"), "welcome after 2 days");
+    ok(!R.welcomeBack(R.act(P, { type: "seenWelcome" }, "2026-10-04"), "2026-10-04"), "welcome shown twice in a day");
+  });
+  await test("secret badges: Solo Flight and Own Idea, worth the most XP", () => {
+    let P = finish(R.blank(), 1);
+    P = R.act(P, { type: "checkin", day: 1, answer: "solo" }, D);
+    P = R.act(P, { type: "checkin", day: 1, answer: "help" }, D);
+    eq(P.days[1].checkin, "solo", "check-in is answered once:");
+    eq(R.secretBadges(P), ["solo-flight"]);
+    P = R.act(R.blank(), { type: "twist", day: 1 }, D);
+    ok(!P.days[1]?.twist, "a twist needs a picture first");
+    P = R.blank();
+    for (let n = 1; n <= 3; n++) P = R.act(finish(P, n), { type: "twist", day: n }, D);
+    ok(R.secretBadges(P).includes("own-idea"), "3 twists should earn Own Idea");
+    ok(XP.soloFlight >= XP.task && XP.ownIdea >= XP.task, "secret badges should be worth the most");
+  });
+  await test("rooms, gifts and tricks", () => {
+    let P = finishAll(5);
+    eq(R.pendingLevelUp(P), null, "before day 6:");
+    P = finish(P, 6);
+    eq(R.pendingLevelUp(P), 1, "after day 6:");
+    P = R.act(P, { type: "seenLevelUp", room: 1 }, D);
+    eq(R.pendingLevelUp(P), null, "after opening:");
+    eq(R.tricks(finishAll(30)), ["wave", "spin", "fly", "dance"]);
+    eq(R.tricks(finishAll(14)), ["wave", "spin"]);
+  });
+  await test("what Lumi can wear: that room's pictures, newest first, up to 3", () => {
+    let P = finishAll(20);
+    P = R.act(P, { type: "upload", day: 17, key: "extra" }, D);
+    eq(R.wearChoices(P, ROOMS[3]), ["k20", "k19", "k18"]);
+    eq(R.wearChoices(P, ROOMS[3], 9), ["k20", "k19", "k18", "extra", "k17", "k16"]);
+  });
+  await test("a perfect 30-day run earns the maximum XP", () => {
+    let P = R.blank();
+    for (const d of FAKE) {
+      for (const v of d.videos) P = R.act(P, { type: "watch", day: d.day, id: v.id }, D);
+      P = finish(P, d.day);
+      P = R.act(P, { type: "twist", day: d.day }, D);
+      P = R.act(P, { type: "checkin", day: d.day, answer: "solo" }, D);
+    }
+    eq(R.doneCount(P), 30);
+    eq(R.xp(P, FAKE), R.maxXp(FAKE));
+    eq(R.badges(P, FAKE).length, 32, "30 day badges + 2 secret:");
+  });
+  await test("quiz shuffle: fair positions, and the answer always follows its text", () => {
+    const quiz = [{ q: "q", options: ["right", "b", "c", "d"], answer: 0, why: "" }];
+    const hits = [0, 0, 0, 0];
+    for (let i = 0; i < 3000; i++) {
+      const [q] = R.deck(quiz);
+      eq(q.options[q.answer], "right");
+      hits[q.answer]++;
+    }
+    hits.forEach((h, i) => ok(h / 3000 > 0.22 && h / 3000 < 0.28, `position ${"ABCD"[i]} got ${((h / 30) | 0)}%`));
+    const order = R.deck(FAKE[0].quiz).map((q) => q.q).sort();
+    eq(order, ["q0", "q1", "q2", "q3", "q4"], "all 5 questions kept:");
+  });
+  await test("her flavor pick goes into the steps", () => {
+    eq(R.fillFlavor("Draw {flavor} with the Pen tool.", { fill: "a sleepy owl" }), "Draw a sleepy owl with the Pen tool.");
+    eq(R.fillFlavor("Draw {flavor}.", undefined), "Draw your pick.");
+  });
+
+  // ---------- 3. storage ----------
+  await test("saved progress is upgraded safely", () => {
+    const fresh = migrate(null);
+    eq([fresh.v, fresh.lanterns, fresh.days], [1, [], {}]);
+    eq(migrate({ v: 1, penName: "Moth" }).seen, { levelUps: [], welcomeBack: null });
+    let threw = false;
+    try { migrate({ v: 99 }); } catch { threw = true; }
+    ok(threw, "a newer save must be refused, not silently damaged");
+  });
+  await test("backup → reset → restore brings back progress and pictures", async () => {
+    const store = openStore("night-studio-test");
+    try {
+      await store.reset();
+      const bytes = new Uint8Array([1, 2, 3, 250]);
+      await store.putImage({ key: "d01-a", day: 1, blob: new Blob([bytes], { type: "image/webp" }), w: 2, h: 2, at: 1 });
+      await store.putImage({ key: "d02-b", day: 2, blob: new Blob([bytes.slice(1)], { type: "image/webp" }), w: 2, h: 2, at: 2 });
+      const P = finish(finish(R.act(R.blank(), { type: "name", name: "Moth" }, D), 1), 2);
+      const file = await store.backup(P, D5);
+      eq(store.lastBackup(), D5, "last backup date:");
+      await store.reset();
+      eq((await store.allImages()).length, 0, "pictures after reset:");
+      const back = await store.restore(await file.text());
+      eq(back, P, "progress:");
+      const pics = await store.allImages();
+      eq(pics.length, 2, "pictures:");
+      eq([...new Uint8Array(await pics.find((p) => p.key === "d01-a").blob.arrayBuffer())], [1, 2, 3, 250], "picture bytes:");
+      let threw = false;
+      try { await store.restore('{"kind":"something else"}'); } catch { threw = true; }
+      ok(threw, "a wrong file must be refused");
+    } finally {
+      await store.destroy();
+    }
+  });
+
+  // ---------- 4. Lumi matches the original ----------
+  // The original Scale2x + warp, built on strings (from Lumia_marketing kit.tsx), as the reference.
+  const scale2xRef = (rows) => {
+    const h = rows.length, w = rows[0].length, at = (x, y) => (x < 0 || y < 0 || x >= w || y >= h ? "." : rows[y][x]);
+    const out = [];
+    for (let y = 0; y < h; y++) {
+      let r0 = "", r1 = "";
+      for (let x = 0; x < w; x++) {
+        const P = at(x, y), A = at(x, y - 1), B = at(x + 1, y), C = at(x - 1, y), D = at(x, y + 1);
+        r0 += (C === A && C !== D && A !== B ? A : P) + (A === B && A !== C && B !== D ? B : P);
+        r1 += (D === C && D !== B && C !== A ? C : P) + (B === D && B !== A && D !== C ? D : P);
+      }
+      out.push(r0, r1);
+    }
+    return out;
+  };
+  const warpRef = (src, A, t) => {
+    const det = A[0] * A[3] - A[1] * A[2];
+    if (Math.abs(det) < 1e-6) return { rows: ["."], x: 0, y: 0 };
+    const inv = [A[3] / det, -A[1] / det, -A[2] / det, A[0] / det], W = src.rows[0].length, H = src.rows.length;
+    const xs = [], ys = [];
+    for (const [cx, cy] of [[src.x, src.y], [src.x + W, src.y], [src.x, src.y + H], [src.x + W, src.y + H]]) { xs.push(A[0] * cx + A[1] * cy + t[0]); ys.push(A[2] * cx + A[3] * cy + t[1]); }
+    const bx = Math.floor(Math.min(...xs)), by = Math.floor(Math.min(...ys)), bw = Math.ceil(Math.max(...xs)) - bx, bh = Math.ceil(Math.max(...ys)) - by;
+    const big = scale2xRef(scale2xRef(scale2xRef(src.rows))), rows = [];
+    for (let Y = 0; Y < bh; Y++) {
+      let r = "";
+      for (let X = 0; X < bw; X++) {
+        const dx = bx + X + 0.5 - t[0], dy = by + Y + 0.5 - t[1];
+        const ix = Math.floor((inv[0] * dx + inv[1] * dy - src.x) * 8), iy = Math.floor((inv[2] * dx + inv[3] * dy - src.y) * 8);
+        r += iy >= 0 && iy < H * 8 && ix >= 0 && ix < W * 8 ? big[iy][ix] : ".";
+      }
+      rows.push(r);
+    }
+    return { rows, x: bx, y: by };
+  };
+  await test("the fast pixel warp gives exactly the original's pixels", () => {
+    let seed = 7;
+    const rand = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+    for (let n = 0; n < 60; n++) {
+      const w = 3 + Math.floor(rand() * 20), h = 3 + Math.floor(rand() * 20);
+      const rows = Array.from({ length: h }, () => Array.from({ length: w }, () => ".abcdo"[Math.floor(rand() * 6)]).join(""));
+      const src = { rows, x: Math.floor(rand() * 10) - 5, y: Math.floor(rand() * 10) - 5 };
+      const a = rand() - 0.5, sx = 0.6 + rand(), sy = 0.6 + rand();
+      const A = [Math.cos(a) * sx, -Math.sin(a) * sy, Math.sin(a) * sx, Math.cos(a) * sy], t = [rand() * 6 - 3, rand() * 6 - 3];
+      eq(warp(src, A, t), warpRef(src, A, t), `sprite ${n}:`);
+      eq(warp(src, A, t, true), warpRef(src, A, t), `sprite ${n} (kept):`);
+    }
+  });
+  const fnv = (s) => { let x = 0x811c9dc5; for (let i = 0; i < s.length; i++) { x ^= s.charCodeAt(i); x = Math.imul(x, 0x01000193) >>> 0; } return x.toString(16).padStart(8, "0"); };
+  // Computed from the ORIGINAL Remotion Lumi (Lumia_marketing, commit c089895): [move, t, figure hash, palette hash].
+  const GOLDEN = [["idle", 1, "3632ecf7", "fc70988a"], ["wave", 0.55, "12b02504", "3f577e8e"], ["think", 1.3, "2d376ed0", "fc70988a"], ["correct", 0.8, "e21f91d1", "9423ff71"], ["oops", 1, "b544b103", "e571bd8a"], ["love", 0.6, "f7c352cc", "a06d15ad"], ["sleepy", 1.5, "39714206", "5e0ce825"], ["spin", 0.65, "f1d405db", "3f577e8e"], ["dance", 0.25, "bdd72b4c", "a6e65f6d"], ["fly", 0.5, "d110e516", "fc70988a"], ["enter", 0.55, "7345eac1", "fc70988a"], ["exit", 0.95, "ff64d22a", "3f577e8e"]];
+  const AT = { x: 540, y: 900, scale: 5 };
+  await test("12 of Lumi's key frames match the original, pixel for pixel", () => {
+    for (const [move, t, figHash, palHash] of GOLDEN) {
+      // the original's idle clock ticks in whole frames (30 a second)
+      const fr = composeLumi({ ...AT, t: Math.round(t * 30) / 30, pose: MOVES[move].pose(t, AT) });
+      eq(fnv(`${fr.figure.x},${fr.figure.y}|${fr.figure.rows.join("/")}`), figHash, `${move} figure:`);
+      eq(fnv(Object.keys(fr.pal).sort().map((k) => `${k}:${fr.pal[k]}`).join(";")), palHash, `${move} colours:`);
+    }
+  });
+  await test("paint() puts every art pixel in the right place and colour (mirrored too)", () => {
+    const fr = composeLumi({ ...AT, t: 0.6, pose: MOVES.love.pose(0.6, AT) });
+    const rows = fr.figure.rows, s = 3, W = rows[0].length, H = rows.length;
+    for (const flip of [false, true]) {
+      const c = Object.assign(document.createElement("canvas"), { width: W * s, height: H * s }), ctx = c.getContext("2d");
+      ctx.setTransform(flip ? -s : s, 0, 0, s, flip ? W * s : 0, 0);
+      paint(ctx, rows, fr.pal, 0, 0);
+      const px = ctx.getImageData(0, 0, c.width, c.height).data;
+      let wrong = 0;
+      for (let y = 0; y < H; y++) {
+        for (let x = 0; x < W; x++) {
+          const sx = flip ? W - 1 - x : x, i = ((y * s + 1) * c.width + (sx * s + 1)) * 4, ch = rows[y][x];
+          const hex = "#" + [px[i], px[i + 1], px[i + 2]].map((v) => v.toString(16).padStart(2, "0")).join("");
+          if (ch === "." ? px[i + 3] !== 0 : px[i + 3] !== 255 || hex !== fr.pal[ch]) wrong++;
+        }
+      }
+      eq(wrong, 0, `${flip ? "mirrored" : "normal"} wrong pixels:`);
+    }
+  });
+  await test("Lumi is fast enough: 600 frames, median under 4 ms", () => {
+    const names = ["idle", "think", "correct", "oops", "love", "wave", "dance", "spin", "fly", "sleepy"], ms = [];
+    for (let i = 0; i < 600; i++) {
+      const move = MOVES[names[i % names.length]], t = (i / 30) % move.len, t0 = performance.now();
+      composeLumi({ ...AT, t, pose: move.pose(t, AT) });
+      ms.push(performance.now() - t0);
+    }
+    ms.sort((a, b) => a - b);
+    const median = ms[300];
+    line(`(info) Lumi: median ${median.toFixed(2)} ms a frame, slowest 1% ${ms[594].toFixed(2)} ms`, "info");
+    ok(median < 4, `median ${median.toFixed(2)} ms`);
+  });
+
+  document.title = failed ? `FAIL ${failed} · Night Studio tests` : `PASS ${passed}/${passed} · Night Studio tests`;
+  document.getElementById("summary").textContent = failed ? `✗ ${failed} failed, ${passed} passed` : `✓ All ${passed} passed`;
+  document.getElementById("summary").style.color = failed ? "var(--danger)" : "var(--mint)";
+
+  // ---------- 5. by eye: every move, the star colours, a worn design ----------
+  const sheet = document.getElementById("sheet"), cards = [];
+  const card = (label, opts) => {
+    const c = document.createElement("canvas");
+    c.width = 130 * 3;
+    c.height = 126 * 3;
+    const f = document.createElement("figure");
+    f.append(c, Object.assign(document.createElement("figcaption"), { textContent: label }));
+    sheet.append(f);
+    cards.push({ ctx: c.getContext("2d"), opts, c });
+  };
+  const draw = (t) => {
+    for (const { ctx, opts, c } of cards) {
+      const move = MOVES[opts.move], u = opts.still ? move.key : t % move.len;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, c.width, c.height);
+      paintLumi(ctx, composeLumi({ t: opts.still ? move.key : t, x: 64 * 3, y: 112 * 3, scale: 3, pose: move.pose(u, { x: 192, y: 336, scale: 3 }), star: opts.star, wear: opts.wear }));
+    }
+  };
+  for (const move of Object.keys(MOVES)) card(move, { move, still: true });
+  for (const star of Object.keys(STARS).slice(1)) card(`star: ${star}`, { move: "idle", still: true, star });
+  // A made-up design: a pink circle with a navy star, on a white background (the background gets trimmed away).
+  const c = Object.assign(document.createElement("canvas"), { width: 300, height: 300 }), g = c.getContext("2d");
+  g.fillStyle = "#fff"; g.fillRect(0, 0, 300, 300);
+  g.fillStyle = "#f07aa0"; g.beginPath(); g.arc(150, 150, 110, 0, Math.PI * 2); g.fill();
+  g.fillStyle = "#1d2a6b"; g.beginPath();
+  for (let i = 0; i < 10; i++) { const r = i % 2 ? 30 : 75, a = (i * Math.PI) / 5 - Math.PI / 2; g.lineTo(150 + r * Math.cos(a), 150 + r * Math.sin(a)); }
+  g.fill();
+  const blob = await new Promise((resolve) => c.toBlob(resolve, "image/png"));
+  const wear = { belly: await pixelate(blob, "belly"), pin: await pixelate(blob, "pin"), patch: await pixelate(blob, "patch") };
+  card("wearing a design", { move: "idle", still: true, wear });
+  card("love, wearing it", { move: "love", still: true, wear, star: "rose" });
+  draw(0);
+  let raf = 0;
+  document.getElementById("play").addEventListener("change", (e) => {
+    cancelAnimationFrame(raf);
+    const start = performance.now();
+    const loop = (ms) => { draw((ms - start) / 1000); raf = requestAnimationFrame(loop); };
+    if (e.target.checked) { cards.forEach((k) => (k.opts.still = false)); raf = requestAnimationFrame(loop); } else { cards.forEach((k) => (k.opts.still = true)); draw(0); }
+  });
+</script>
+</body>
+</html>

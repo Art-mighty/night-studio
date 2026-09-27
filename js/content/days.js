@@ -1,0 +1,1878 @@
+// Night Studio: the 30 days of the course.
+//
+// How to edit a day (it's all plain text, no coding needed):
+// - Change any words inside the "double quotes". Keep the quotes, commas and brackets as they are.
+// - Swap a video: paste the new 11-character YouTube id (the part after "watch?v=") into `id`,
+//   then update its title, channel and min (the minutes she will actually watch).
+// - Play only part of a video: set `start` and `end` in seconds (2:30 is 150).
+//   `start: 0` starts at the beginning; `end: null` plays to the end.
+// - `{flavor}` inside a step is replaced by the option she picks on that day's flavor card.
+// - Quiz `answer` counts from 0: first option = 0, second = 1, third = 2, fourth = 3.
+//   The game shuffles the options every attempt, so their order here doesn't matter.
+// - Never renumber, reorder or delete days: her saved progress is stored by day number.
+
+export const DAYS = [
+  {
+    day: 1,
+    room: 1,
+    title: "Hello, Figma",
+    goal: "Get around the canvas; make your first frame, shapes and text; export once.",
+    videos: [
+      { id: "AFDZpMCTn2E", title: "Figma Design for beginners: Course overview", channel: "Figma", min: 2, start: 0, end: null, note: "" },
+      { id: "jQ1sfKIl50E", title: "Figma Tutorial for Beginners (13-min crash course!)", channel: "Flux Academy", min: 13, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your frame's mood",
+      options: [
+        { label: "🌙 Midnight", fill: "a midnight-blue" },
+        { label: "🌸 Blossom", fill: "a soft pink" },
+        { label: "🍋 Lemon", fill: "a lemon-yellow" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Open Figma and create a new design file called “My Night Studio.”",
+        "Press F for the Frame tool and make a 1080×1080 frame (type the size into W and H in the right panel).",
+        "Fill the frame with {flavor} background.",
+        "Add a circle (O), a rectangle (R) and a star (from the shape tools in the toolbar).",
+        "Press T and type your initials.",
+        "Name the frame Day01_hello, then click + in the Export section at the bottom of the right panel and export it as a PNG.",
+      ],
+      deliverable: "Day01_hello.png",
+    },
+    quiz: [
+      {
+        q: "You drag a rectangle from the empty canvas into a frame. What changes?",
+        options: ["It becomes a component", "It becomes a child of the frame, moving and clipping with it", "It gets flattened", "Nothing"],
+        answer: 1,
+        why: "Frames contain layers, so the rectangle moves with the frame and can be clipped by it.",
+      },
+      {
+        q: "What do you need to follow Figma's beginner course?",
+        options: ["A paid Professional plan", "An iPad and Apple Pencil", "A computer, internet and a Figma account; the free Starter plan is enough", "Adobe Illustrator"],
+        answer: 2,
+        why: "Figma works on any computer with internet, and the free Starter plan has everything the beginner course uses.",
+      },
+      {
+        q: "Frame vs group?",
+        options: ["Groups can clip; frames can't", "Frames have their own fill, clipping and layout; groups just bundle layers", "Identical", "Only groups export"],
+        answer: 1,
+        why: "A frame is a real container with its own fill, clipping and layout settings, while a group only holds layers together.",
+      },
+      {
+        q: "In the Layers panel, a layer higher in the list appears…",
+        options: ["behind lower layers", "in front of lower layers", "randomly", "hidden"],
+        answer: 1,
+        why: "The Layers panel is a stack: whatever sits higher in the list is drawn on top of what's below it.",
+      },
+      {
+        q: "You want to export only your artwork. Best method?",
+        options: ["Screenshot", "Select the frame and add an export setting", "Print the page", "Export the page file"],
+        answer: 1,
+        why: "An export setting on the frame saves exactly that frame, at the size and format you pick, with nothing extra around it.",
+      },
+    ],
+    badge: { id: "first-mark", name: "First Mark", icon: "✏️" },
+  },
+  {
+    day: 2,
+    room: 1,
+    title: "The Secret Rules of Good Design",
+    goal: "Use balance, contrast, emphasis, repetition and unity.",
+    videos: [
+      { id: "9EPTM91TBDU", title: "The Principles of Design | FREE COURSE", channel: "Envato Tuts+", min: 22, start: 0, end: null, note: "Watch for balance, contrast, emphasis, pattern and unity." },
+    ],
+    flavor: {
+      prompt: "Pick your two colors",
+      options: [
+        { label: "🍓 Berry & Cream", fill: "berry red and cream" },
+        { label: "🌊 Ocean & Sand", fill: "ocean blue and sand" },
+        { label: "🌲 Pine & Peach", fill: "pine green and peach" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Make four 600×600 frames named Contrast, Balance, Repetition and Emphasis.",
+        "Use only circles, squares and triangles (the Polygon tool) in two colors: {flavor}.",
+        "Contrast: make one shape very different from the rest in size or color.",
+        "Balance: arrange the shapes so neither side feels heavier.",
+        "Repetition: repeat one shape at even spacing, like a pattern.",
+        "Emphasis: make one shape the clear star of the card.",
+      ],
+      deliverable: "4 frames",
+    },
+    quiz: [
+      {
+        q: "A big star sits in the center with identical small stars mirrored on each side. What kind of balance?",
+        options: ["Asymmetrical", "Symmetrical", "Radial only", "None"],
+        answer: 1,
+        why: "When one side is a mirror image of the other, the design has symmetrical balance.",
+      },
+      {
+        q: "Which layout balances without mirroring?",
+        options: ["One large dark shape on the left, several smaller shapes on the right", "Two identical shapes", "Everything centered", "One shape filling the canvas"],
+        answer: 0,
+        why: "Several small shapes can carry the same visual weight as one big dark shape, which is called asymmetrical balance.",
+      },
+      {
+        q: "One red shape among ten gray ones. Which principle creates the difference, and what does it produce?",
+        options: ["Repetition creates unity", "Contrast creates emphasis", "Balance creates rhythm", "Unity creates contrast"],
+        answer: 1,
+        why: "The red shape contrasts with all the gray ones, so it becomes the point of emphasis your eye jumps to.",
+      },
+      {
+        q: "A tote covered in the same small icon at regular spacing uses…",
+        options: ["Emphasis", "Pattern/repetition", "Asymmetry", "Hierarchy"],
+        answer: 1,
+        why: "Repeating one element at regular spacing creates a pattern, which is the principle of repetition.",
+      },
+      {
+        q: "A 5-sticker pack uses a different random font and palette on each sticker. What's missing?",
+        options: ["Contrast", "Unity", "Emphasis", "Movement"],
+        answer: 1,
+        why: "Unity comes from shared choices like one font and one palette, so a random mix makes the pack feel unrelated.",
+      },
+    ],
+    badge: { id: "rule-finder", name: "Rule Finder", icon: "📐" },
+  },
+  {
+    day: 3,
+    room: 1,
+    title: "Color Magic",
+    goal: "Build palettes with the color wheel; understand hue, saturation and value.",
+    videos: [
+      { id: "Zl1-GHVl9Sw", title: "Design the PERFECT Color Palette! (Color Theory Basics Explained)", channel: "Lindsay Marsh", min: 10, start: 0, end: 627, note: "Plays the color-theory part; stops before the Adobe palette demos." },
+      { id: "2QTHs7QSR9o", title: "Color Theory for Beginners | FREE COURSE", channel: "Envato Tuts+", min: 10, start: 0, end: 629, note: "Plays the wheel and harmonies; stops before RGB and CMYK." },
+    ],
+    flavor: {
+      prompt: "Pick your starting hue",
+      options: [
+        { label: "💙 Blue", fill: "blue" },
+        { label: "💚 Green", fill: "green" },
+        { label: "💜 Purple", fill: "purple" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Make a frame named Palette Board.",
+        "Start from {flavor} and find its opposite on the color wheel: that's your complementary palette.",
+        "Build an analogous palette (three neighbors on the wheel) and a triadic one (three evenly spaced colors).",
+        "Save each color as a color style: click the style icon next to Fill, then +.",
+        "Recolor your Day 2 cards with your favorite palette.",
+      ],
+      deliverable: "A “Palette Board” frame",
+    },
+    quiz: [
+      {
+        q: "Which pair is complementary?",
+        options: ["Blue & orange", "Blue & green", "Red & orange", "Yellow & yellow-green"],
+        answer: 0,
+        why: "Complementary colors sit opposite each other on the color wheel, and blue and orange are a classic opposite pair.",
+      },
+      {
+        q: "A dull blue and a vivid blue have the same hue. What differs?",
+        options: ["Value", "Saturation", "Temperature", "Hue"],
+        answer: 1,
+        why: "Saturation is how intense or grayed-out a color is, so the same blue can be vivid or dull.",
+      },
+      {
+        q: "Why does an analogous palette feel calm?",
+        options: ["It uses opposite colors", "Its colors are neighbors on the wheel, so contrast is low", "It's black and white", "It uses neon"],
+        answer: 1,
+        why: "Analogous colors sit side by side on the wheel, so they blend gently instead of clashing.",
+      },
+      {
+        q: "Yellow text on a white sticker is hard to read mainly because of…",
+        options: ["Low hue contrast", "Low value contrast", "Too much saturation", "Wrong font"],
+        answer: 1,
+        why: "Yellow and white are both very light, and readability depends mostly on the light-dark difference, called value contrast.",
+      },
+      {
+        q: "Why let one color dominate and use its complement only as an accent?",
+        options: ["Printers need it", "Equal amounts of complements can “vibrate” and feel jarring", "Complements can't print", "It's required on tees"],
+        answer: 1,
+        why: "Opposite colors in equal amounts fight for attention, so a small accent of the complement adds punch without the buzz.",
+      },
+    ],
+    badge: { id: "palette-keeper", name: "Palette Keeper", icon: "🎨" },
+  },
+  {
+    day: 4,
+    room: 1,
+    title: "Type That Talks",
+    goal: "Control font, size, letter spacing and line height.",
+    videos: [
+      { id: "doCdDEANxKE", title: "Typography in Figma for Beginners (Text Tool, Fonts, and Spacing Explained)", channel: "Seddyworld Digital", min: 7, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your phrase",
+      options: [
+        { label: "👽 Stay Weird", fill: "the words “Stay Weird”" },
+        { label: "🤫 Quiet Power", fill: "the words “Quiet Power”" },
+        { label: "🦉 Night Owl", fill: "the words “Night Owl”" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Make three square frames for your word stickers (600×600 works well).",
+        "Press T and type {flavor} in each one, or swap in a phrase of your own.",
+        "Frame 1: set it in a bold sans-serif font.",
+        "Frame 2: use a serif font, the kind with small “feet.”",
+        "Frame 3: pick a fun display font.",
+        "Break each phrase onto two lines, then tune letter spacing and line height until it feels right.",
+      ],
+      deliverable: "3 “word sticker” frames",
+    },
+    quiz: [
+      {
+        q: "Letter spacing (tracking) changes…",
+        options: ["Space between one pair of letters", "Space evenly across all selected letters", "Space between lines", "Weight"],
+        answer: 1,
+        why: "Tracking adds or removes the same space between every selected letter; changing just one pair is called kerning.",
+      },
+      {
+        q: "Line height controls…",
+        options: ["Letter width", "Vertical space between lines", "Color", "Box width"],
+        answer: 1,
+        why: "Line height sets how far apart the lines of text sit from top to bottom.",
+      },
+      {
+        q: "You type a long phrase in an auto-width text box. What happens?",
+        options: ["It wraps", "It keeps growing sideways on one line", "It shrinks", "It outlines"],
+        answer: 1,
+        why: "Auto width lets the text box grow with the words, so it keeps stretching sideways instead of wrapping.",
+      },
+      {
+        q: "A serif font has…",
+        options: ["All caps", "Small “feet” at the ends of strokes", "A handwritten look", "Monospace letters"],
+        answer: 1,
+        why: "Serifs are the small feet at the ends of letter strokes, which is where serif fonts get their name.",
+      },
+      {
+        q: "For a 2-inch sticker, which is safest?",
+        options: ["Thin script at 5 pt", "Bold sans-serif with open spacing, well above 6 pt", "Hairline serif", "Tiny caps"],
+        answer: 1,
+        why: "Small stickers need bold, open letters above the 6 pt minimum, or the text blurs and gets hard to read.",
+      },
+    ],
+    badge: { id: "type-whisperer", name: "Type Whisperer", icon: "🔤" },
+  },
+  {
+    day: 5,
+    room: 1,
+    title: "Where the Eye Goes (Hierarchy & Composition)",
+    goal: "Build a design with a clear first, second and third read.",
+    videos: [
+      { id: "4QNEDhrsRLo", title: "The ONLY Video On Visual Hierarchy ANY Graphic Designer Needs", channel: "Satori Graphics", min: 17, start: 0, end: null, note: "" },
+      { id: "dGYCn9qYjUQ", title: "LESS Than 10% Of Designers Know This! ((Satori Graphics Design Principles))", channel: "Satori Graphics", min: 5, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your club",
+      options: [
+        { label: "🦉 Night Owls", fill: "the Night Owl Club" },
+        { label: "🌙 Moon Gazers", fill: "the Moon Gazers Club" },
+        { label: "🐸 Frog Squad", fill: "the Frog Squad" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Make a frame and draw a large circle (O): the badge for {flavor}.",
+        "Level 1: add a simple icon in the middle, big and high-contrast.",
+        "Level 2: add the club name, smaller but bold.",
+        "Level 3: add a short tagline, small and quiet.",
+        "Duplicate the badge and give the copy a Layer blur (Effects section, right panel).",
+        "Look at the blurry copy: does the icon still stand out first?",
+      ],
+      deliverable: "Badge plus blurred copy",
+    },
+    quiz: [
+      {
+        q: "Visual hierarchy is…",
+        options: ["Layer order", "The order the eye notices elements", "Alphabetical font order", "Folder structure"],
+        answer: 1,
+        why: "Hierarchy is about attention: which element people see first, second and third.",
+      },
+      {
+        q: "Which is NOT a hierarchy tool?",
+        options: ["Size", "Contrast", "White space", "File format"],
+        answer: 3,
+        why: "Size, contrast and white space all change what the eye notices first, but a file format doesn't change how a design looks.",
+      },
+      {
+        q: "Why blur or squint at a design?",
+        options: ["To test resolution", "To see what still stands out when detail disappears", "To add a style", "To check spelling"],
+        answer: 1,
+        why: "Blurring hides small details, so only the strongest shapes and contrasts survive, showing your real first read.",
+      },
+      {
+        q: "Everything is the same size and weight. The result?",
+        options: ["Strong focus", "No clear entry point", "Better unity", "Faster printing"],
+        answer: 1,
+        why: "If nothing is bigger or bolder, nothing leads, so the eye doesn't know where to start.",
+      },
+      {
+        q: "A tee is seen from about 3 m away. The primary element should be…",
+        options: ["Tiny text", "Large, simple and high-contrast", "A photo gradient", "1 inch wide"],
+        answer: 1,
+        why: "From across a room, only big, simple, high-contrast shapes are readable, so the main element needs all three.",
+      },
+    ],
+    badge: { id: "eye-guide", name: "Eye Guide", icon: "👀" },
+  },
+  {
+    day: 6,
+    room: 1,
+    title: "Boss Night: Your First Mini Poster",
+    goal: "Combine the basics; learn pixel and DPI basics.",
+    videos: [
+      { id: "FgU0rTnWlRk", title: "Figma Basics Tutorial for Beginners 2025. FREE Design Tool for Print on Demand.", channel: "Detour Shirts", min: 18, start: 345, end: 1401, note: "Plays frames through exporting; pen tools come on Day 7." },
+    ],
+    flavor: {
+      prompt: "Pick your poster's theme",
+      options: [
+        { label: "🌙 Night Sky", fill: "a night sky" },
+        { label: "🍄 Mushroom Forest", fill: "a mushroom forest" },
+        { label: "🌊 Deep Sea", fill: "the deep sea" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Make a frame 1800 px wide and 2400 px tall, and name it Day06_poster.",
+        "Design a mini poster about {flavor} with shapes, text and your Day 3 palette.",
+        "Give it a clear first, second and third read, like your Day 5 badge.",
+        "In the Export section, choose PNG at 2x and save it as Day06_poster@2x.png.",
+        "Check the result: 3600×4800 px, enough for a 12×16 in print at 300 DPI.",
+      ],
+      deliverable: "Day06_poster@2x.png",
+    },
+    quiz: [
+      {
+        q: "Why use a transparent PNG for shirts?",
+        options: ["Smaller files", "Any background in the file gets printed on the garment", "PNGs are vector", "Stickers need it"],
+        answer: 1,
+        why: "The printer prints every pixel that isn't transparent, so a leftover background shows up as a box on the shirt.",
+      },
+      {
+        q: "Pixels for 12 in at 300 DPI?",
+        options: ["1,200", "2,400", "3,600", "4,800"],
+        answer: 2,
+        why: "Pixels = inches × DPI, so 12 × 300 = 3,600 pixels.",
+      },
+      {
+        q: "An 1800 px frame exported at 2× is…",
+        options: ["900 px wide", "1,800 px wide", "3,600 px wide", "7,200 px wide"],
+        answer: 2,
+        why: "Exporting at 2× doubles every dimension, so 1,800 px becomes 3,600 px.",
+      },
+      {
+        q: "Which format supports transparency?",
+        options: ["JPG", "PNG", "Both JPG and PNG", "Neither of them"],
+        answer: 1,
+        why: "PNG can store see-through pixels, while JPG always fills the background with a solid color.",
+      },
+      {
+        q: "Why do Figma shapes stay sharp when enlarged but a small photo doesn't?",
+        options: ["Figma sharpens photos", "Shapes are vectors (math), photos are pixels", "Photos are always blurry", "Export settings"],
+        answer: 1,
+        why: "Vector shapes are redrawn from math at any size, while a photo has a fixed number of pixels that get stretched.",
+      },
+    ],
+    badge: { id: "poster-pioneer", name: "Poster Pioneer", icon: "🖼️" },
+  },
+  {
+    day: 7,
+    room: 2,
+    title: "Taming the Pen Tool",
+    goal: "Draw straight lines, curves and branching shapes with the Pen tool, then fill each closed area.",
+    videos: [
+      { id: "5x2uHUB_pzw", title: "Figma Tutorial: Pen Tool Basics & Vector Networks", channel: "Figma", min: 4, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your leaf colors",
+      options: [
+        { label: "🍃 Spring Greens", fill: "three shades of green" },
+        { label: "🍂 Autumn", fill: "autumn orange, red and gold" },
+        { label: "🌸 Blossom", fill: "three soft pinks" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Press P for the Pen tool. Click to place corner points for a lightning bolt, then click the first point to close it.",
+        "Draw a cloud: click and drag as you place points to make curves.",
+        "Draw a sprout: a stem plus three leaves that all branch from one point.",
+        "Select the sprout, press Enter for vector edit mode, and pick the Paint tool (Shift+B).",
+        "Click each leaf to fill it separately with {flavor}.",
+        "Tip: press Escape anytime to stop drawing and leave a path open.",
+      ],
+      deliverable: "3 icons",
+    },
+    quiz: [
+      {
+        q: "What makes vector networks unusual?",
+        options: ["They must always close", "One point can connect to more than two paths, so shapes can branch", "Straight lines only", "They're raster"],
+        answer: 1,
+        why: "In Figma a single point can join three or more lines, which is how your sprout's leaves branch from one spot.",
+      },
+      {
+        q: "Click-drag with the Pen tool makes…",
+        options: ["A corner", "A curve with bézier handles", "A frame", "Text"],
+        answer: 1,
+        why: "Dragging as you place a point pulls out bézier handles, which bend the line into a curve.",
+      },
+      {
+        q: "To close a path you…",
+        options: ["Press Enter twice", "Hover over the starting point and click", "Double-click empty canvas", "Use Union"],
+        answer: 1,
+        why: "Clicking back on the first point joins the end to the start, making a closed shape you can fill.",
+      },
+      {
+        q: "To stop drawing and leave the path open, press…",
+        options: ["Delete", "Escape", "Shift", "Tab"],
+        answer: 1,
+        why: "Escape ends the current path without closing it, so your line stays open.",
+      },
+      {
+        q: "How do you fill just one enclosed region?",
+        options: ["Fill the whole layer", "Paint bucket in vector edit mode", "Mask it", "Flatten first"],
+        answer: 1,
+        why: "In vector edit mode, the paint bucket fills a single closed area, so each leaf can get its own color.",
+      },
+    ],
+    badge: { id: "path-tamer", name: "Path Tamer", icon: "🖋️" },
+  },
+  {
+    day: 8,
+    room: 2,
+    title: "Cookie-Cutter Shapes (Boolean Operations)",
+    goal: "Combine and cut simple shapes with union, subtract, intersect and exclude to build clean icons.",
+    videos: [
+      { id: "5pYzyN_idJk", title: "Figma Design for K-12: Drawing with geometry", channel: "Figma", min: 8, start: 0, end: null, note: "Figma's own lesson for students: booleans, then building icons." },
+      { id: "tdyQVg7tbfg", title: "Boolean Groups - Figma Tutorial | UI Design", channel: "ApolloDesigns", min: 5, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your icon color",
+      options: [
+        { label: "✨ Warm Gold", fill: "warm gold" },
+        { label: "🍬 Candy Pink", fill: "candy pink" },
+        { label: "❄️ Ice Blue", fill: "icy blue" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Moon: draw a circle (O), put a second circle on top, offset a little, then select both and choose Subtract from the Boolean operations menu in the toolbar.",
+        "Cloud: overlap 4 circles and choose Union.",
+        "Donut: center a small circle on a big one and choose Subtract.",
+        "Keyhole: Union a circle with a narrow triangle underneath it.",
+        "Give all four icons the same fill: {flavor}.",
+        "Duplicate the cloud and flatten the copy (right-click → Flatten).",
+      ],
+      deliverable: "4 icons plus the flattened copy",
+    },
+    quiz: [
+      {
+        q: "For a crescent, the second circle goes ___ and you use ___.",
+        options: ["Below; Union", "On top, offset; Subtract", "On top; Intersect", "Below; Exclude"],
+        answer: 1,
+        why: "Subtract cuts the top shape out of the bottom one, so an offset circle on top bites out a crescent.",
+      },
+      {
+        q: "After Subtract, which layer's fill does the result use?",
+        options: ["Top", "Bottom", "Random", "Gray"],
+        answer: 1,
+        why: "Subtract keeps what's left of the bottom shape, so Figma uses the bottom layer's fill, stroke and effects.",
+      },
+      {
+        q: "After Union, which layer sets the fill?",
+        options: ["Top", "Bottom", "Largest", "None"],
+        answer: 0,
+        why: "For Union, Figma takes the fill, stroke and effects from the top layer, and you can change them anytime.",
+      },
+      {
+        q: "Why keep a boolean unflattened while designing?",
+        options: ["It prints better", "It's non-destructive, so you can still move the cutter shape", "Flattening is impossible", "Plugins need it"],
+        answer: 1,
+        why: "A boolean group keeps its shapes editable, while flattening locks them into one path you can't separate again.",
+      },
+      {
+        q: "Exclude keeps…",
+        options: ["Only the overlap", "Everything except the overlap", "The bottom shape", "Outlines"],
+        answer: 1,
+        why: "Exclude removes the areas where shapes overlap and keeps only the parts that don't.",
+      },
+    ],
+    badge: { id: "cookie-cutter", name: "Cookie Cutter", icon: "🍪" },
+  },
+  {
+    day: 9,
+    room: 2,
+    title: "Clone Power (Components)",
+    goal: "Turn a drawing into a component, reuse it as instances, and update every copy at once.",
+    videos: [
+      { id: "k74IrUNaJVk", title: "[OLD] Figma Tutorial: Components - The Basics", channel: "Figma", min: 6, start: 0, end: null, note: "Older Figma look, but components still work the same way." },
+      { id: "EoJolbaEQi8", title: "Figma Components 101", channel: "Figma", min: 3, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your eye style",
+      options: [
+        { label: "🔵 Round", fill: "a big round eye with a shiny dot" },
+        { label: "🐱 Cat", fill: "a cat eye with a slit pupil" },
+        { label: "⭐ Sparkly", fill: "a sparkly eye with a star highlight" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Draw {flavor} from simple shapes.",
+        "Select it all and press ⌥⌘K (Ctrl+Alt+K on Windows) to make it a component.",
+        "Duplicate it three times (⌘D / Ctrl+D) and spread the copies out: each copy is an instance.",
+        "Give each instance a different color.",
+        "Change the shape of the main component and watch the instances update while keeping their colors.",
+        "Bonus: right-click the main component → Main component → Add variant, and make a closed eye.",
+      ],
+      deliverable: "Component plus 3 instances",
+    },
+    quiz: [
+      {
+        q: "You edit the main component. Instances…",
+        options: ["Stay the same", "Update, except for overrides", "Delete", "Detach"],
+        answer: 1,
+        why: "Instances follow the main component, but anything you changed on an instance, called an override, stays yours.",
+      },
+      {
+        q: "An instance was recolored, then the main component's shape changes. The instance…",
+        options: ["Loses its color", "Keeps its color and gets the new shape", "Does nothing", "Breaks"],
+        answer: 1,
+        why: "The color is an override, so it stays, while the shape wasn't overridden, so it updates from the main.",
+      },
+      {
+        q: "“Detach instance” means…",
+        options: ["Deleted", "No longer linked to the main component", "It becomes the main", "Locked"],
+        answer: 1,
+        why: "Detaching cuts the link, so the layer stops getting updates from the main component.",
+      },
+      {
+        q: "Why are components great for a 10-sticker pack?",
+        options: ["Smaller files", "One shared element updates everywhere at once", "Printers require them", "They add bleed"],
+        answer: 1,
+        why: "Fix the main component once and every sticker that uses it updates, so the whole pack stays consistent.",
+      },
+      {
+        q: "Eye open and eye closed belong together as…",
+        options: ["Groups", "Variants in a component set", "Pages", "Styles"],
+        answer: 1,
+        why: "Variants keep different states of one component, like open and closed, together in a single set.",
+      },
+    ],
+    badge: { id: "clone-master", name: "Clone Master", icon: "💠" },
+  },
+  {
+    day: 10,
+    room: 2,
+    title: "Shape Shifter (Auto Layout)",
+    goal: "Use auto layout so frames grow, shrink and reflow as their content changes.",
+    videos: [
+      { id: "TyaGpGDFczw", title: "Figma in 5: Auto Layout", channel: "Figma", min: 7, start: 0, end: null, note: "" },
+      { id: "PGYCZbP3xH4", title: "Figma for Education: Learning Auto layout", channel: "Figma", min: 11, start: 2132, end: 2810, note: "A clip from a live class: the hug, fixed and fill part." },
+    ],
+    flavor: {
+      prompt: "Pick your tag's word",
+      options: [
+        { label: "🌙 Moonlight", fill: "the word “Moonlight”" },
+        { label: "☕ Cozy", fill: "the word “Cozy”" },
+        { label: "⚡ Spark", fill: "the word “Spark”" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Hang tag: type {flavor} with the Text tool, press Escape, then press Shift+A to add auto layout.",
+        "Give the tag a fill, some padding and rounded corners, and set its width to Hug.",
+        "Keep typing: the tag should grow with the text.",
+        "Add a price line and a size line, and switch the direction to vertical so they stack.",
+        "Sticker grid: select 6 same-size squares, press Shift+A, turn on wrap, and resize the frame so 3 fit in each row.",
+        "Duplicate one sticker and watch the grid reflow.",
+      ],
+      deliverable: "Tag plus grid",
+    },
+    quiz: [
+      {
+        q: "“Hug contents” means…",
+        options: ["Fixed size", "The frame fits its children", "Fills its parent", "Clips"],
+        answer: 1,
+        why: "Hug makes the frame shrink or grow to wrap snugly around whatever is inside it.",
+      },
+      {
+        q: "Padding vs gap?",
+        options: ["Same thing", "Padding is inside the frame edge; gap is between items", "Gap is outside the frame", "Padding is vertical only"],
+        answer: 1,
+        why: "Padding is the cushion between the frame's edge and its content, while gap is the space between neighboring items.",
+      },
+      {
+        q: "You add a 4th item to a horizontal auto layout. What happens?",
+        options: ["Overlap", "Items shift automatically", "It breaks", "Nothing"],
+        answer: 1,
+        why: "Auto layout rearranges the row for you, making room for the new item with the same gap.",
+      },
+      {
+        q: "A name / price / size stack uses which direction?",
+        options: ["Horizontal", "Vertical", "Wrap", "Absolute"],
+        answer: 1,
+        why: "A stack runs from top to bottom, so it needs the vertical direction.",
+      },
+      {
+        q: "A badge should widen with its name. Set horizontal sizing to…",
+        options: ["Fixed", "Hug", "Fill", "Scale"],
+        answer: 1,
+        why: "Hug lets the badge's width follow its content, so a longer name makes a wider badge.",
+      },
+    ],
+    badge: { id: "shape-shifter", name: "Shape Shifter", icon: "🦋" },
+  },
+  {
+    day: 11,
+    room: 2,
+    title: "Plugins & the Community Treasure Chest",
+    goal: "Use plugins and Community files safely to speed up your work.",
+    videos: [
+      { id: "ZEOdvJSkcmM", title: "How to use Plugins in Figma", channel: "Bring Your Own Laptop", min: 5, start: 0, end: null, note: "Includes a quick plug for a paid course; you don't need it." },
+    ],
+    flavor: {
+      prompt: "Pick a palette to remix",
+      options: [
+        { label: "🎨 Complementary", fill: "your complementary palette" },
+        { label: "🌿 Analogous", fill: "your analogous palette" },
+        { label: "🔺 Triadic", fill: "your triadic palette" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "In a design file, open the Tools tab on the left and search for a color palette plugin.",
+        "Before you run it, check who made it and what it can access.",
+        "Run it on {flavor} from Day 3 and take a screenshot of the result.",
+        "In the Figma Community, find “Bonfire T-Shirt Mockup Generator” and click Open in Figma to get your own copy.",
+        "Optional: try the Print for Figma plugin to set up a 3×3 in page with bleed.",
+      ],
+      deliverable: "Screenshot plus duplicated file",
+    },
+    quiz: [
+      {
+        q: "Before installing a plugin, check…",
+        options: ["Nothing", "Who made it and what it can access", "Its color", "File size"],
+        answer: 1,
+        why: "Plugins can read and change your file, so check the creator and its permissions before you trust it.",
+      },
+      {
+        q: "Duplicating a Community file…",
+        options: ["Edits the original", "Creates your own copy", "Deletes it", "Costs money"],
+        answer: 1,
+        why: "Duplicating puts a personal copy in your drafts, so you can change anything without touching the original.",
+      },
+      {
+        q: "Figma natively designs in…",
+        options: ["CMYK", "RGB", "Pantone", "Grayscale"],
+        answer: 1,
+        why: "Figma works in RGB, the color mode of screens; plugins like Print for Figma can add CMYK export for printers.",
+      },
+      {
+        q: "Print for Figma's bleed option adds…",
+        options: ["0.5 in of white", "0.125 in of bleed", "A watermark", "A cut line only"],
+        answer: 1,
+        why: "The Print for Figma plugin adds the standard 0.125 in (1/8 in) of bleed around your page.",
+      },
+      {
+        q: "When using a Community mockup, you should still…",
+        options: ["Sell the template", "Check its license and credit it if asked", "Remove the author's name", "Ignore licenses"],
+        answer: 1,
+        why: "Free to duplicate doesn't mean free of rules, so read the license and give credit when the creator asks.",
+      },
+    ],
+    badge: { id: "treasure-hunter", name: "Treasure Hunter", icon: "🗝️" },
+  },
+  {
+    day: 12,
+    room: 2,
+    title: "Export Ninja",
+    goal: "Export the right file type and size for each printer: SVG, PDF and transparent PNG.",
+    videos: [
+      { id: "w0SDoyvywbo", title: "How to Export Figma to JPG, PNG, SVG & PDF | Export Vector Files from Figma", channel: "GD Alam", min: 3, start: 0, end: null, note: "" },
+      { id: "FLCyHiolSVU", title: "Figma Basics: How To EXPORT Your Projects (Tutorial)", channel: "Mavi Design", min: 10, start: 0, end: 582, note: "Stops before the course ad at the end." },
+    ],
+    flavor: {
+      prompt: "Pick the fill you'll remove",
+      options: [
+        { label: "🍅 Tomato", fill: "a tomato-red" },
+        { label: "🥝 Kiwi", fill: "a kiwi-green" },
+        { label: "🍇 Grape", fill: "a grape-purple" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Put your Day 8 moon in a small frame and give the frame {flavor} fill.",
+        "Select the moon and add three export settings: SVG, PNG at 3x, and PDF.",
+        "Export them into a new folder on your computer named Print Ready.",
+        "Now export the whole frame as a PNG: see the colored box around the moon?",
+        "Remove the frame's fill (or uncheck Show in exports) and export it again.",
+        "Drag the new PNG onto a dark frame in Figma: the background should be see-through.",
+      ],
+      deliverable: "A “Print Ready” folder",
+    },
+    quiz: [
+      {
+        q: "What does a pin factory want?",
+        options: ["JPG", "SVG or PDF (vector)", "GIF", "Screenshot"],
+        answer: 1,
+        why: "Pins are built from separate metal lines and color areas, so factories need clean vector files like SVG or PDF.",
+      },
+      {
+        q: "What does a Printful DTG shirt want?",
+        options: ["Transparent PNG", "PPTX", "White-background JPG", "HTML"],
+        answer: 0,
+        why: "Printful asks for a transparent sRGB PNG, because any background in the file would print on the shirt.",
+      },
+      {
+        q: "Why do SVG and PDF export only at 1×?",
+        options: ["Bug", "They're vector, so scale doesn't matter", "To save money", "Printers demand it"],
+        answer: 1,
+        why: "Vector files are math, not pixels, so they stay sharp at any size and don't need a 2× or 3× version.",
+      },
+      {
+        q: "A white box appears around your PNG. Cause?",
+        options: ["Font", "The frame still has a white fill", "DPI", "Boolean error"],
+        answer: 1,
+        why: "New frames get a white fill by default, and that fill exports too unless you remove it.",
+      },
+      {
+        q: "You export one small selected layer. The file is…",
+        options: ["The whole page", "Just that layer's bounds", "Blank", "The whole frame"],
+        answer: 1,
+        why: "Figma exports exactly what you selected, cropped to that layer's own edges.",
+      },
+    ],
+    badge: { id: "export-ninja", name: "Export Ninja", icon: "📤" },
+  },
+  {
+    day: 13,
+    room: 3,
+    title: "Meet Claude Design",
+    goal: "Write a clear Claude Design prompt, compare the results and pick a favorite mood board.",
+    videos: [
+      { id: "t_LBECIQQqs", title: "Introducing Claude Design by Anthropic Labs", channel: "Claude", min: 1, start: 0, end: null, note: "" },
+      { id: "e55YEhUBATw", title: "Claude Design Tutorial for Beginners", channel: "Kevin Stratvert", min: 9, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your mascot",
+      options: [
+        { label: "🦉 Night Owl", fill: "a shy night owl" },
+        { label: "🐱 Sleepy Cat", fill: "a sleepy cat" },
+        { label: "👾 Tiny Monster", fill: "a tiny monster" },
+      ],
+    },
+    task: {
+      tool: "Claude Design",
+      steps: [
+        "With your grown-up at the keyboard, open Claude Design — you decide what to type and which result to keep.",
+        "Write a prompt using Subject + Style + 3 Colors + Mood + Format.",
+        "For example: “A one-page mood board for {flavor} mascot, flat cartoon style, navy/mustard/pink, cozy and funny, 6 variations.”",
+        "Ask for 3 versions, compare them side by side, and pick your favorite.",
+        "Export your favorite mood board as a PDF.",
+      ],
+      deliverable: "PDF of the mood board",
+    },
+    quiz: [
+      {
+        q: "Your prompt says: “A sleepy owl mascot, flat cartoon style, navy/mustard/pink, cozy and funny.” Which part of Subject + Style + 3 Colors + Mood + Format is missing?",
+        options: ["The subject (what it's about)", "The style (how it looks)", "The mood (how it feels)", "The format (what to make)"],
+        answer: 3,
+        why: "It names the owl, style, colors and mood but never says what to make, like a one-page mood board with 6 variations.",
+      },
+      {
+        q: "Which is NOT a way to refine a Claude Design output?",
+        options: ["Conversation", "Inline comments", "Custom sliders", "A Photoshop plugin"],
+        answer: 3,
+        why: "Claude Design refines through conversation, inline comments, direct edits and custom sliders; there's no Photoshop plugin.",
+      },
+      {
+        q: "Which export does Claude Design NOT offer?",
+        options: ["PDF", "PPTX", "Canva", "A native Figma .fig file"],
+        answer: 3,
+        why: "Claude Design exports to PDF, PPTX, Canva and standalone HTML, but not to Figma's own .fig format.",
+      },
+      {
+        q: "Why does Claude Design output need rebuilding in Figma for print?",
+        options: ["It's ugly", "It exports PDF/PPTX/HTML/Canva, not print-ready SVG or 300-PPI PNG", "Figma is AI", "Printers ban AI"],
+        answer: 1,
+        why: "Printers want vector files or 300-PPI images, and Claude Design's exports are made for sharing ideas, not production.",
+      },
+      {
+        q: "The most usable merch prompt?",
+        options: ["“Make something cool”", "“Sticker”", "“A die-cut sticker of a sleepy owl, thick outlines, 3 flat colors (navy, mustard, pink), readable at 3 inches”", "“Do art.”"],
+        answer: 2,
+        why: "It names the product, subject, style, colors and size, so Claude knows exactly what to make.",
+      },
+    ],
+    badge: { id: "prompt-captain", name: "Prompt Captain", icon: "⚓" },
+  },
+  {
+    day: 14,
+    room: 3,
+    title: "Iterate Like a Pro (and Move Ideas into Figma)",
+    goal: "Refine an AI design one change at a time, then trace it in Figma to make it yours.",
+    videos: [
+      { id: "eXlSgQmz02E", title: "Claude Design: The Complete Guide", channel: "UI Collective", min: 14, start: 0, end: 857, note: "Plays up to sending designs to Claude Code and Figma." },
+      { id: "ii9MJCBHqjM", title: "Claude Design Tutorial for Beginners | Master 99% in under 20 Minutes", channel: "Kate Hayes", min: 8, start: 234, end: 740, note: "Plays just the “creating and refining designs” part." },
+    ],
+    flavor: {
+      prompt: "Pick your first tweak",
+      options: [
+        { label: "👀 Bigger Eyes", fill: "make the eyes bigger" },
+        { label: "😊 Rosy Cheeks", fill: "add rosy cheeks" },
+        { label: "🎩 Tiny Hat", fill: "add a tiny hat" },
+      ],
+    },
+    task: {
+      tool: "Claude Design + Figma",
+      steps: [
+        "With your grown-up at the keyboard, open your Day 13 design in Claude Design — you decide what to type and which result to keep.",
+        "Round 1: leave an inline comment on your mascot asking Claude to {flavor}.",
+        "Round 2: use a slider or ask for one color tweak, changing just one thing.",
+        "Round 3: ask for “3 simpler versions for a 2-inch sticker” and pick one.",
+        "In Figma, paste in a screenshot of it, set its opacity to 50%, and lock it in the Layers panel.",
+        "On a new layer, trace over it with the Pen tool (P).",
+      ],
+      deliverable: "Traced vector outline",
+    },
+    quiz: [
+      {
+        q: "You only want to change the hat color. Best move?",
+        options: ["A new prompt", "An inline comment on the hat", "Export to PPTX", "Delete the design"],
+        answer: 1,
+        why: "An inline comment points Claude at exactly one element, so the hat changes and everything else stays put.",
+      },
+      {
+        q: "What is “Handoff to Claude Code” for?",
+        options: ["Printing stickers", "Turning a design into a working coded product", "T-shirts", "Adding bleed"],
+        answer: 1,
+        why: "Handoff packages a finished design so Claude Code can build it into a real, working app or website.",
+      },
+      {
+        q: "Best iteration habit?",
+        options: ["Change everything each round", "Change one thing at a time", "Never iterate", "Only use sliders"],
+        answer: 1,
+        why: "Changing one thing per round shows you exactly what made the design better or worse.",
+      },
+      {
+        q: "Claude Design usage counts against plan limits, so…",
+        options: ["Spam prompts", "Plan a clear prompt before sending", "Use it for chatting", "Never export"],
+        answer: 1,
+        why: "Each request uses part of the plan's limit, so a clear, planned prompt gets more done with fewer tries.",
+      },
+      {
+        q: "Why trace the AI idea yourself?",
+        options: ["It's required", "You get clean vectors and the design becomes truly yours", "It's faster than exporting", "The AI asks you to"],
+        answer: 1,
+        why: "Tracing turns a picture into clean vector paths you control, and your own hand makes the final design yours.",
+      },
+    ],
+    badge: { id: "iteration-engine", name: "Iteration Engine", icon: "⚙️" },
+  },
+  {
+    day: 15,
+    room: 3,
+    title: "Designing a Mascot for Merch",
+    goal: "Build a merch-ready mascot from simple shapes, with swappable eyes and mouths for different moods.",
+    videos: [
+      { id: "qu8NCUxajZ0", title: "Create illustrated stickers with Figma | Draw Lolo with us", channel: "LottieFiles", min: 9, start: 0, end: null, note: "Watch how new eyes and mouths change the mood." },
+    ],
+    flavor: {
+      prompt: "Pick a signature detail",
+      options: [
+        { label: "🎀 Bow", fill: "a little bow" },
+        { label: "⭐ Star Mark", fill: "a star-shaped mark" },
+        { label: "🌙 Moon Spot", fill: "a moon-shaped spot" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Rebuild your mascot in Figma from big basic shapes first, using booleans to join and cut.",
+        "Add {flavor} as its signature detail.",
+        "Make the eyes and the mouth into components (⌥⌘K / Ctrl+Alt+K).",
+        "Add variants to each one: happy and sleepy.",
+        "Place two copies of your mascot and swap variants so one is happy and one is sleepy.",
+        "Silhouette test: fill a copy with solid black. Can you still tell what it is?",
+      ],
+      deliverable: "Mascot in 2 moods",
+    },
+    quiz: [
+      {
+        q: "What's the first step for a merch character?",
+        options: ["Tiny details", "Big basic shapes, then refine", "Gradients", "Shadows"],
+        answer: 1,
+        why: "Starting with big, simple shapes gets the pose and proportions right before any detail goes on.",
+      },
+      {
+        q: "Fastest way to make two moods?",
+        options: ["Redraw everything", "Swap eye and mouth components or variants", "Change the font", "A new file"],
+        answer: 1,
+        why: "Swapping a variant changes the expression instantly while the rest of the mascot stays exactly the same.",
+      },
+      {
+        q: "The silhouette test checks…",
+        options: ["Color", "Whether the shape is recognizable at a glance", "DPI", "Bleed"],
+        answer: 1,
+        why: "If a solid black version is still recognizable, the shape is strong enough to read at any size.",
+      },
+      {
+        q: "Why thick, consistent outlines?",
+        options: ["Style only", "They survive small sizes and cutting", "Printers require black", "Smaller files"],
+        answer: 1,
+        why: "Thin lines break up when shrunk or cut, while thick outlines stay clear on small stickers and pins.",
+      },
+      {
+        q: "Line weights across a set should be…",
+        options: ["Random", "Consistent", "Thinner each time", "Irrelevant"],
+        answer: 1,
+        why: "Matching line weights make separate pieces look like one family, which is what unity means.",
+      },
+    ],
+    badge: { id: "character-creator", name: "Character Creator", icon: "🧸" },
+  },
+  {
+    day: 16,
+    room: 4,
+    title: "Die-Cut vs Kiss-Cut",
+    goal: "Tell die-cut from kiss-cut stickers and build a clean white border with a magenta cut line.",
+    videos: [
+      { id: "vjblLJPQykI", title: "Die cut vs. Kiss cut stickers", channel: "Sticker Mule", min: 1, start: 0, end: null, note: "" },
+      { id: "gM9AoEJqBgQ", title: "Kiss Cut vs Die Cut Stickers – What’s the Difference?", channel: "Jukebox Print", min: 1, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your sticker's mood",
+      options: [
+        { label: "😊 Happy", fill: "happy" },
+        { label: "😴 Sleepy", fill: "sleepy" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Put your {flavor} mascot from Day 15 in a new frame.",
+        "Duplicate the mascot and Union the copy's shapes into one silhouette.",
+        "Give the silhouette a thick white stroke set to Outside, then right-click → Outline stroke.",
+        "Union the result, Flatten it (right-click → Flatten), and place it behind the mascot as the border.",
+        "Duplicate the border, remove its fill, and give it a magenta (#FF00FF) stroke with weight 0.5: that's your cut line.",
+        "Kiss-cut version: duplicate the frame and put a larger rounded square behind everything as the backing.",
+      ],
+      deliverable: "2 artboards",
+    },
+    quiz: [
+      {
+        q: "A die-cut sticker is cut…",
+        options: ["Through the vinyl only", "Through vinyl and backing, to the design's shape", "As a square", "Not at all"],
+        answer: 1,
+        why: "Die-cut goes all the way through vinyl and backing, so the whole sticker takes the shape of your design.",
+      },
+      {
+        q: "A kiss-cut sticker's backing…",
+        options: ["Matches the shape", "Stays a larger shape and can be printed on", "Is clear", "Has no adhesive"],
+        answer: 1,
+        why: "Kiss-cut only cuts the vinyl, so the backing stays a bigger square or rectangle that can even be printed on.",
+      },
+      {
+        q: "A thin antenna pokes out of the design. For die-cut you…",
+        options: ["Leave it", "Thicken it or enclose it in the border", "Make it thinner", "Add a gradient"],
+        answer: 1,
+        why: "Cutting blades can't follow skinny bits cleanly, so thicken them or tuck them inside the white border.",
+      },
+      {
+        q: "Sticker Mule's cut-line indicator?",
+        options: ["5 pt black", "0.05–1 pt magenta stroke", "Dotted blue", "A text label"],
+        answer: 1,
+        why: "Sticker Mule asks for a thin 0.05–1 pt magenta stroke, a color that won't be mistaken for part of the art.",
+      },
+      {
+        q: "The cleanest border path in Figma comes from…",
+        options: ["Screenshot", "Outline stroke → Union → Flatten", "Mask", "Blur"],
+        answer: 1,
+        why: "Outline stroke turns the border into a shape, Union merges it with the art, and Flatten leaves one clean path.",
+      },
+    ],
+    badge: { id: "cut-line-pro", name: "Cut Line Pro", icon: "✂️" },
+  },
+  {
+    day: 17,
+    room: 4,
+    title: "Bleed, White Borders & Safe Zones",
+    goal: "Set up a full-bleed sticker with bleed, a trim line and a safe zone for text.",
+    videos: [
+      { id: "s2hz5Va1sz4", title: "How to add a white sticker outline to a design in Procreate", channel: "Graphic Design How To", min: 4, start: 0, end: null, note: "Made in Procreate, but the same idea works in Figma." },
+      { id: "bNqJMDof-eA", title: "HOW TO OUTLINE STICKERS BY ADDING A WHITE BORDER / PROCREATE TIPS AND TRICKS FOR BEGINNERS / DESIGN", channel: "Creatively Erica", min: 7, start: 462, end: 853, note: "Also Procreate; plays just the two outlining methods." },
+    ],
+    flavor: {
+      prompt: "Pick your full-bleed background",
+      options: [
+        { label: "🌌 Galaxy", fill: "a starry galaxy" },
+        { label: "🌅 Sunset", fill: "a sunset sky" },
+        { label: "🍉 Watermelon", fill: "a watermelon-pink" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Make a 975×975 frame: a 3×3 in sticker plus 1/8 in bleed on every side, at 300 DPI.",
+        "Turn on rulers (main menu → View → Rulers).",
+        "With the frame selected, hold Option (Alt on Windows) and drag guides about 37.5 px in from each edge: that's the trim line.",
+        "Add more guides 75 px in from each edge: that's the safe zone.",
+        "Fill the whole frame, right to the edges, with {flavor} background, then add your mascot and keep all text inside the safe zone.",
+        "Export it as a PNG at 1x.",
+      ],
+      deliverable: "Full-bleed file",
+    },
+    quiz: [
+      {
+        q: "Why add bleed?",
+        options: ["Bigger sticker", "Cutting drift would otherwise leave a white sliver at the edge", "Printer logo", "Thicker vinyl"],
+        answer: 1,
+        why: "Cutters drift a tiny bit, so running the art 1/8 in past the edge means no white slivers show.",
+      },
+      {
+        q: "A 3×4 in sticker with 1/8 in bleed needs a canvas of…",
+        options: ["3×4 in", "3.125×4.125 in", "3.25×4.25 in", "3.5×4.5 in"],
+        answer: 2,
+        why: "Bleed goes on both sides, so add 1/8 in twice: 3 + 0.25 = 3.25 and 4 + 0.25 = 4.25 in.",
+      },
+      {
+        q: "Sticker Mule says text…",
+        options: ["Can go full-bleed", "Can't be printed full-bleed", "Must be red", "Must be 1 pt"],
+        answer: 1,
+        why: "Text right at the edge could get trimmed, so Sticker Mule says text can't be printed full-bleed.",
+      },
+      {
+        q: "Minimums?",
+        options: ["2 pt font, 0.1 pt line", "6 pt font, 1 pt line", "12 pt, 5 pt", "None"],
+        answer: 1,
+        why: "Sticker Mule's minimums are 6 pt for text and 1 pt for lines, so anything smaller may not print clearly.",
+      },
+      {
+        q: "Minimum raster resolution for stickers?",
+        options: ["72 PPI", "150 PPI", "300 PPI", "600 PPI"],
+        answer: 2,
+        why: "Sticker printers like Sticker Mule want raster images at 300 PPI or more so details stay crisp.",
+      },
+    ],
+    badge: { id: "bleed-guard", name: "Bleed Guard", icon: "🛡️" },
+  },
+  {
+    day: 18,
+    room: 4,
+    title: "Holographic & Special Finishes",
+    goal: "Design a sticker that shows off holographic vinyl with open areas and strong outlines.",
+    videos: [
+      { id: "wS24KZon9Io", title: "Holographic Stickers – Sticker Mule", channel: "Sticker Mule", min: 1, start: 0, end: null, note: "" },
+      { id: "apzxZx1JGZ8", title: "Zap Creatives Iridescent stickers vs Stickermule holographic stickers comparison review", channel: "Sketched by Ste", min: 8, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your holo shape",
+      options: [
+        { label: "🌙 Moon", fill: "a crescent moon" },
+        { label: "⭐ Star", fill: "a shooting star" },
+        { label: "💎 Crystal", fill: "a sparkly crystal" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Make a sticker frame with your mascot and {flavor}.",
+        "Leave some areas open, with no ink, so the holographic vinyl can shine through.",
+        "Give any text a strong outline or high contrast so it stays readable over the rainbow.",
+        "Add a text layer named HOLO ZONES with notes pointing to where the holo should show.",
+      ],
+      deliverable: "Holo sticker",
+    },
+    quiz: [
+      {
+        q: "The holo rainbow…",
+        options: ["Is printed ink", "Changes with light and viewing angle", "Only shows in the dark", "Is a gradient in the file"],
+        answer: 1,
+        why: "The rainbow comes from the vinyl itself, so it shifts as the light and your viewing angle change.",
+      },
+      {
+        q: "Which design shows off holo most?",
+        options: ["Solid dark ink everywhere", "Light or open areas", "Photo backgrounds", "Tiny text"],
+        answer: 1,
+        why: "Holo only shines where ink doesn't cover it, so open or light areas let the effect show.",
+      },
+      {
+        q: "Why compare finishes?",
+        options: ["Same cost", "They look different, so one may fit the theme better", "Iridescent is paper", "No reason"],
+        answer: 1,
+        why: "Holographic and iridescent vinyl shimmer differently, so comparing them helps you pick the one that suits your design.",
+      },
+      {
+        q: "Text over holo should…",
+        options: ["Be thin", "Have a strong outline or contrast", "Be pastel", "Be tiny"],
+        answer: 1,
+        why: "The shifting rainbow can swallow thin or pale letters, so strong outlines keep text readable.",
+      },
+      {
+        q: "Before sending a holo file you…",
+        options: ["Guess", "Check that printer's file instructions", "Use JPG", "Skip the proof"],
+        answer: 1,
+        why: "Every printer sets up special finishes differently, so their own file instructions tell you exactly what to send.",
+      },
+    ],
+    badge: { id: "holo-hunter", name: "Holo Hunter", icon: "🌈" },
+  },
+  {
+    day: 19,
+    room: 4,
+    title: "AI-Brainstormed Sticker Sheet",
+    goal: "Brainstorm sticker ideas with Claude Design, then build a matching set on a kiss-cut sheet.",
+    videos: [
+      { id: "VeWf0l4ci6Y", title: "Claude Design is Insanely Easy (even for beginners)", channel: "Jeff Su", min: 15, start: 0, end: null, note: "About slide decks, with toolkit plugs; the feedback tips still help." },
+      { id: "3RWm4inkS2E", title: "A Complete Guide to the New Claude Design", channel: "Futurepedia", min: 10, start: 0, end: 579, note: "Plays everything up to the slides section." },
+    ],
+    flavor: {
+      prompt: "Pick your sticker set",
+      options: [
+        { label: "🦉 Night Owl Club", fill: "a “Night Owl Club”" },
+        { label: "🍪 Midnight Snacks", fill: "a “Midnight Snacks”" },
+        { label: "🌙 Moon Garden", fill: "a “Moon Garden”" },
+      ],
+    },
+    task: {
+      tool: "Claude Design + Figma",
+      steps: [
+        "With your grown-up at the keyboard, open Claude Design — you decide what to type and which result to keep.",
+        "Ask for 6 sticker concepts for {flavor} set featuring your mascot, same 3-color palette, bold outlines.",
+        "Pick your 3 favorites and build them in Figma, reusing your mascot components.",
+        "Simplify and thicken any thin, spiky bits so they survive printing and cutting.",
+        "Make a 5×7 in sheet (1500×2100 px at 300 DPI) and arrange the stickers with auto layout (Shift+A).",
+        "Add a magenta cut line around each sticker; the sheet is the shared kiss-cut backing.",
+      ],
+      deliverable: "Sticker sheet",
+    },
+    quiz: [
+      {
+        q: "Why ask for 6 concepts but build only 3?",
+        options: ["Laziness", "Explore widely, then choose, so you keep creative control", "Printer limits", "Required"],
+        answer: 1,
+        why: "Seeing many options first gives you real choices, and building only your favorites keeps you in charge.",
+      },
+      {
+        q: "How do you keep a set unified?",
+        options: ["New palette each time", "Shared palette, line weight and mascot components", "Random fonts", "Different sizes"],
+        answer: 1,
+        why: "Repeating the same palette, line weight and mascot parts makes separate stickers look like one family.",
+      },
+      {
+        q: "Which tool makes the sheet reflow?",
+        options: ["Boolean", "Auto layout", "Pen", "Mask"],
+        answer: 1,
+        why: "Auto layout repositions the stickers automatically when you add, remove or resize one.",
+      },
+      {
+        q: "Kiss-cut suits sheets because…",
+        options: ["Each sticker is cut through the backing", "Stickers peel from one shared backing", "Cheaper vinyl", "No cut line needed"],
+        answer: 1,
+        why: "Kiss-cut leaves the backing whole, so many stickers can sit on one sheet and peel off one by one.",
+      },
+      {
+        q: "An AI concept has a thin spiky outline. Before building it for print you…",
+        options: ["Keep it", "Simplify and thicken it so it survives printing and cutting", "Add a gradient", "Shrink it"],
+        answer: 1,
+        why: "Thin spikes can break or get cut off, so bolder, simpler shapes print and cut cleanly.",
+      },
+    ],
+    badge: { id: "set-builder", name: "Set Builder", icon: "🗂️" },
+  },
+  {
+    day: 20,
+    room: 4,
+    title: "Boss Night: The Print-Ready Sticker Pack",
+    goal: "Finish a five-sticker pack and check every file against a real printer's checklist.",
+    videos: [
+      { id: "ygrHVHDjeRE", title: "Ultimate Cricut Sticker Guide from Start to Finish (Die Cut, Kiss Cut, Easy Peel, Sticker Sheets)", channel: "Little CRAFT Nest", min: 12, start: 93, end: 814, note: "Made for Cricut; plays just canvas setup and making stickers." },
+    ],
+    flavor: {
+      prompt: "Pick your checking background",
+      options: [
+        { label: "🌌 Night Navy", fill: "a night-navy" },
+        { label: "🍅 Tomato Red", fill: "a tomato-red" },
+        { label: "🌿 Moss Green", fill: "a moss-green" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Pick 5 finished stickers (a mix of die-cut, kiss-cut and holo) and gather them in one file.",
+        "Lay them on {flavor} background so white borders and cut lines are easy to spot.",
+        "Check each one: 300 PPI ✔, 1/8 in bleed ✔, safe zone ✔, text ≥ 6 pt ✔, lines ≥ 1 pt ✔, magenta cut line ✔.",
+        "On the copies you'll export, flatten text into shapes (right-click → Flatten) so fonts can't go wrong.",
+        "Export each sticker as a vector PDF and a full-size PNG into a folder named StickerPack_v1.",
+      ],
+      deliverable: "A “StickerPack_v1” folder",
+    },
+    quiz: [
+      {
+        q: "The most print-ready set is…",
+        options: ["Screenshots", "Vector PDF plus 300-PPI PNGs with bleed and cut lines", "72-DPI JPG", "PPTX"],
+        answer: 1,
+        why: "Printers need sharp art, bleed and a cut line, and vector PDFs plus 300-PPI PNGs deliver all three.",
+      },
+      {
+        q: "A 1-in 300-PPI PNG scaled to 3 in becomes…",
+        options: ["300 PPI", "900 PPI", "100 PPI", "150 PPI"],
+        answer: 2,
+        why: "The same 300 pixels now stretch across 3 inches, so 300 ÷ 3 = 100 PPI, which is too low for stickers.",
+      },
+      {
+        q: "Cut line color?",
+        options: ["Your main color", "A spot color like magenta that isn't in the art", "White", "Black"],
+        answer: 1,
+        why: "A spot color that appears nowhere in the art tells the printer exactly where to cut.",
+      },
+      {
+        q: "Gradients are fine on…",
+        options: ["Printed vinyl stickers", "Enamel pins", "Screen-print tees", "Embroidery"],
+        answer: 0,
+        why: "Vinyl stickers are printed like photos, so gradients work, while pins, screen prints and thread need flat colors.",
+      },
+      {
+        q: "Converting text to outlines…",
+        options: ["Is pointless", "Avoids font problems at the printer", "Adds bleed", "Lowers DPI"],
+        answer: 1,
+        why: "Outlined text is just shapes, so it looks right even if the printer doesn't have your font.",
+      },
+    ],
+    badge: { id: "sticker-boss", name: "Sticker Boss", icon: "👑" },
+  },
+  {
+    day: 21,
+    room: 5,
+    title: "T-Shirt Anatomy & Pixel Math",
+    goal: "Size t-shirt print files with pixel math and export them as transparent PNGs.",
+    videos: [
+      { id: "a1aNTnnocTo", title: "Designing and printing my own T-shirts (24 Hr Challenge)", channel: "Will Paterson", min: 10, start: 0, end: null, note: "A pro's real tee project; he designs in Affinity Designer." },
+      { id: "j3vkbcuDE_k", title: "8 Tips for a Perfect Design Print File with Printful", channel: "Printful Custom Printing", min: 8, start: 0, end: null, note: "Straight from Printful: file formats, DPI and clean backgrounds." },
+    ],
+    flavor: {
+      prompt: "Pick your shirt color",
+      options: [
+        { label: "⚫ Black Tee", fill: "a black" },
+        { label: "⚪ White Tee", fill: "a white" },
+        { label: "🔵 Navy Tee", fill: "a navy" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Make an 1800×2400 frame for the front print and remove its fill so the background is transparent.",
+        "Design it for {flavor} shirt, choosing art colors that stand out on it.",
+        "Export it as a PNG at 2x: 3600×4800 px, a 12×16 in print at 300 DPI.",
+        "Make a 1200×1200 frame for a 4×4 in chest print, also with no fill.",
+        "Export it as a PNG at 1x: 1200 px ÷ 300 DPI = 4 in.",
+      ],
+      deliverable: "2 PNGs",
+    },
+    quiz: [
+      {
+        q: "Printful's standard front print area?",
+        options: ["8×10 in", "12×16 in", "20×30 in", "5×5 in"],
+        answer: 1,
+        why: "Printful's standard front print area on a tee goes up to 12×16 in.",
+      },
+      {
+        q: "Minimum DTG resolution?",
+        options: ["72 DPI", "150 DPI", "600 DPI", "1,000 DPI"],
+        answer: 1,
+        why: "Printful's minimum for shirt prints is 150 DPI, with 300 DPI as the sensible top end.",
+      },
+      {
+        q: "Printful's color profile?",
+        options: ["CMYK", "sRGB", "Pantone", "Grayscale"],
+        answer: 1,
+        why: "Printful asks for sRGB files for apparel, which suits Figma since it already works in RGB.",
+      },
+      {
+        q: "A 4×4 in print at 300 DPI is…",
+        options: ["400 px", "1,200×1,200 px", "3,000 px", "300 px"],
+        answer: 1,
+        why: "Pixels = inches × DPI, so 4 × 300 = 1,200 pixels on each side.",
+      },
+      {
+        q: "A black background on a black tee prints as…",
+        options: ["Invisible", "A grayish rectangle", "Perfect", "Shiny"],
+        answer: 1,
+        why: "Printed black ink never exactly matches black fabric, so a filled background shows up as a grayish box.",
+      },
+    ],
+    badge: { id: "pixel-math-wizard", name: "Pixel Math Wizard", icon: "🧙" },
+  },
+  {
+    day: 22,
+    room: 5,
+    title: "DTG vs DTF vs Screen Printing",
+    goal: "Compare DTG, DTF and screen printing, then make a full-color and a 3-color version.",
+    videos: [
+      { id: "Sc_Xm1cBxbY", title: "DTG vs DTF: Closer Look at Printful’s Premium DTFlex Method", channel: "Printful Custom Printing", min: 5, start: 0, end: null, note: "Screen printing isn't in the video; the quiz explains it." },
+    ],
+    flavor: {
+      prompt: "Pick your three inks",
+      options: [
+        { label: "🌙 Night", fill: "navy, gold and white" },
+        { label: "🍓 Candy", fill: "pink, red and cream" },
+        { label: "🌿 Forest", fill: "green, tan and brown" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Duplicate your Day 21 front design so you have two copies.",
+        "DTG version: keep it full color, with all its details and shading.",
+        "Screen-print version: rebuild it with just 3 flat spot colors: {flavor}.",
+        "Remove every gradient, soft shadow and blur from the screen-print copy.",
+        "Label the frames DTG and Screen print.",
+      ],
+      deliverable: "2 versions",
+    },
+    quiz: [
+      {
+        q: "DTG is best for…",
+        options: ["Huge 1-color runs", "Small runs of full-color, detailed designs", "Embroidery", "Metal"],
+        answer: 1,
+        why: "DTG prints straight onto the shirt like an inkjet printer, so detailed full-color art works even for one shirt.",
+      },
+      {
+        q: "Screen printing is best for…",
+        options: ["One-off photos", "Bulk runs of simple, few-color designs", "Phone cases", "Stickers"],
+        answer: 1,
+        why: "Screens take time to set up but then print fast, so they pay off on big orders of simple designs.",
+      },
+      {
+        q: "Why limit colors for screen printing?",
+        options: ["Style", "Each color usually needs its own screen", "Colorblind printers", "No reason"],
+        answer: 1,
+        why: "Every ink color usually gets its own screen and printing pass, so fewer colors mean simpler, cheaper printing.",
+      },
+      {
+        q: "DTF prints…",
+        options: ["Directly on fabric", "On a film that's heat-transferred to the garment", "Embroidery", "Sublimation"],
+        answer: 1,
+        why: "Direct-to-film means the design is printed on a film first, then heat-pressed onto the garment.",
+      },
+      {
+        q: "The screen version should avoid…",
+        options: ["Flat shapes", "Gradients and soft shadows", "Bold text", "Outlines"],
+        answer: 1,
+        why: "Screens lay down solid areas of ink, so gradients and soft shadows don't come through cleanly.",
+      },
+    ],
+    badge: { id: "ink-master", name: "Ink Master", icon: "🖨️" },
+  },
+  {
+    day: 23,
+    room: 5,
+    title: "Mockups That Sell the Idea",
+    goal: "Show your tee art on shirt mockups so people can picture the real thing.",
+    videos: [
+      { id: "aiihQyIaPto", title: "How to Make a T-Shirt Mockup in Photoshop", channel: "Printful Custom Printing", min: 4, start: 0, end: null, note: "Made in Photoshop; the Multiply trick works in Figma too." },
+      { id: "4ZBYb23ngoM", title: "T-Shirt Mockup Design || Figma Photopea Tutorial", channel: "Eirene KW", min: 10, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your shirt trio",
+      options: [
+        { label: "⚪ Classic", fill: "white, heather gray and black" },
+        { label: "🍑 Warm", fill: "peach, mustard and maroon" },
+        { label: "🌊 Cool", fill: "sky blue, sage and navy" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Open your copy of the Bonfire T-Shirt Mockup Generator from Day 11.",
+        "Place your tee art on three shirt colors: {flavor}.",
+        "On the light shirt, set the art's blend mode to Multiply (Appearance section, right panel) so the fabric folds show through.",
+        "Compare the three: where does the art pop, and where does it fade?",
+        "Put all three on one frame named Mockup Board.",
+      ],
+      deliverable: "Mockup board",
+    },
+    quiz: [
+      {
+        q: "You send the printer…",
+        options: ["The mockup", "The separate transparent print file", "A screenshot", "A PDF mockup"],
+        answer: 1,
+        why: "Mockups are pictures for showing people; the printer needs the actual transparent print file.",
+      },
+      {
+        q: "Multiply on a light shirt…",
+        options: ["Brightens", "Lets fabric folds and shadows show through", "Adds bleed", "Converts to CMYK"],
+        answer: 1,
+        why: "Multiply darkens the art wherever the fabric has shadows, so the print looks like it's really on the shirt.",
+      },
+      {
+        q: "Why test 3 shirt colors?",
+        options: ["Required", "The same art reads well or badly depending on garment contrast", "Cheaper", "DPI"],
+        answer: 1,
+        why: "Art that pops on white can vanish on navy, so testing colors shows where the contrast works.",
+      },
+      {
+        q: "A dark design on navy fails because of…",
+        options: ["Low value contrast", "Resolution", "File type", "Bleed"],
+        answer: 0,
+        why: "Dark ink on a dark shirt has little light-dark difference, so the design is hard to see.",
+      },
+      {
+        q: "Mockup photos from the internet…",
+        options: ["Are free", "May be copyrighted, so use licensed or Community mockups", "Are print files", "Need bleed"],
+        answer: 1,
+        why: "Photos online belong to someone, so use mockups with a clear license, like Community files.",
+      },
+    ],
+    badge: { id: "showroom-star", name: "Showroom Star", icon: "🌟" },
+  },
+  {
+    day: 24,
+    room: 5,
+    title: "Hoodies, Hats & Embroidery",
+    goal: "Adapt your art for embroidery and plan a hoodie with a chest logo and back print.",
+    videos: [
+      { id: "vv6gbW4tJ0A", title: "Do This, Not That: Printful Embroidery Tutorial for Beginners!", channel: "Printful Custom Printing", min: 12, start: 0, end: null, note: "" },
+      { id: "OIE2cjfPJGs", title: "How to Create Embroidery Designs with Printful's Design Maker", channel: "Printful Custom Printing", min: 7, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your hoodie's back print",
+      options: [
+        { label: "🌙 Big Moon", fill: "a big moon scene" },
+        { label: "🦉 Giant Mascot", fill: "a giant version of your mascot" },
+        { label: "✨ Star Scatter", fill: "a scatter of little stars" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Hat: make an embroidery version of your mascot or logo with 6 or fewer flat colors.",
+        "Keep text at least 0.25 in tall and lines at least 0.05 in thick (75 px and 15 px at 300 DPI).",
+        "Remove gradients, shadows and tiny details, since thread can't blend.",
+        "Hoodie front: put a small chest logo in its own frame.",
+        "Hoodie back: plan {flavor} in a second, larger frame.",
+      ],
+      deliverable: "Hat file plus hoodie layout",
+    },
+    quiz: [
+      {
+        q: "Minimum embroidered text height?",
+        options: ["0.05 in", "0.25 in", "1 in", "2 in"],
+        answer: 1,
+        why: "Printful's embroidery needs text at least 0.25 in tall, or the stitches blur the letters together.",
+      },
+      {
+        q: "Minimum line thickness?",
+        options: ["0.001 in", "0.05 in", "0.5 in", "1 in"],
+        answer: 1,
+        why: "Printful's embroidery minimum for lines is 0.05 in; anything thinner won't stitch cleanly.",
+      },
+      {
+        q: "Why do gradients fail in embroidery?",
+        options: ["Thread is solid color", "Too cheap", "Too shiny", "They don't fail"],
+        answer: 0,
+        why: "Each thread is one solid color, so smooth color blends can't be stitched.",
+      },
+      {
+        q: "A tiny tagline in embroidery will…",
+        options: ["Stitch perfectly", "Blur or fill in, so remove or enlarge it", "Glow", "Turn into a gradient"],
+        answer: 1,
+        why: "Stitches are much chunkier than pixels, so tiny letters clump together; make them bigger or leave them out.",
+      },
+      {
+        q: "A good hoodie plan is…",
+        options: ["One huge chest print", "Small chest logo plus a larger back design, separate files", "One file stretched everywhere", "No plan"],
+        answer: 1,
+        why: "Each print spot has its own size limits, so every placement gets its own properly sized file.",
+      },
+    ],
+    badge: { id: "thread-head", name: "Thread Head", icon: "🧵" },
+  },
+  {
+    day: 25,
+    room: 5,
+    title: "All-Over Print Patterns",
+    goal: "Build a seamless pattern tile for all-over print and check that the edges line up.",
+    videos: [
+      { id: "ZLHl0KQpSEM", title: "How to Design All-Over Print Apparel | Printful Tutorial 2026", channel: "Printful Custom Printing", min: 9, start: 0, end: 523, note: "Plays the basics and Photoshop demo; skips the other apps." },
+      { id: "H8iYo08qDeE", title: "Create All-Over Print Pattern Designs for Free", channel: "Printful Custom Printing", min: 9, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your pattern icons",
+      options: [
+        { label: "⭐ Stars & Moons", fill: "tiny stars and moons" },
+        { label: "🍄 Mushrooms", fill: "little mushrooms and leaves" },
+        { label: "🦉 Mini Mascots", fill: "mini versions of your mascot" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Make a 1000×1000 frame for your tile.",
+        "Scatter {flavor} across it, letting a few cross the edges.",
+        "For each icon that crosses an edge, duplicate it and move the copy exactly 1000 px to the opposite side (edit X or Y in the right panel).",
+        "Preview: arrange 9 copies of the tile in a 3×3 grid with no gaps and look for seams.",
+        "Export the tile and the preview as JPGs.",
+      ],
+      deliverable: "Tile plus preview",
+    },
+    quiz: [
+      {
+        q: "“Seamless” means…",
+        options: ["No outlines", "Anything cut at one edge continues on the opposite edge", "One color", "Random placement"],
+        answer: 1,
+        why: "When a shape cut off at one edge reappears on the opposite edge, tiles fit together with no visible join.",
+      },
+      {
+        q: "Format for all-over print?",
+        options: ["PNG only", "JPG", "SVG", "PPTX"],
+        answer: 1,
+        why: "All-over prints cover the fabric edge to edge with no transparent areas, so JPG works better for them.",
+      },
+      {
+        q: "Why do templates include seam areas?",
+        options: ["Decoration", "The design wraps across panels, so art must extend past cut edges", "Embroidery", "Bleed-free"],
+        answer: 1,
+        why: "All-over garments are sewn from printed panels, so the art must run past the cut lines to meet at the seams.",
+      },
+      {
+        q: "A visible stripe every tile means…",
+        options: ["DPI", "Edge elements weren't copied exactly to the opposite side", "Font", "Color mode"],
+        answer: 1,
+        why: "If an edge icon's copy is even slightly off, the two halves don't line up and a seam appears.",
+      },
+      {
+        q: "Patterns rely on…",
+        options: ["Repetition and consistent spacing", "One giant focal point", "Tiny text", "Photos"],
+        answer: 0,
+        why: "A pattern is the same elements repeated with steady spacing, which is what makes it feel even.",
+      },
+    ],
+    badge: { id: "pattern-weaver", name: "Pattern Weaver", icon: "🧶" },
+  },
+  {
+    day: 26,
+    room: 6,
+    title: "Enamel Pins",
+    goal: "Design an enamel pin with metal outlines, flat colors and no gradients.",
+    videos: [
+      { id: "xDn6iEXP_2o", title: "[ PIN MAKING 101 ] How To Design Enamel Pins ~ Part 1!", channel: "Le Spirit Designs", min: 6, start: 85, end: 422, note: "Skips the hello and a quick promo at the start." },
+      { id: "-AxpA48Bezk", title: "The Ultimate Guide to Creating Custom Enamel Pins", channel: "Monterey Company", min: 6, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your pin's metal",
+      options: [
+        { label: "🥇 Gold", fill: "gold" },
+        { label: "🥈 Silver", fill: "silver" },
+        { label: "⚫ Black Nickel", fill: "black nickel" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Make a 375×375 frame for a 1.25 in pin (at 300 DPI) and simplify your mascot for it.",
+        "Outline every color area with a metal line at least 0.2 mm thick (3 px or more here).",
+        "Color the metal lines to look like {flavor}.",
+        "Use 5 or fewer flat colors, no gradients, and keep any text at least 5 pt (about 21 px here).",
+        "Export the pin as SVG and as PDF.",
+      ],
+      deliverable: "Pin vector",
+    },
+    quiz: [
+      {
+        q: "Pin colors must be…",
+        options: ["Blended", "Separated by raised metal lines", "Gradients", "Printed"],
+        answer: 1,
+        why: "Enamel is filled into little metal walls, so every color needs a metal line around it.",
+      },
+      {
+        q: "Minimum metal line?",
+        options: ["0.02 mm", "0.2 mm", "2 mm", "5 mm"],
+        answer: 1,
+        why: "Pin makers ask for metal lines of at least 0.2 mm so every line comes out solid in metal.",
+      },
+      {
+        q: "For a sunset gradient you'd use…",
+        options: ["Hard enamel", "A printed pin, or flat bands", "A soft enamel gradient", "Embroidery"],
+        answer: 1,
+        why: "Enamel colors are flat, so a gradient needs a printed pin, or you can fake it with bands of flat color.",
+      },
+      {
+        q: "Soft vs hard enamel?",
+        options: ["Soft is smooth and polished", "Soft has recessed enamel with raised metal you can feel; hard is flat and polished", "Same", "Hard is cheaper"],
+        answer: 1,
+        why: "Soft enamel sits below the metal lines so you feel ridges, while hard enamel is polished flat and smooth.",
+      },
+      {
+        q: "A beginner pin size is…",
+        options: ["0.25 in", "About 1–1.5 in", "6 in", "12 in"],
+        answer: 1,
+        why: "Around 1–1.5 in is big enough for clear details but still a normal, wearable pin size.",
+      },
+    ],
+    badge: { id: "metal-liner", name: "Metal Liner", icon: "📌" },
+  },
+  {
+    day: 27,
+    room: 6,
+    title: "Patches & Keychains",
+    goal: "Simplify your art into a stitchable patch and an acrylic keychain with a cut line.",
+    videos: [
+      { id: "40QnBG07Flc", title: "How to Make Custom Embroidered Patches! What You Need to Know", channel: "Monterey Company", min: 6, start: 0, end: null, note: "Watch the part on why AI art fails as patches." },
+    ],
+    flavor: {
+      prompt: "Pick your patch border",
+      options: [
+        { label: "🌻 Mustard", fill: "mustard" },
+        { label: "🌸 Pink", fill: "pink" },
+        { label: "🔵 Navy", fill: "navy" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Patch: make a 900×900 frame (3 in at 300 DPI) with a circle, and redraw your mascot as bold, flat shapes.",
+        "Use 6 or fewer thread colors, with no tiny details or gradients.",
+        "Give the patch a thick {flavor} border.",
+        "Keychain: place your mascot with a white border and add a magenta cut line around it.",
+        "Add a hole tab: Union a small circle to the edge, then Subtract a smaller circle for the ring.",
+      ],
+      deliverable: "2 files",
+    },
+    quiz: [
+      {
+        q: "Why does AI art often fail as a patch?",
+        options: ["Too simple", "Fine textures, gradients and tiny details can't be stitched", "It's vector", "Too small"],
+        answer: 1,
+        why: "Thread can't reproduce soft textures, blends or tiny details, and AI images are usually full of them.",
+      },
+      {
+        q: "The fix for AI art that can't be stitched?",
+        options: ["Upscale", "Redraw as bold, flat shapes with few colors", "Add noise", "Add a gradient"],
+        answer: 1,
+        why: "Simple flat shapes in a few colors are exactly what embroidery machines stitch well.",
+      },
+      {
+        q: "The patch border should be…",
+        options: ["Hairline", "Thick and simple", "Dotted", "Missing"],
+        answer: 1,
+        why: "A thick, simple border stitches cleanly around the edge and frames the design, while a hairline would disappear.",
+      },
+      {
+        q: "A keychain file needs…",
+        options: ["A mockup only", "Art, a cut line and a hole or tab area", "PPTX", "A gradient"],
+        answer: 1,
+        why: "The maker prints your art, cuts along your cut line, and needs a spot for the hole or ring tab.",
+      },
+      {
+        q: "Which uses thread?",
+        options: ["Pin", "Patch", "Both a pin and a patch", "Neither of them"],
+        answer: 1,
+        why: "Patches are embroidered with thread, while pins are made of metal filled with enamel.",
+      },
+    ],
+    badge: { id: "stitch-smith", name: "Stitch Smith", icon: "🧷" },
+  },
+  {
+    day: 28,
+    room: 6,
+    title: "Phone Cases, Mugs, Totes & Packaging",
+    goal: "Adapt your mascot and palette for phone cases, mugs, totes and packaging.",
+    videos: [
+      { id: "ZJVivm48UEo", title: "Easy Custom Phone Case Tutorial (Printify - Print on Demand)", channel: "Printify", min: 4, start: 0, end: null, note: "" },
+      { id: "ZW9dsdcWZ5U", title: "Mug Design Tutorial - Printify Mug Tutorial 11oz & 15oz", channel: "POD Insights", min: 13, start: 0, end: 766, note: "Plays the safe-area test and the 11oz template method." },
+      { id: "EKjylNTRVAY", title: "How to Create a Custom Tote Bag (Printify - Print on Demand)", channel: "Printify", min: 3, start: 0, end: null, note: "" },
+    ],
+    flavor: {
+      prompt: "Pick your card's message",
+      options: [
+        { label: "💌 Thank You", fill: "a little thank-you note" },
+        { label: "🌙 Club Motto", fill: "your club's motto" },
+        { label: "✨ Care Tips", fill: "quick sticker care tips" },
+      ],
+    },
+    task: {
+      tool: "Figma",
+      steps: [
+        "Phone case: make a tall frame at 300 DPI (300 px for every inch) and keep art away from the camera area and curved edges.",
+        "Mug: design a wide, horizontal wrap and keep key art away from the handle.",
+        "Tote: design a bold front print.",
+        "Sticker backing card: add your mascot, your palette and {flavor}.",
+        "Check that all four share your palette and mascot so they look like one collection.",
+      ],
+      deliverable: "4 files",
+    },
+    quiz: [
+      {
+        q: "Phone case resolution?",
+        options: ["72 DPI", "150 DPI", "300 DPI", "30 DPI"],
+        answer: 2,
+        why: "Phone cases are seen up close, so like stickers they need 300 DPI to look sharp.",
+      },
+      {
+        q: "On a phone case, keep art away from…",
+        options: ["The center", "The camera cutout and curved edges", "The bottom", "Nowhere"],
+        answer: 1,
+        why: "The camera hole cuts right through the art and the curved edges wrap it, so key details there get lost.",
+      },
+      {
+        q: "A mug design is…",
+        options: ["Tall and narrow", "Wide and horizontal", "Circular", "Square"],
+        answer: 1,
+        why: "A mug print wraps around the cup, so the design area is a wide, short strip.",
+      },
+      {
+        q: "Why check 11oz and 15oz separately?",
+        options: ["Same template", "Different print areas", "Colors", "No reason"],
+        answer: 1,
+        why: "The 15oz mug is bigger, so its print area is a different size and the art has to be resized for it.",
+      },
+      {
+        q: "Packaging should…",
+        options: ["Hide the brand", "Match the collection's palette and mascot", "Be random", "Be black"],
+        answer: 1,
+        why: "Packaging is part of the collection, so the same palette and mascot make everything feel like one brand.",
+      },
+    ],
+    badge: { id: "merch-maker", name: "Merch Maker", icon: "🛍️" },
+  },
+  {
+    day: 29,
+    room: 7,
+    title: "Collection Board & Portfolio",
+    goal: "Gather your best pieces into a collection board and a one-page lookbook.",
+    videos: [
+      { id: "3ZBY7oVZpuM", title: "How to Actually Use Claude Design Like a Pro | Claude Design Tutorial", channel: "Ferdy․com | Ferdy Korpershoek", min: 9, start: 148, end: 700, note: "Builds a website, but the same steps make your lookbook." },
+    ],
+    flavor: {
+      prompt: "Pick your lookbook's feel",
+      options: [
+        { label: "🌙 Moody", fill: "a moody, midnight" },
+        { label: "☀️ Bright", fill: "a bright, bold" },
+        { label: "🌿 Calm", fill: "a soft, calm" },
+      ],
+    },
+    task: {
+      tool: "Figma + Claude Design",
+      steps: [
+        "In Figma, make a Collection Board frame with your palette, mascot, stickers, tee, hat, pin, patch, case and mug.",
+        "Export the board as a PNG image.",
+        "With your grown-up at the keyboard, open Claude Design — you decide what to type and which result to keep.",
+        "Attach the board image and ask for a one-page lookbook with {flavor} feel.",
+        "Change one thing at a time until you love it, then export the lookbook as a PDF.",
+      ],
+      deliverable: "Board plus lookbook",
+    },
+    quiz: [
+      {
+        q: "A strong portfolio shows…",
+        options: ["Everything", "Your best, most cohesive pieces plus a bit of process", "Only sketches", "Only AI output"],
+        answer: 1,
+        why: "A small set of your best, matching work, plus a peek at how you got there, shows both taste and skill.",
+      },
+      {
+        q: "What's safest to share publicly?",
+        options: ["Your home address", "A pen name and your designs", "Your phone number", "Your school schedule"],
+        answer: 1,
+        why: "Your designs can speak for you under a pen name, while personal details should stay private.",
+      },
+      {
+        q: "What makes a collection a “line”?",
+        options: ["Different styles", "Shared palette, mascot, line weight and theme", "Different fonts", "Random products"],
+        answer: 1,
+        why: "Products become a line when they share the same palette, mascot, line weight and theme.",
+      },
+      {
+        q: "Why include process shots?",
+        options: ["Filler", "They show real skill and ownership beyond AI output", "Printers need them", "DPI"],
+        answer: 1,
+        why: "Sketches, traces and versions prove you made the decisions and did the building, not just the AI.",
+      },
+      {
+        q: "The lookbook is best exported as…",
+        options: ["An SVG print file", "A PDF to show people", "A pin file", "An embroidery file"],
+        answer: 1,
+        why: "A lookbook is for showing people, and a PDF opens on almost any device with your layout intact.",
+      },
+    ],
+    badge: { id: "collection-curator", name: "Collection Curator", icon: "📖" },
+  },
+  {
+    day: 30,
+    room: 7,
+    title: "Final Boss: Launch Your Merch Line",
+    goal: "Finish your merch line, organize the print-ready files and present it at a family launch night.",
+    videos: [
+      { id: "5m4YjFFHxRo", title: "Color Theory for Digital Artists & Beginners", channel: "Let's Draw with BeeJayDeL", min: 12, start: 699, end: null, note: "Plays the color harmonies: pick one for your whole line." },
+    ],
+    flavor: {
+      prompt: "Pick your line's theme",
+      options: [
+        { label: "🌙 Midnight", fill: "a midnight" },
+        { label: "🌸 Cozy Garden", fill: "a cozy garden" },
+        { label: "🚀 Outer Space", fill: "an outer-space" },
+      ],
+    },
+    task: {
+      tool: "Figma + Claude Design",
+      steps: [
+        "Give your whole line {flavor} theme and one color harmony.",
+        "Final pass in Figma: 3 stickers, 1 tee (DTG plus a 3-color version), 1 pin, 1 patch or hat, and 1 extra product.",
+        "Make mockups, then export every print file into a folder named PRINT_READY.",
+        "With your grown-up at the keyboard, open Claude Design — you decide what to type and which result to keep.",
+        "Make a 3-slide presentation of your line and export it as a PDF.",
+        "Share it at a family launch night, in whatever way feels right to you.",
+      ],
+      deliverable: "The complete folder plus a 3-slide presentation",
+    },
+    quiz: [
+      {
+        q: "Which file goes to which vendor?",
+        options: ["SVG to the tee, PNG to the pin maker", "Transparent sRGB PNG to the Printful tee; vector to the pin maker; vector PDF or 300-PPI PNG with cut line to the sticker printer", "Mockups to all", "PPTX to all"],
+        answer: 1,
+        why: "Every vendor needs its own format: tees print from transparent PNGs, pins from vectors, and stickers from files with cut lines.",
+      },
+      {
+        q: "1200×1600 px art at 12×16 in is…",
+        options: ["300 DPI", "150 DPI", "100 DPI", "72 DPI"],
+        answer: 2,
+        why: "1,200 px ÷ 12 in = 100 DPI, and that's below the 150 minimum.",
+      },
+      {
+        q: "One color harmony across the line supports…",
+        options: ["Contrast", "Unity", "Bleed", "Resolution"],
+        answer: 1,
+        why: "Sharing one color harmony ties every product together, so the whole line feels unified.",
+      },
+      {
+        q: "The mascot is full color on stickers but 5 flat colors on the pin. That's…",
+        options: ["Inconsistency", "Adapting to production limits while keeping identity", "A mistake", "Illegal"],
+        answer: 1,
+        why: "Each product has its own limits, and simplifying for a pin while keeping the mascot recognizable is smart adapting.",
+      },
+      {
+        q: "Claude Design's best role was…",
+        options: ["Final print files", "Exploring, mood boards and presentation, while Figma made the production files", "Embroidery digitizing", "Ordering"],
+        answer: 1,
+        why: "Claude Design is great for ideas and showing work, but print files need Figma's precise vectors and exports.",
+      },
+    ],
+    badge: { id: "launch-legend", name: "Launch Legend", icon: "🚀" },
+  },
+];
