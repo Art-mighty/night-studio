@@ -108,6 +108,18 @@
         }
       }
     });
+    await test("the right answer isn't simply the longest one", () => {
+      let longest = 0, total = 0;
+      for (const d of DAYS) {
+        for (const q of d.quiz) {
+          total++;
+          const len = q.options.map((o) => o.length), right = len[q.answer];
+          if (len.every((l, i) => i === q.answer || l < right)) longest++;
+        }
+      }
+      line(`(info) the right answer is the longest option in ${longest} of ${total} questions`, "info");
+      ok(longest / total <= 0.4, `${longest} of ${total} (${Math.round((100 * longest) / total)}%): picking the longest answer would win too often`);
+    });
     await test("badges are unique, and Blot is gone", () => {
       const ids = DAYS.map((d) => d.badge.id);
       eq(new Set(ids).size, 30, "unique badge ids:");
