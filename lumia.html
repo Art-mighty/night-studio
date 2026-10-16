@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lumia Merch Lab</title>
+  <meta name="description" content="Night Studio's sequel: 15 evenings designing real merch for Lumia with Figma and Claude Design.">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="lumia/brand/logos/Lumia-mark-amber-transparent.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module">
+    import { start } from "./js/main.js";
+    import { COURSE } from "./js/content/lumia/course.js";
+    start(COURSE);
+  </script>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#/"><img class="brand-logo" src="lumia/brand/logos/Lumia-lockup-Marcellus-amber.png" alt="Lumia"> Merch Lab</a>
+    <nav class="stats" aria-label="Your studio">
+      <span id="stat-name"></span>
+      <span id="stat-xp" title="XP"></span>
+      <span id="stat-lanterns" title="Lanterns lit"></span>
+      <a href="#/brand-kit">Brand Kit</a>
+      <a href="#/shelf">Shelf</a>
+      <button id="mute" type="button" aria-label="Sounds on or off">🔔</button>
+    </nav>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <aside id="lumi" aria-label="Lumi, your studio buddy">
+    <canvas></canvas>
+    <div class="lumi-bubble" role="status" aria-live="polite"></div>
+    <button class="lumi-tap" type="button" aria-label="Tap Lumi"></button>
+  </aside>
+
+  <footer class="foot"><a href="#/grown-ups">For grown-ups</a></footer>
+
+  <noscript><p class="file-warning">Lumia Merch Lab needs JavaScript turned on.</p></noscript>
+  <script>
+    // Opened by double-clicking the file? The game has to come from a web address (YouTube and the game's own
+    // scripts refuse to run from a plain file). See README.md.
+    if (location.protocol === "file:") {
+      document.getElementById("app").innerHTML =
+        '<p class="file-warning">Open Lumia Merch Lab from its web address, not as a file. ' +
+        'To try it on this computer, run <code>python3 serve.py</code> in this folder and visit ' +
+        '<a href="http://localhost:8000/lumia.html">http://localhost:8000/lumia.html</a>.</p>';
+    }
+  </script>
+</body>
+</html>

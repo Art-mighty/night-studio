@@ -98,7 +98,7 @@ export const openStore = (name = "night-studio") => {
     async backup(P, date) {
       const pics = await store.allImages();
       const file = {
-        kind: "night-studio-backup",
+        kind: `${name}-backup`, // "night-studio-backup" for Night Studio, so its old backups still restore
         format: 1,
         exportedAt: new Date().toISOString(),
         progress: P,
@@ -115,9 +115,9 @@ export const openStore = (name = "night-studio") => {
       try {
         file = JSON.parse(text);
       } catch {
-        throw new Error("That file isn't a Night Studio backup.");
+        throw new Error("That file isn't a backup of this course.");
       }
-      if (file?.kind !== "night-studio-backup") throw new Error("That file isn't a Night Studio backup.");
+      if (file?.kind !== `${name}-backup`) throw new Error("That file isn't a backup of this course.");
       const P = migrate(file.progress);
       const pics = (file.images ?? []).map((im) => ({ key: im.key, day: im.day, w: im.w, h: im.h, at: im.at, blob: fromBase64(im.data, im.type) }));
       const t = await images("readwrite");

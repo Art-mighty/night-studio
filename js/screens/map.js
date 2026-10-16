@@ -1,14 +1,13 @@
-// The studio map (#/): tonight's day, her lanterns, and the 7 rooms with their days. On her very first visit it's the
+// The studio map (#/): tonight's day, her lanterns, and the course's rooms with their days. On her very first visit it's the
 // welcome screen instead, where she picks a pen name.
 import { h } from "../ui.js";
-import { PEN_NAMES } from "../content/course.js";
 
 // Rough length of a day: the videos, about 30 minutes of making, and a few minutes of quiz.
 export const minutes = (day) => Math.round(day.videos.reduce((s, v) => s + (v.min ?? 0), 0) + 30 + 6);
 
 export const render = (el, ctx) => {
   if (!ctx.P.penName) return welcome(el, ctx);
-  const { rules, DAYS, ROOMS, lumi } = ctx;
+  const { rules, DAYS, ROOMS, lumi, course } = ctx;
   const P = ctx.P, date = ctx.today();
   lumi.base(rules.awake(P) ? "neutral" : "sleepy");
 
@@ -29,16 +28,18 @@ export const render = (el, ctx) => {
         h("p.kicker", `Tonight · Day ${cur} of ${DAYS.length}`),
         h("h1", tonight.title),
         h("p.lead", tonight.goal),
-        h("p.meta", `${room.icon} Room ${room.n} · ${room.name} · about ${minutes(tonight)} min`),
+        h("p.meta", `${room.icon} ${course.roomWord} ${room.n} · ${room.name} · about ${minutes(tonight)} min`),
         h("a.big", { href: `#/day/${cur}` }, P.days[cur] ? `Continue Day ${cur}` : `Start Day ${cur}`),
       )
     : h(
         "section.card.tonight.all-done",
-        h("p.kicker", "30 of 30"),
-        h("h1", "Your studio is lit up ✨"),
-        h("p.lead", "You finished all 30 days. Visit your shelf, dress Lumi, or replay any day you like."),
+        h("p.kicker", `${DAYS.length} of ${DAYS.length}`),
+        h("h1", course.text.finishedTitle),
+        h("p.lead", course.text.finished),
         h("a.big", { href: "#/shelf" }, "Open your shelf"),
       );
+  // Finished the whole course? Point the way to the next one, if there is one.
+  const sequel = !tonight && course.next ? h("section.card.next-course", h("h2", h("a", { href: course.next.href }, course.next.title)), h("p", course.next.text)) : null;
 
   const lit = rules.lanterns(P);
   const lanterns = h(
@@ -60,19 +61,20 @@ export const render = (el, ctx) => {
     }
     return h(
       "section.room" + (done ? ".lit" : ""),
-      h("header", h("span.room-icon", r.icon), h("div", h("h2", `Room ${r.n} · ${r.name}`), h("p", r.blurb))),
+      h("header", h("span.room-icon", r.icon), h("div", h("h2", `${course.roomWord} ${r.n} · ${r.name}`), h("p", r.blurb))),
       h("div.tiles", tiles),
-      h("p.gift", done ? h("a", { href: `#/levelup/${r.n}` }, `🎁 ${r.gift.title}`) : "🎁 Finish this room for a surprise"),
+      h("p.gift", done ? h("a", { href: `#/levelup/${r.n}` }, `🎁 ${r.gift.title}`) : `🎁 Finish this ${course.roomWord.toLowerCase()} for a surprise`),
     );
   });
 
-  el.append(...[rain, next, lanterns, h("div.rooms", rooms)].filter(Boolean));
+  el.append(...[rain, next, sequel, lanterns, h("div.rooms", rooms)].filter(Boolean));
 };
 
 const welcome = (el, ctx) => {
   ctx.lumi.base("sleepy");
   const input = h("input.pen", { type: "text", maxlength: 24, placeholder: "Your artist name", autocomplete: "off", spellcheck: "false", "aria-label": "Your artist name" });
-  const ideas = [...PEN_NAMES].sort(() => Math.random() - 0.5).slice(0, 3);
+  const t = ctx.course.text;
+  const ideas = [...ctx.course.PEN_NAMES].sort(() => Math.random() - 0.5).slice(0, 3);
   const start = () => {
     const name = input.value.trim();
     if (!name) return input.focus();
@@ -83,14 +85,14 @@ const welcome = (el, ctx) => {
   el.append(
     h(
       "section.card.welcome",
-      h("p.kicker", "After hours"),
-      h("h1", "Welcome to Night Studio"),
-      h("p.lead", "This is your secret design studio. In 30 short evenings you'll go from your first shape in Figma to print-ready stickers, t-shirts, pins and patches."),
+      h("p.kicker", t.kicker),
+      h("h1", t.welcome),
+      h("p.lead", t.lead),
       h("p", "Nobody watches and nothing is shared. You can retry anything as many times as you like."),
       h("p", "That's Lumi in the corner, fast asleep. Finish Day 1 and it'll wake up."),
       h("label.field", h("span", "Pick an artist name (a pen name, not your real one):"), input),
       h("div.chips", ideas.map((name) => h("button.chip", { type: "button", onclick: () => { input.value = name; input.focus(); } }, name))),
-      h("button.big", { type: "button", onclick: start }, "Light the lamp"),
+      h("button.big", { type: "button", onclick: start }, t.start),
     ),
   );
   setTimeout(() => input.focus(), 50);

@@ -1,7 +1,6 @@
 // The quiz: 5 questions, one at a time, in a new order each attempt (the answers move around too). After each
 // answer she sees "Yes!" or "Not quite" and one sentence of why. 4 of 5 passes, and she can always try again.
 import { h, chime } from "../ui.js";
-import { PASS } from "../content/course.js";
 
 // Runs one attempt inside `host`. onFinish(score) is called when all 5 are answered (pass or not).
 export const mountQuiz = (host, ctx, day, onFinish) => {
@@ -43,7 +42,7 @@ export const mountQuiz = (host, ctx, day, onFinish) => {
 
   const finish = () => {
     ctx.lumi.base("neutral");
-    const passed = score >= PASS, perfect = score === qs.length;
+    const PASS = ctx.course.PASS, passed = score >= PASS, perfect = score === qs.length;
     onFinish(score);
     box.replaceChildren(
       h("div.score" + (passed ? ".pass" : ""), h("b", score), h("span", ` of ${qs.length}`)),

@@ -1,7 +1,6 @@
 // For grown-ups (#/grown-ups): how she's doing (lightly: no quiz attempt counts are ever kept), keeping her work safe,
 // and the research's playbook and print cheat sheet. Nothing on this page is hidden from her.
 import { h, toast } from "../ui.js";
-import { CHEAT_SHEET, PLAYBOOK, PRINT_REWARDS, SETUP } from "../content/course.js";
 
 const CHECKIN = { solo: "All by myself", help: "With a little help", together: "We did it together" };
 const nice = (date) => new Date(`${date}T12:00:00`).toLocaleDateString(undefined, { month: "short", day: "numeric" });
@@ -9,6 +8,7 @@ const mmss = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 
 export const render = (el, ctx) => {
   const R = ctx.rules, P = ctx.P, today = ctx.today();
+  const { CHEAT_SHEET, PLAYBOOK, PRINT_REWARDS, SETUP } = ctx.course;
   ctx.lumi.base(R.awake(P) ? "neutral" : "sleepy");
 
   // ----- how it's going -----
@@ -61,7 +61,7 @@ export const render = (el, ctx) => {
         backupBtn.disabled = true;
         try {
           const blob = await ctx.store.backup(ctx.P, today);
-          const a = h("a", { href: URL.createObjectURL(blob), download: `night-studio-backup-${today}.json` });
+          const a = h("a", { href: URL.createObjectURL(blob), download: `${ctx.course.id}-backup-${today}.json` });
           document.body.append(a);
           a.click();
           a.remove();
@@ -148,7 +148,7 @@ export const render = (el, ctx) => {
 
   el.append(
     h("nav.crumbs", h("a", { href: "#/" }, "← Studio")),
-    h("header.page-head", h("h1", "For grown-ups"), h("p.lead", "Night Studio follows the research in docs/research.md: small private wins, real choices, unlimited retries, and you as co-pilot rather than judge.")),
+    h("header.page-head", h("h1", "For grown-ups"), h("p.lead", ctx.course.text.grownUps)),
     progress,
     safety,
     setup,

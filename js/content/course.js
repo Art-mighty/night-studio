@@ -1,6 +1,9 @@
 // Night Studio: the course's fixed rules and texts. The 30 days themselves are in days.js.
 // Everything here comes from docs/research.md unless a comment says otherwise. Change numbers freely: XP and badges are
 // calculated from her progress every time, so a change applies to everything she has already done.
+// Everything is bundled into COURSE at the bottom: the "course pack" the game engine runs (index.html starts it).
+
+import { DAYS } from "./days.js";
 
 // Correct answers (out of 5) needed to pass a day's quiz. Retries are unlimited.
 export const PASS = 4;
@@ -83,7 +86,7 @@ export const PLAYBOOK = [
   ["Show work safely", "Her gallery stays private in this browser. Hold a family “gallery night” with Show Family, and order one real print as a capstone reward. Share online only if she wants to, with a pen name."],
   ["Plugins and Community files", "Check who made a plugin before installing it. Duplicating a Community file makes her own copy."],
   ["Original characters only", "No fan art of brands or characters for anything that might be sold."],
-  ["Claude Design is a work tool", "Open it for the design task and close it when done. Claude's consumer plans are for adults (18+), so on Days 13, 14, 19 and 29 you drive the keyboard while she decides what to type and which result to keep."],
+  ["Claude Design is a work tool", "Open it for the design task and close it when done. Claude's consumer plans are for adults (18+), so on Days 13, 14, 19, 29 and 30 you drive the keyboard while she decides what to type and which result to keep."],
   ["Go at her pace", "If a day takes two sessions, that's fine. Days unlock as soon as she finishes, and her lanterns never go out."],
   ["One real print is worth 100 badges", "Order a small sticker run after Day 20, and a tee or pin after Day 30."],
 ];
@@ -93,7 +96,7 @@ export const SETUP = [
   "A free Figma account (the Starter plan is enough) on this computer.",
   "Bookmark this page in Chrome. Don't use an Incognito or Guest window: they forget her progress.",
   "Headphones, so she can watch the videos in her own bubble.",
-  "Your Claude account with Claude Design for Days 13, 14, 19 and 29 (you drive, she directs).",
+  "Your Claude account with Claude Design for Days 13, 14, 19, 29 and 30 (you drive, she directs).",
   "Preview the videos (list below) and skim the day texts once.",
 ];
 
@@ -117,3 +120,23 @@ export const PRINT_REWARDS = [
 
 // Pen-name ideas for the first screen (the research: share only under a pen name).
 export const PEN_NAMES = ["Moth", "Ink Owl", "Night Fern", "Quiet Comet", "Pixel Fox", "Moon Doodle", "Velvet Crow", "Lamp Moth", "Paper Star", "Nova"];
+
+// The course pack: everything above in one object. js/main.js runs whichever pack its page hands it (lumia.html
+// hands it js/content/lumia/course.js). `id` is also the save name, so never change it: her progress lives under it.
+export const COURSE = {
+  id: "night-studio",
+  title: "Night Studio",
+  DAYS, ROOMS, PASS, XP, OWN_IDEA_TWISTS, SECRET_BADGES, LUMI_WORDS, PLAYBOOK, SETUP, CHEAT_SHEET, PRINT_REWARDS, PEN_NAMES,
+  roomWord: "Room",
+  text: {
+    kicker: "After hours",
+    welcome: "Welcome to Night Studio",
+    lead: "This is your secret design studio. In 30 short evenings you'll go from your first shape in Figma to print-ready stickers, t-shirts, pins and patches.",
+    start: "Light the lamp",
+    finishedTitle: "Your studio is lit up ✨",
+    finished: "You finished all 30 days. Visit your shelf, dress Lumi, or replay any day you like.",
+    grownUps: "Night Studio follows the research in docs/research.md: small private wins, real choices, unlimited retries, and you as co-pilot rather than judge.",
+  },
+  // Shown on the map once the last day is done.
+  next: { href: "lumia.html", title: "Next: Lumia Merch Lab →", text: "A real client wants merch. 15 evenings designing stickers, tees, mugs and more for Lumia, and your best pieces get printed." },
+};

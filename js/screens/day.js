@@ -2,7 +2,6 @@
 // → the reward. Every step saves as she goes, so she can stop and come back at any time. The day counts as done once
 // it has a picture and a passed quiz; the videos are optional (they earn XP).
 import { chime, h, picture, toast, uploadZone, videoCard, xpFloat } from "../ui.js";
-import { PASS, SECRET_BADGES, XP } from "../content/course.js";
 import { prepareUpload } from "../images.js";
 import { mountQuiz } from "./quiz.js";
 import { minutes } from "./map.js";
@@ -11,6 +10,7 @@ const CHECKIN = [["solo", "All by myself"], ["help", "With a little help"], ["to
 
 export const render = (el, ctx, arg) => {
   const n = Number(arg), day = ctx.DAYS[n - 1], room = ctx.rules.roomOf(n), R = ctx.rules;
+  const { PASS, SECRET_BADGES, XP } = ctx.course;
   const urls = [], stops = [];
   const D = () => ctx.P.days[n] ?? {};
   ctx.lumi.base(R.awake(ctx.P) ? "neutral" : "sleepy");
@@ -222,7 +222,7 @@ export const render = (el, ctx, arg) => {
     quizSec.replaceChildren(
       h("h2", h("span.num", "5"), "Quick quiz"),
       h("p.muted", `${day.quiz.length} questions, one at a time. ${PASS} right passes. Retry as often as you like; the questions shuffle each time.`),
-      passed ? h("p", `Passed ✓ Best score: ${q.best} of ${day.quiz.length}.`) : null,
+      passed ? h("p", `Passed ✓ Best score: ${q.best} of ${day.quiz.length}.`) : "",
       h("button" + (passed ? ".ghost" : ".big"), { type: "button", onclick: () => mountQuiz(quizSec, ctx, day, onFinish) }, passed ? "Practice again" : q ? "Try again" : "Start the quiz"),
     );
   };
@@ -260,7 +260,7 @@ export const render = (el, ctx, arg) => {
   };
 
   el.append(
-    h("nav.crumbs", h("a", { href: "#/" }, "← Studio"), h("span", `${room.icon} Room ${room.n} · ${room.name}`)),
+    h("nav.crumbs", h("a", { href: "#/" }, "← Studio"), h("span", `${room.icon} ${ctx.course.roomWord} ${room.n} · ${room.name}`)),
     h(
       "header.day-head",
       h("p.kicker", `Day ${n} of ${ctx.DAYS.length}`),

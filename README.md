@@ -7,6 +7,12 @@ pixel ghost, keeps her company. It wakes up on Day 1, learns tricks, and wears h
 It's built from the research in [docs/research.md](docs/research.md). The build plan is in
 [docs/implementation-plan.md](docs/implementation-plan.md).
 
+**The sequel, Lumia Merch Lab** (`lumia.html`), is 15 evenings of designing real merch for Lumia, inside its brand
+rules: stickers, a pin, a patch, tees, a cap, a tote, a mug, a school set, a plush concept, a welcome kit, and a
+print-ready hand-off. It has a Brand Kit screen (`#/brand-kit`) with the logos, Lumi's poses, colours and fonts. On
+its first open it brings over her pen name and Lumi (star colour, outfit, tricks) from Night Studio, which it only
+reads. Its plan is in [docs/lumia-merch-lab-plan.md](docs/lumia-merch-lab-plan.md).
+
 ## For her
 
 Open the bookmark in Chrome. That's all. Her progress and pictures are saved in that browser on that computer.
@@ -20,11 +26,12 @@ files ("Error 153"), and browsers won't load the game's JavaScript modules from 
 python3 serve.py
 ```
 
-Then open <http://localhost:8000>. No installs, no build step.
+Then open <http://localhost:8000> (Night Studio) or <http://localhost:8000/lumia.html> (Lumia Merch Lab). No
+installs, no build step.
 
 - **Tests:** <http://localhost:8000/tests.html>. The tab title says `PASS n/n`. They check the content, every game
   rule, backups, and that Lumi matches the original pixel for pixel.
-- **Dev mode:** <http://localhost:8000/?dev>, then in the console `nightStudio.skipTo(16)` finishes Days 1–15 with
+- **Dev mode:** <http://localhost:8000/?dev> (or `lumia.html?dev`), then in the console `nightStudio.skipTo(16)` finishes Days 1–15 with
   made-up pictures, so you can see level-ups and outfit pickers. Use a separate Chrome profile, since it writes real
   progress.
 
@@ -37,8 +44,9 @@ a minute or two. Push when she isn't mid-session, and never renumber days, since
 
 | To change… | Edit |
 |---|---|
-| A day's text, steps, flavor choices, quiz or videos | `js/content/days.js` |
-| XP values, pass mark, rooms and gifts, Lumi's words, the playbook, the cheat sheet | `js/content/course.js` |
+| A day's text, steps, flavor choices, quiz or videos | `js/content/days.js` (Lumia: `js/content/lumia/days.js`) |
+| XP values, pass mark, rooms and gifts, Lumi's words, the playbook, the cheat sheet | `js/content/course.js` (Lumia: `js/content/lumia/course.js`) |
+| The Lumia Brand Kit: rules, logo list, poses, colours | `BRAND` in `js/content/lumia/course.js`; files in `lumia/brand/` |
 | Colours and layout | `css/style.css` (variables at the top) |
 
 Days in `days.js`:
@@ -52,19 +60,25 @@ After editing, reload `tests.html`.
 ## How it's built
 
 ```
-index.html          the page: header, <main> for screens, Lumi's corner, footer
+index.html          the page: header, <main> for screens, Lumi's corner, footer; starts Night Studio
+lumia.html          the same page for Lumia Merch Lab
 css/style.css       the night-studio look
-js/main.js          starts everything; the #/ address picks the screen
+js/main.js          the engine: start(course) runs a course pack; the #/ address picks the screen
 js/rules.js         every game rule, as pure functions (tested in tests.html)
 js/store.js         progress in localStorage, pictures in IndexedDB, backup/restore/reset
 js/images.js        shrinks uploads; turns a design into Lumi-sized pixels
 js/ui.js            small helpers: h() to build elements, chime, video card, upload box
-js/screens/         map (+ welcome), day, quiz, levelup, shelf, grownups
-js/content/         days.js (the 30 days), course.js (rules and texts)
+js/screens/         map (+ welcome), day, quiz, levelup, shelf, grownups, brandkit (Lumia only)
+js/content/         days.js (the 30 days), course.js (rules and texts, bundled as the COURSE pack)
+js/content/lumia/   the Lumia Merch Lab pack: days.js (15 days), course.js
+lumia/brand/        Lumia's logo files (see its README)
 js/lumi/            Lumi, copied from Lumia_marketing (see below), plus director.js
 tests.html          no-install tests
 docs/               the research and the plan
 ```
+
+Each course is one "pack" (`COURSE`): its days, rooms, texts and save name (`id`). A page hands a pack to
+`start()`; the rules and screens read everything course-specific from it. A third course is a new pack plus a page.
 
 Plain HTML, CSS and JavaScript modules: no framework, no npm, no build. Her data never leaves her browser. The only
 outside requests are the YouTube player (youtube-nocookie.com), and only when she presses Play.
@@ -72,6 +86,8 @@ outside requests are the YouTube player (youtube-nocookie.com), and only when sh
 ## Her data
 
 - **Progress** lives in `localStorage` (`night-studio:progress`) and **pictures** in IndexedDB (`night-studio`).
+  Lumia Merch Lab uses its own: `lumia-merch-lab:progress` and `lumia-merch-lab`. The two never touch each other.
+- **Never change a pack's `id`**: it's the save name.
 - The grown-ups page (footer link) downloads a **backup** (one JSON file, pictures included), restores one, or starts
   over (type `RESET`).
 - The game asks Chrome to keep its data even when the disk fills up. The grown-ups page shows whether Chrome agreed,

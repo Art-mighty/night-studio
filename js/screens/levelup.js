@@ -84,7 +84,7 @@ export const render = (el, ctx, arg) => {
   el.append(
     h(
       "section.card.levelup",
-      h("p.kicker", `Room ${room.n} complete`),
+      h("p.kicker", `${ctx.course.roomWord} ${room.n} complete`),
       h("h1", `${room.icon} ${room.name}`),
       h("h2.gift-title", `🎁 ${gift.title}`),
       h("p.lead", gift.text),

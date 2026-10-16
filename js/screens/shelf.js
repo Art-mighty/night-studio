@@ -1,7 +1,6 @@
 // Her shelf (#/shelf): the badges she earned, her private gallery, and Show Family, a full-screen slideshow for a
 // family gallery night. Nothing leaves this browser.
 import { h, picture, plural } from "../ui.js";
-import { SECRET_BADGES } from "../content/course.js";
 
 export const render = (el, ctx) => {
   const R = ctx.rules, P = ctx.P, urls = [];
@@ -13,7 +12,7 @@ export const render = (el, ctx) => {
       const on = earned.has(d.badge.id);
       return h("div.badge" + (on ? ".on" : ""), { title: on ? `${d.badge.name}, Day ${d.day}` : `Finish Day ${d.day}` }, h("span.icon", on ? d.badge.icon : "·"), h("span.name", on ? d.badge.name : `Day ${d.day}`));
     }),
-    ...SECRET_BADGES.map((b) => {
+    ...ctx.course.SECRET_BADGES.map((b) => {
       const on = earned.has(b.id);
       return h("div.badge.secret" + (on ? ".on" : ""), { title: on ? b.how : "A secret badge" }, h("span.icon", on ? b.icon : "?"), h("span.name", on ? b.name : "???"));
     }),
@@ -29,7 +28,7 @@ export const render = (el, ctx) => {
       h("h2", "Your gallery"),
       h("p.muted", "Only you can see these. Show Family plays them full screen, for a family gallery night."),
       showBtn,
-      R.roomDone(P, ctx.ROOMS[6]) ? h("p", h("a", { href: "#/levelup/7" }, "Dress Lumi ✨")) : null,
+      R.roomDone(P, ctx.ROOMS.at(-1)) ? h("p", h("a", { href: `#/levelup/${ctx.ROOMS.length}` }, "Dress Lumi ✨")) : null,
       gallery,
     ),
   );

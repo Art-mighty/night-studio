@@ -3,7 +3,14 @@
 //
 // P is her progress (shape in blank() below). days is the DAYS list from content/days.js. Dates are local calendar
 // dates like "2026-10-01", passed in by the caller.
-import { OWN_IDEA_TWISTS, PASS, ROOMS, XP } from "./content/course.js";
+import { COURSE as NIGHT_STUDIO } from "./content/course.js";
+
+// The course these rules play: its rooms, pass mark and XP. Night Studio unless the page says otherwise (lumia.html
+// calls useCourse with the Lumia pack once, at start). A page only ever runs one course.
+let C = NIGHT_STUDIO;
+export const useCourse = (course) => {
+  C = course;
+};
 
 // ---------- dates ----------
 // A Date as a local "YYYY-MM-DD" (not UTC, so a late-evening session counts for the right day).
@@ -23,14 +30,29 @@ export const blank = () => ({
   days: {},
   lumi: { star: null, wear: {} }, // her star colour and the designs Lumi wears ({ belly, pin, patch })
   seen: { levelUps: [], welcomeBack: null },
+  // A sequel also gets carried: { from, tricks } on its first open (see carryOver); a first course never has it.
 });
 
+// A sequel's first open: bring her pen name, sound setting and Lumi (star colour, outfit, every trick it knows) over
+// from the course before. `old` is that course's progress, `oldCourse` its pack. Only a fresh P changes, and `old` is
+// never touched, so the first course's save stays exactly as it was.
+export const carryOver = (P, old, oldCourse) => {
+  if (P.penName || !old?.penName) return P;
+  const next = structuredClone(P);
+  next.penName = old.penName;
+  next.muted = !!old.muted;
+  next.lumi = structuredClone(old.lumi ?? next.lumi);
+  const learned = oldCourse.ROOMS.filter((r) => r.gift.trick && roomDone(old, r)).map((r) => r.gift.trick);
+  next.carried = { from: oldCourse.id, tricks: [...new Set([...(old.carried?.tricks ?? []), ...learned])] };
+  return next;
+};
+
 // ---------- days ----------
-export const roomOf = (n) => ROOMS.find((r) => n >= r.first && n <= r.last);
-export const isComplete = (d) => !!d?.taskAt && (d.quiz?.best ?? 0) >= PASS;
+export const roomOf = (n) => C.ROOMS.find((r) => n >= r.first && n <= r.last);
+export const isComplete = (d) => !!d?.taskAt && (d.quiz?.best ?? 0) >= C.PASS;
 // "done", "open" (she can play it now) or "locked" (the day before isn't done yet).
 export const dayStatus = (P, n) => (P.days[n]?.doneAt ? "done" : n === 1 || P.days[n - 1]?.doneAt ? "open" : "locked");
-export const currentDay = (P, total = 30) => {
+export const currentDay = (P, total = C.ROOMS.at(-1).last) => {
   for (let n = 1; n <= total; n++) if (dayStatus(P, n) === "open") return n;
   return null;
 };
@@ -112,30 +134,30 @@ export const act = (P, a, date) => {
 export const secretBadges = (P) => {
   const all = Object.values(P.days), out = [];
   if (all.some((d) => d.checkin === "solo")) out.push("solo-flight");
-  if (all.filter((d) => d.twist).length >= OWN_IDEA_TWISTS) out.push("own-idea");
+  if (all.filter((d) => d.twist).length >= C.OWN_IDEA_TWISTS) out.push("own-idea");
   return out;
 };
 // XP for one day. Video XP is capped at the day's number of videos, so swapping a video later never takes XP away.
 export const dayXp = (d, day) => {
   if (!d) return 0;
-  let x = Math.min(d.watched?.length ?? 0, day.videos.length) * XP.video;
-  if (d.taskAt) x += XP.task;
-  if ((d.quiz?.best ?? 0) >= PASS) x += XP.quiz;
-  if (d.quiz?.first === day.quiz.length) x += XP.perfect;
-  if (d.twist) x += XP.twist;
+  let x = Math.min(d.watched?.length ?? 0, day.videos.length) * C.XP.video;
+  if (d.taskAt) x += C.XP.task;
+  if ((d.quiz?.best ?? 0) >= C.PASS) x += C.XP.quiz;
+  if (d.quiz?.first === day.quiz.length) x += C.XP.perfect;
+  if (d.twist) x += C.XP.twist;
   return x;
 };
 export const xp = (P, days) => {
   let total = 0;
   for (const day of days) total += dayXp(P.days[day.day], day);
   const secret = secretBadges(P);
-  if (secret.includes("solo-flight")) total += XP.soloFlight;
-  if (secret.includes("own-idea")) total += XP.ownIdea;
+  if (secret.includes("solo-flight")) total += C.XP.soloFlight;
+  if (secret.includes("own-idea")) total += C.XP.ownIdea;
   return total;
 };
 // The most XP the course can give (every video, perfect first tries, a twist every day, both secret badges).
 export const maxXp = (days) =>
-  days.reduce((s, day) => s + day.videos.length * XP.video + XP.task + XP.quiz + XP.perfect + XP.twist, 0) + XP.soloFlight + XP.ownIdea;
+  days.reduce((s, day) => s + day.videos.length * C.XP.video + C.XP.task + C.XP.quiz + C.XP.perfect + C.XP.twist, 0) + C.XP.soloFlight + C.XP.ownIdea;
 // Badge ids she has earned: one per finished day, plus the secret ones.
 export const badges = (P, days) => [...days.filter((day) => P.days[day.day]?.doneAt).map((day) => day.badge.id), ...secretBadges(P)];
 export const lanterns = (P) => P.lanterns.length;
@@ -151,15 +173,18 @@ export const roomDone = (P, room) => {
   return true;
 };
 // A finished room whose gift she hasn't opened yet (the game takes her to it).
-export const pendingLevelUp = (P) => ROOMS.find((r) => roomDone(P, r) && !P.seen.levelUps.includes(r.n))?.n ?? null;
-// Lumi dozes until Day 1 is done.
-export const awake = (P) => !!P.days[1]?.doneAt;
-// Moves a tap on Lumi plays: wave, plus each trick from a finished room.
-export const tricks = (P) => ["wave", ...ROOMS.filter((r) => r.gift.trick && roomDone(P, r)).map((r) => r.gift.trick)];
+export const pendingLevelUp = (P) => C.ROOMS.find((r) => roomDone(P, r) && !P.seen.levelUps.includes(r.n))?.n ?? null;
+// Lumi dozes until Day 1 is done (or, in a sequel, arrives awake from the course before).
+export const awake = (P) => !!P.days[1]?.doneAt || !!P.carried;
+// Moves a tap on Lumi plays: wave, the tricks it brought from the course before (P.carried), and each trick from a
+// finished room.
+export const tricks = (P) => [
+  ...new Set(["wave", ...(P.carried?.tricks ?? []), ...C.ROOMS.filter((r) => r.gift.trick && roomDone(P, r)).map((r) => r.gift.trick)]),
+];
 // Her pictures from a room, newest first (the choices for what Lumi wears). No room = all her pictures.
 export const wearChoices = (P, room, max = 3) => {
   const keys = [];
-  const [from, to] = room ? [room.first, room.last] : [1, 30];
+  const [from, to] = room ? [room.first, room.last] : [1, C.ROOMS.at(-1).last];
   for (let n = to; n >= from; n--) keys.push(...[...(P.days[n]?.uploads ?? [])].reverse());
   return keys.slice(0, max);
 };

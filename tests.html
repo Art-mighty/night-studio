@@ -21,7 +21,7 @@
 <body>
 <main>
   <h1>Night Studio tests</h1>
-  <p class="muted">Checks the 30 days of content, the game rules, saving and backups, and that Lumi moves exactly like the
+  <p class="muted">Checks the content of both courses (Night Studio and Lumia Merch Lab), the game rules, carrying her name and Lumi from one to the other, saving and backups, and that Lumi moves exactly like the
     original in Lumia_marketing. Nothing to install: run <code>python3 serve.py</code> in this folder and open
     <code>http://localhost:8000/tests.html</code>. The tab title says PASS or FAIL.</p>
   <p id="summary">Running…</p>
@@ -60,23 +60,28 @@
   const eq = (a, b, msg = "") => { if (JSON.stringify(a) !== JSON.stringify(b)) throw new Error(`${msg} expected ${JSON.stringify(b)}, got ${JSON.stringify(a)}`); };
   const D = "2026-10-01", D2 = "2026-10-02", D5 = "2026-10-05";
 
-  // ---------- 1. content ----------
-  let DAYS = null;
-  try {
-    ({ DAYS } = await import("./js/content/days.js"));
-  } catch (e) {
-    await test("content file loads", () => { throw e; });
+  // ---------- 1. content (every course pack: Night Studio, then Lumia Merch Lab) ----------
+  const PACKS = [];
+  for (const path of ["./js/content/course.js", "./js/content/lumia/course.js"]) {
+    try {
+      PACKS.push((await import(path)).COURSE);
+    } catch (e) {
+      await test(`${path} loads`, () => { throw e; });
+    }
   }
-  if (DAYS) {
-    await test("30 days, in order, in the right rooms", () => {
-      eq(DAYS.length, 30, "days:");
+  for (const C of PACKS) {
+    const DAYS = C.DAYS, N = C.ROOMS.at(-1).last, name = C.title;
+    R.useCourse(C);
+    await test(`${name}: ${N} days, in order, in the right rooms`, () => {
+      eq(DAYS.length, N, "days:");
+      C.ROOMS.forEach((r, i) => eq(r.first, i ? C.ROOMS[i - 1].last + 1 : 1, `room ${r.n} starts right after the one before:`));
       DAYS.forEach((d, i) => {
         eq(d.day, i + 1, "day number:");
         eq(d.room, R.roomOf(d.day).n, `day ${d.day} room:`);
         ok(d.title && d.goal, `day ${d.day} needs a title and a goal`);
       });
     });
-    await test("videos: valid ids, clips that make sense", () => {
+    await test(`${name}: videos: valid ids, clips that make sense`, () => {
       for (const d of DAYS) {
         ok(d.videos.length >= 1 && d.videos.length <= 3, `day ${d.day}: 1–3 videos`);
         for (const v of d.videos) {
@@ -88,7 +93,7 @@
       const removed = ["P4vvf0KBhZM", "JQj_inE7yQU"]; // login-only and embedding-disabled (checked Sep 2026)
       ok(!DAYS.some((d) => d.videos.some((v) => removed.includes(v.id))), "a broken video is still listed");
     });
-    await test("flavor choices fit into the task", () => {
+    await test(`${name}: flavor choices fit into the task`, () => {
       for (const d of DAYS) {
         ok(d.flavor.prompt && d.flavor.options.length >= 2 && d.flavor.options.length <= 3, `day ${d.day}: 2–3 flavor options`);
         d.flavor.options.forEach((o) => ok(o.label && o.fill, `day ${d.day}: flavor option needs label and fill`));
@@ -97,7 +102,7 @@
         ok(d.task.deliverable && d.task.tool, `day ${d.day}: deliverable and tool`);
       }
     });
-    await test("quizzes: 5 questions, 4 different options, an answer and a why", () => {
+    await test(`${name}: quizzes: 5 questions, 4 different options, an answer and a why`, () => {
       for (const d of DAYS) {
         eq(d.quiz.length, 5, `day ${d.day} questions:`);
         for (const q of d.quiz) {
@@ -108,7 +113,7 @@
         }
       }
     });
-    await test("the right answer isn't simply the longest one", () => {
+    await test(`${name}: the right answer isn't simply the longest one`, () => {
       let longest = 0, total = 0;
       for (const d of DAYS) {
         for (const q of d.quiz) {
@@ -117,19 +122,20 @@
           if (len.every((l, i) => i === q.answer || l < right)) longest++;
         }
       }
-      line(`(info) the right answer is the longest option in ${longest} of ${total} questions`, "info");
+      line(`(info) ${name}: the right answer is the longest option in ${longest} of ${total} questions`, "info");
       ok(longest / total <= 0.4, `${longest} of ${total} (${Math.round((100 * longest) / total)}%): picking the longest answer would win too often`);
     });
-    await test("badges are unique, and Blot is gone", () => {
+    await test(`${name}: badges are unique, and Blot is gone`, () => {
       const ids = DAYS.map((d) => d.badge.id);
-      eq(new Set(ids).size, 30, "unique badge ids:");
+      eq(new Set(ids).size, N, "unique badge ids:");
       DAYS.forEach((d) => ok(d.badge.name && d.badge.icon, `day ${d.day}: badge name and icon`));
       ok(!/\bBlot\b/.test(JSON.stringify(DAYS)), "the research's old companion is still mentioned");
     });
     const spread = [0, 0, 0, 0];
     DAYS.forEach((d) => d.quiz.forEach((q) => spread[q.answer]++));
-    line(`(info) correct-answer positions in the file: A ${spread[0]}, B ${spread[1]}, C ${spread[2]}, D ${spread[3]}. The game shuffles them every attempt.`, "info");
+    line(`(info) ${name}: correct-answer positions in the file: A ${spread[0]}, B ${spread[1]}, C ${spread[2]}, D ${spread[3]}. The game shuffles them every attempt.`, "info");
   }
+  R.useCourse(PACKS[0]); // the rules tests below play Night Studio
 
   // ---------- 2. rules (on made-up days, so content edits never break these) ----------
   const FAKE = Array.from({ length: 30 }, (_, i) => ({
@@ -256,6 +262,60 @@
     eq(R.fillFlavor("Draw {flavor} with the Pen tool.", { fill: "a sleepy owl" }), "Draw a sleepy owl with the Pen tool.");
     eq(R.fillFlavor("Draw {flavor}.", undefined), "Draw your pick.");
   });
+
+  // ---------- 2b. two courses side by side ----------
+  const [NS, LUMIA] = PACKS;
+  if (LUMIA) {
+    await test("the two courses save in different places", () => {
+      ok(NS.id === "night-studio", "Night Studio's save name must never change");
+      ok(LUMIA.id !== NS.id, "Lumia would overwrite Night Studio's save");
+      ok(LUMIA.carryFrom === NS, "Lumia carries over from Night Studio");
+      ok(!new Set(NS.DAYS.map((d) => d.badge.id)).has(LUMIA.DAYS[0].badge.id), "badge ids should differ between courses");
+    });
+    await test("Lumia: every gift trick and Brand Kit pose is a real Lumi move", () => {
+      for (const r of LUMIA.ROOMS) if (r.gift.trick) ok(["aha", "love", "surprised", "spin", "fly", "dance"].includes(r.gift.trick), `level ${r.n}: Lumi can't play ${r.gift.trick}`);
+      for (const [move] of LUMIA.BRAND.poses) ok(MOVES[move], `no Lumi move called ${move}`);
+      for (const [hex] of LUMIA.BRAND.colours) ok(/^#[0-9a-f]{6}$/.test(hex), `bad colour ${hex}`);
+    });
+    await test("Lumia: every Brand Kit file is really there", async () => {
+      for (const l of LUMIA.BRAND.logos) ok((await fetch(l.file, { method: "HEAD" })).ok, `missing ${l.file}`);
+    });
+  }
+  await test("a sequel's first open brings her name and Lumi over, and only reads the old save", () => {
+    let old = finishAll(14, R.act(R.blank(), { type: "name", name: "Moth" }, D));
+    old = R.act(old, { type: "star", star: "rose" }, D);
+    old = R.act(old, { type: "wear", slot: "pin", item: { img: "k9", rows: ["6"] } }, D);
+    const before = JSON.stringify(old);
+    const P = R.carryOver(R.blank(), old, NS);
+    eq(JSON.stringify(old), before, "the old save was changed:");
+    eq([P.penName, P.lumi.star, P.lumi.wear.pin.img], ["Moth", "rose", "k9"]);
+    eq(P.carried, { from: "night-studio", tricks: ["spin"] });
+    eq(P.days, {}, "no days come along:");
+    ok(R.awake(P), "Lumi arrives awake");
+    eq(R.tricks(P), ["wave", "spin"]);
+    ok(R.carryOver(P, { ...old, penName: "Other" }, NS) === P, "only a fresh save is filled");
+    ok(R.carryOver(R.blank(), null, NS).penName === "", "no old save: nothing to bring");
+  });
+  if (LUMIA) {
+    await test("Lumia rules: 15 days, levels, gifts and tricks", () => {
+      R.useCourse(LUMIA);
+      try {
+        const fake = Array.from({ length: 15 }, (_, i) => ({ ...FAKE[i] }));
+        let P = R.carryOver(R.blank(), finishAll(30, R.act(R.blank(), { type: "name", name: "Moth" }, D)), NS);
+        eq(R.currentDay(P), 1);
+        for (let n = 1; n <= 3; n++) P = finish(P, n);
+        eq(R.pendingLevelUp(P), 1, "level 1 done:");
+        eq(R.tricks(P), ["wave", "spin", "fly", "dance", "aha"]);
+        for (let n = 4; n <= 15; n++) P = finish(P, n);
+        eq(R.currentDay(P), null, "all 15 done:");
+        eq(R.tricks(P), ["wave", "spin", "fly", "dance", "aha", "love", "surprised"]);
+        eq(R.wearChoices(P, null, 20).length, 15, "the last level's dress-up offers all 15 days:");
+        eq(R.badges(P, fake).length, 15);
+      } finally {
+        R.useCourse(NS);
+      }
+    });
+  }
 
   // ---------- 3. storage ----------
   await test("saved progress is upgraded safely", () => {

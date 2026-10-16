@@ -2,7 +2,7 @@
 // Screens never draw Lumi themselves. They send small requests:
 //   lumi.base("think")             the mood Lumi returns to on this screen (neutral, happy, think, sleepy, love)
 //   lumi.react("correct", "Yes!")  a short reaction, then back to the base mood (+ an optional word bubble)
-//   lumi.act("wave")               a move: wave, enter, exit, spin, fly, dance
+//   lumi.act("wave")               a move: wave, enter, exit, spin, fly, dance, or a feeling trick (aha, love, surprised)
 //   lumi.say("Wow!")               a word bubble only: 1–3 words, never an answer or an order
 //   lumi.dress({ star, wear })     her star colour and the designs Lumi wears (from her progress)
 //   lumi.tricks(["wave", "spin"])  the moves a tap on Lumi plays, one after another
@@ -18,6 +18,8 @@ const ART_W = 130, ART_H = 126, GROUND = [64, 112];
 const BODY_BOX = { x: 30, y: 21, w: 69, h: 91 };
 // How long each reaction lasts before Lumi goes back to its base mood, in seconds.
 const REACT_LEN = { correct: 1.8, oops: 1.8, surprised: 1.6, aha: 1.8, happy: 2.2, love: 2.4, think: 2, neutral: 1, sad: 2, sleepy: 3 };
+// Night Studio: feelings a tap can play as a trick (gifts in Lumia Merch Lab).
+const FEELING_TRICKS = ["aha", "love", "surprised"];
 // Numbers in a pose fade toward 0 near the end of a looping move, so it settles instead of snapping.
 const soften = (pose, k) => {
   const o = {};
@@ -114,7 +116,8 @@ export const createLumi = (root) => {
     },
     act(name, words) {
       const a = ACTS[name];
-      if (!a) return;
+      // Night Studio: Lumia Merch Lab's gifts are feelings; as tricks they play as a short reaction.
+      if (!a) return FEELING_TRICKS.includes(name) ? api.react(name, words) : undefined;
       if (name === "enter") acting = [];
       else acting = acting.filter((x) => x.name !== name);
       acting.push({ name, t0: now() + (name === "enter" ? 0 : 0.1), len: a.len, pose: a.pose });
